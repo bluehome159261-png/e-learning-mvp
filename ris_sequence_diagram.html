@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>RIS Sequence Diagram</title>
+<style>
+  body { background:#f8f9fa; font-family:'Segoe UI',Arial,sans-serif; display:flex; flex-direction:column; align-items:center; padding:30px; }
+  h2 { color:#1a3a5c; font-size:16px; margin-bottom:4px; }
+  p.caption { color:#555; font-size:13px; margin-top:4px; font-style:italic; }
+</style>
+</head>
+<body>
+<h2>Figure 3.4 — Sequence Diagram: Student Login → Course Enrollment → Virtual Classroom</h2>
+<p class="caption">Key system flow showing interactions between actor, browser, PHP server, and MySQL database</p>
+<svg width="820" height="680" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrf" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0,9 3.5,0 7" fill="#1a3a5c"/>
+    </marker>
+    <marker id="arrb" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0,9 3.5,0 7" fill="#888"/>
+    </marker>
+  </defs>
+
+  <!-- ===== ACTOR HEADERS ===== -->
+  <!-- Student -->
+  <circle cx="90" cy="38" r="18" fill="#34495e" stroke="#1a3a5c" stroke-width="2"/>
+  <text x="90" y="44" text-anchor="middle" fill="white" font-size="11" font-weight="bold">S</text>
+  <rect x="42" y="56" width="96" height="28" rx="5" fill="#34495e"/>
+  <text x="90" y="75" text-anchor="middle" fill="white" font-size="11" font-weight="bold">Student</text>
+
+  <!-- Browser -->
+  <rect x="246" y="20" width="108" height="64" rx="6" fill="#2563eb"/>
+  <text x="300" y="46" text-anchor="middle" fill="white" font-size="11" font-weight="bold">Browser</text>
+  <text x="300" y="62" text-anchor="middle" fill="#cce" font-size="10">(HTML/JS)</text>
+  <text x="300" y="76" text-anchor="middle" fill="#cce" font-size="10">Presentation</text>
+
+  <!-- PHP Server -->
+  <rect x="436" y="20" width="108" height="64" rx="6" fill="#16a34a"/>
+  <text x="490" y="46" text-anchor="middle" fill="white" font-size="11" font-weight="bold">PHP Server</text>
+  <text x="490" y="62" text-anchor="middle" fill="#cec" font-size="10">Application</text>
+  <text x="490" y="76" text-anchor="middle" fill="#cec" font-size="10">Layer</text>
+
+  <!-- MySQL -->
+  <rect x="626" y="20" width="108" height="64" rx="6" fill="#ca8a04"/>
+  <text x="680" y="46" text-anchor="middle" fill="white" font-size="11" font-weight="bold">MySQL DB</text>
+  <text x="680" y="62" text-anchor="middle" fill="#fef" font-size="10">Data Layer</text>
+  <text x="680" y="76" text-anchor="middle" fill="#fef" font-size="10">(XAMPP)</text>
+
+  <!-- ===== LIFELINES ===== -->
+  <line x1="90" y1="84" x2="90" y2="660" stroke="#34495e" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <line x1="300" y1="84" x2="300" y2="660" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <line x1="490" y1="84" x2="490" y2="660" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <line x1="680" y1="84" x2="680" y2="660" stroke="#ca8a04" stroke-width="1.5" stroke-dasharray="6,4"/>
+
+  <!-- ===== SECTION LABELS ===== -->
+  <rect x="10" y="100" width="8" height="150" rx="3" fill="#2563eb" opacity="0.7"/>
+  <text x="22" y="178" fill="#2563eb" font-size="11" font-weight="bold" transform="rotate(-90,22,178)">LOGIN</text>
+
+  <rect x="10" y="290" width="8" height="160" rx="3" fill="#16a34a" opacity="0.7"/>
+  <text x="22" y="378" fill="#16a34a" font-size="11" font-weight="bold" transform="rotate(-90,22,378)">ENROLL</text>
+
+  <rect x="10" y="490" width="8" height="150" rx="3" fill="#7c3aed" opacity="0.7"/>
+  <text x="22" y="568" fill="#7c3aed" font-size="11" font-weight="bold" transform="rotate(-90,22,568)">CLASSROOM</text>
+
+  <!-- ===== MESSAGES ===== -->
+  <!-- 1. Student opens login page -->
+  <line x1="90" y1="116" x2="290" y2="116" stroke="#1a3a5c" stroke-width="1.8" marker-end="url(#arrf)"/>
+  <text x="180" y="110" text-anchor="middle" fill="#1a3a5c" font-size="11">1. Open login page</text>
+
+  <!-- 2. Browser sends GET to PHP -->
+  <line x1="300" y1="138" x2="480" y2="138" stroke="#1a3a5c" stroke-width="1.8" marker-end="url(#arrf)"/>
+  <text x="390" y="132" text-anchor="middle" fill="#1a3a5c" font-size="11">2. GET /login.php</text>
+
+  <!-- 3. PHP returns login form -->
+  <line x1="480" y1="158" x2="310" y2="158" stroke="#888" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrb)"/>
+  <text x="390" y="152" text-anchor="middle" fill="#888" font-size="11">3. Return HTML login form</text>
+
+  <!-- 4. Student submits credentials -->
+  <line x1="90" y1="180" x2="290" y2="180" stroke="#1a3a5c" stroke-width="1.8" marker-end="url(#arrf)"/>
+  <text x="180" y="174" text-anchor="middle" fill="#1a3a5c" font-size="11">4. Submit email + password</text>
+
+  <!-- 5. POST to PHP -->
+  <line x1="300" y1="200" x2="480" y2="200" stroke="#1a3a5c" stroke-width="1.8" marker-end="url(#arrf)"/>
+  <text x="390" y="194" text-anchor="middle" fill="#1a3a5c" font-size="11">5. POST /login.php</text>
+
+  <!-- 6. PHP queries DB -->
+  <line x1="490" y1="220" x2="670" y2="220" stroke="#1a3a5c" stroke-width="1.8" marker-end="url(#arrf)"/>
+  <text x="582" y="214" text-anchor="middle" fill="#1a3a5c" font-size="11">6. SELECT user WHERE email=?</text>
+
+  <!-- 7. DB returns user row -->
+  <line x1="670" y1="240" x2="500" y2="240" stroke="#888" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrb)"/>
+  <text x="582" y="234" text-anchor="middle" fill="#888" font-size="11">7. Return user row</text>
+
+  <!-- 8. PHP verifies password + creates session -->
+  <rect x="446" y="253" width="88" height="22" rx="3" fill="#dcfce7" stroke="#16a34a" stroke-width="1"/>
+  <text x="490" y="268" text-anchor="middle" fill="#15803d" font-size="10">password_verify()</text>
+  <text x="490" y="281" text-anchor="middle" fill="#15803d" font-size="10">$_SESSION created</text>
+
+  <!-- 9. Redirect to dashboard -->
+  <line x1="480" y1="294" x2="310" y2="294" stroke="#888" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrb)"/>
+  <text x="390" y="288" text-anchor="middle" fill="#888" font-size="11">8. Redirect → /dashboard.php</text>
+
+  <!-- ===== ENROLLMENT ===== -->
+  <!-- 9. Student browses catalog -->
+  <line x1="90" y1="318" x2="290" y2="318" stroke="#1a3a5c" stroke-width="1.8" marker-end="url(#arrf)"/>
+  <text x="180" y="312" text-anchor="middle" fill="#1a3a5c" font-size="11">9. Browse course catalog</text>
+
+  <!-- 10. GET catalog -->
+  <line x1="300" y1="338" x2="480" y2="338" stroke="#1a3a5c" stroke-width="1.8" marker-end="url(#arrf)"/>
+  <text x="390" y="332" text-anchor="middle" fill="#1a3a5c" font-size="11">10. GET /catalog.php</text>
+
+  <!-- 11. PHP SELECT courses -->
+  <line x1="490" y1="356" x2="670" y2="356" stroke="#1a3a5c" stroke-width="1.8" marker-end="url(#arrf)"/>
+  <text x="582" y="350" text-anchor="middle" fill="#1a3a5c" font-size="11">11. SELECT * FROM courses</text>
+
+  <!-- 12. DB returns courses -->
+  <line x1="670" y1="374" x2="500" y2="374" stroke="#888" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrb)"/>
+  <text x="582" y="368" text-anchor="middle" fill="#888" font-size="11">12. Return courses list</text>
+
+  <!-- 13. Student clicks Enroll -->
+  <line x1="90" y1="400" x2="290" y2="400" stroke="#1a3a5c" stroke-width="1.8" marker-end="url(#arrf)"/>
+  <text x="180" y="394" text-anchor="middle" fill="#1a3a5c" font-size="11">13. Click "Enroll" on course</text>
+
+  <!-- 14. POST enroll -->
+  <line x1="300" y1="420" x2="480" y2="420" stroke="#1a3a5c" stroke-width="1.8" marker-end="url(#arrf)"/>
+  <text x="390" y="414" text-anchor="middle" fill="#1a3a5c" font-size="11">14. POST /enroll.php {course_id}</text>
+
+  <!-- 15. INSERT enrollment -->
+  <line x1="490" y1="440" x2="670" y2="440" stroke="#1a3a5c" stroke-width="1.8" marker-end="url(#arrf)"/>
+  <text x="582" y="434" text-anchor="middle" fill="#1a3a5c" font-size="11">15. INSERT INTO enrollments</text>
+
+  <!-- 16. success -->
+  <line x1="670" y1="458" x2="500" y2="458" stroke="#888" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrb)"/>
+  <text x="582" y="452" text-anchor="middle" fill="#888" font-size="11">16. OK / success</text>
+
+  <!-- 17. redirect dashboard -->
+  <line x1="480" y1="476" x2="310" y2="476" stroke="#888" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrb)"/>
+  <text x="390" y="470" text-anchor="middle" fill="#888" font-size="11">17. Redirect → updated dashboard</text>
+
+  <!-- ===== CLASSROOM ===== -->
+  <!-- 18. Student joins classroom -->
+  <line x1="90" y1="504" x2="290" y2="504" stroke="#7c3aed" stroke-width="1.8" marker-end="url(#arrf)"/>
+  <text x="180" y="498" text-anchor="middle" fill="#7c3aed" font-size="11">18. Click "Join Classroom"</text>
+
+  <!-- 19. GET classroom -->
+  <line x1="300" y1="524" x2="480" y2="524" stroke="#7c3aed" stroke-width="1.8" marker-end="url(#arrf)"/>
+  <text x="390" y="518" text-anchor="middle" fill="#7c3aed" font-size="11">19. GET /classroom.php?session_id=X</text>
+
+  <!-- 20. Verify enrollment + session -->
+  <line x1="490" y1="544" x2="670" y2="544" stroke="#7c3aed" stroke-width="1.8" marker-end="url(#arrf)"/>
+  <text x="582" y="538" text-anchor="middle" fill="#7c3aed" font-size="11">20. SELECT enrollment + session</text>
+
+  <!-- 21. return data -->
+  <line x1="670" y1="562" x2="500" y2="562" stroke="#888" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrb)"/>
+  <text x="582" y="556" text-anchor="middle" fill="#888" font-size="11">21. Return session data</text>
+
+  <!-- 22. Render classroom UI -->
+  <line x1="480" y1="582" x2="310" y2="582" stroke="#888" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrb)"/>
+  <text x="390" y="576" text-anchor="middle" fill="#888" font-size="11">22. Render classroom interface</text>
+
+  <!-- 23. Student interacts -->
+  <rect x="256" y="598" width="88" height="22" rx="3" fill="#ede9fe" stroke="#7c3aed" stroke-width="1"/>
+  <text x="300" y="614" text-anchor="middle" fill="#5b21b6" font-size="10">Chat / File Upload active</text>
+  <text x="300" y="628" text-anchor="middle" fill="#5b21b6" font-size="10">Video: Phase 2 (WebRTC)</text>
+
+  <!-- END -->
+  <text x="90" y="655" text-anchor="middle" fill="#34495e" font-size="10">✓</text>
+  <text x="300" y="655" text-anchor="middle" fill="#2563eb" font-size="10">✓</text>
+  <text x="490" y="655" text-anchor="middle" fill="#16a34a" font-size="10">✓</text>
+  <text x="680" y="655" text-anchor="middle" fill="#ca8a04" font-size="10">✓</text>
+</svg>
+<p class="caption">Solid arrows = requests/calls &nbsp;|&nbsp; Dashed arrows = responses/returns &nbsp;|&nbsp; POST requests carry form data securely</p>
+</body>
+</html>

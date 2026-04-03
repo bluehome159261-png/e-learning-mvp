@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>RIS Use Case Diagram</title>
+<style>
+  body {
+    background: #f8f9fa;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+  }
+  h2 { color: #1a3a5c; font-size: 16px; margin-bottom: 4px; }
+  p.caption { color: #555; font-size: 13px; margin-top: 4px; font-style: italic; }
+</style>
+</head>
+<body>
+<h2>Figure 3.1 — Use Case Diagram of the RIS Platform</h2>
+<p class="caption">Showing all actors (Student, Mentor, Admin, Guest) and their interactions with the system</p>
+
+<svg width="900" height="720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arr" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0,9 3.5,0 7" fill="#555"/>
+    </marker>
+    <marker id="arrinc" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0,9 3.5,0 7" fill="#2563eb"/>
+    </marker>
+    <marker id="arrext" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0,9 3.5,0 7" fill="#16a34a"/>
+    </marker>
+  </defs>
+
+  <!-- ========== SYSTEM BOUNDARY ========== -->
+  <rect x="180" y="30" width="570" height="660" rx="12"
+        fill="white" stroke="#1a3a5c" stroke-width="2.5" stroke-dasharray="none"/>
+  <text x="465" y="58" text-anchor="middle" fill="#1a3a5c"
+        font-size="15" font-weight="bold">RIS Platform System</text>
+
+  <!-- ========== ACTORS ========== -->
+
+  <!-- GUEST (far left top) -->
+  <circle cx="60" cy="110" r="18" fill="none" stroke="#888" stroke-width="2"/>
+  <line x1="60" y1="128" x2="60" y2="168" stroke="#888" stroke-width="2"/>
+  <line x1="60" y1="140" x2="38" y2="158" stroke="#888" stroke-width="2"/>
+  <line x1="60" y1="140" x2="82" y2="158" stroke="#888" stroke-width="2"/>
+  <line x1="60" y1="168" x2="40" y2="192" stroke="#888" stroke-width="2"/>
+  <line x1="60" y1="168" x2="80" y2="192" stroke="#888" stroke-width="2"/>
+  <text x="60" y="208" text-anchor="middle" fill="#555" font-size="12" font-weight="bold">Guest</text>
+
+  <!-- STUDENT (far left middle) -->
+  <circle cx="60" cy="300" r="18" fill="none" stroke="#2563eb" stroke-width="2"/>
+  <line x1="60" y1="318" x2="60" y2="358" stroke="#2563eb" stroke-width="2"/>
+  <line x1="60" y1="330" x2="38" y2="348" stroke="#2563eb" stroke-width="2"/>
+  <line x1="60" y1="330" x2="82" y2="348" stroke="#2563eb" stroke-width="2"/>
+  <line x1="60" y1="358" x2="40" y2="382" stroke="#2563eb" stroke-width="2"/>
+  <line x1="60" y1="358" x2="80" y2="382" stroke="#2563eb" stroke-width="2"/>
+  <text x="60" y="398" text-anchor="middle" fill="#2563eb" font-size="12" font-weight="bold">Student</text>
+
+  <!-- MENTOR (far right middle) -->
+  <circle cx="848" cy="300" r="18" fill="none" stroke="#16a34a" stroke-width="2"/>
+  <line x1="848" y1="318" x2="848" y2="358" stroke="#16a34a" stroke-width="2"/>
+  <line x1="848" y1="330" x2="826" y2="348" stroke="#16a34a" stroke-width="2"/>
+  <line x1="848" y1="330" x2="870" y2="348" stroke="#16a34a" stroke-width="2"/>
+  <line x1="848" y1="358" x2="828" y2="382" stroke="#16a34a" stroke-width="2"/>
+  <line x1="848" y1="358" x2="868" y2="382" stroke="#16a34a" stroke-width="2"/>
+  <text x="848" y="398" text-anchor="middle" fill="#16a34a" font-size="12" font-weight="bold">Mentor</text>
+
+  <!-- ADMIN (far right bottom) -->
+  <circle cx="848" cy="560" r="18" fill="none" stroke="#c0392b" stroke-width="2"/>
+  <line x1="848" y1="578" x2="848" y2="618" stroke="#c0392b" stroke-width="2"/>
+  <line x1="848" y1="590" x2="826" y2="608" stroke="#c0392b" stroke-width="2"/>
+  <line x1="848" y1="590" x2="870" y2="608" stroke="#c0392b" stroke-width="2"/>
+  <line x1="848" y1="618" x2="828" y2="642" stroke="#c0392b" stroke-width="2"/>
+  <line x1="848" y1="618" x2="868" y2="642" stroke="#c0392b" stroke-width="2"/>
+  <text x="848" y="658" text-anchor="middle" fill="#c0392b" font-size="12" font-weight="bold">Admin</text>
+
+  <!-- ========== USE CASES ========== -->
+
+  <!-- --- GUEST USE CASES --- -->
+  <ellipse cx="380" cy="100" rx="105" ry="22" fill="#f1f5f9" stroke="#888" stroke-width="1.5"/>
+  <text x="380" y="105" text-anchor="middle" fill="#333" font-size="11">Browse Course Catalog</text>
+
+  <ellipse cx="380" cy="148" rx="105" ry="22" fill="#f1f5f9" stroke="#888" stroke-width="1.5"/>
+  <text x="380" y="153" text-anchor="middle" fill="#333" font-size="11">View Mentor Profiles</text>
+
+  <ellipse cx="380" cy="196" rx="105" ry="22" fill="#f1f5f9" stroke="#888" stroke-width="1.5"/>
+  <text x="380" y="201" text-anchor="middle" fill="#333" font-size="11">Register / Create Account</text>
+
+  <!-- Guest → Browse -->
+  <line x1="78" y1="118" x2="272" y2="100" stroke="#888" stroke-width="1.5" marker-end="url(#arr)"/>
+  <!-- Guest → View Mentor -->
+  <line x1="78" y1="130" x2="272" y2="148" stroke="#888" stroke-width="1.5" marker-end="url(#arr)"/>
+  <!-- Guest → Register -->
+  <line x1="78" y1="145" x2="272" y2="196" stroke="#888" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- --- STUDENT USE CASES --- -->
+  <ellipse cx="380" cy="256" rx="105" ry="22" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="380" y="261" text-anchor="middle" fill="#1e40af" font-size="11">Login to Platform</text>
+
+  <ellipse cx="380" cy="304" rx="105" ry="22" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="380" y="309" text-anchor="middle" fill="#1e40af" font-size="11">Enroll in Course</text>
+
+  <ellipse cx="380" cy="352" rx="105" ry="22" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="380" y="357" text-anchor="middle" fill="#1e40af" font-size="11">Track Learning Progress</text>
+
+  <ellipse cx="380" cy="400" rx="105" ry="22" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="380" y="405" text-anchor="middle" fill="#1e40af" font-size="11">Join Virtual Classroom</text>
+
+  <ellipse cx="380" cy="448" rx="105" ry="22" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="380" y="453" text-anchor="middle" fill="#1e40af" font-size="11">Submit Assignment</text>
+
+  <ellipse cx="380" cy="496" rx="105" ry="22" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="380" y="501" text-anchor="middle" fill="#1e40af" font-size="11">Download Certificate</text>
+
+  <!-- Student → use cases -->
+  <line x1="78" y1="310" x2="272" y2="270" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrinc)"/>
+  <line x1="78" y1="318" x2="272" y2="304" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrinc)"/>
+  <line x1="78" y1="326" x2="272" y2="352" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrinc)"/>
+  <line x1="78" y1="334" x2="272" y2="400" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrinc)"/>
+  <line x1="78" y1="342" x2="272" y2="448" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrinc)"/>
+  <line x1="78" y1="350" x2="272" y2="496" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrinc)"/>
+
+  <!-- --- MENTOR USE CASES --- -->
+  <ellipse cx="600" cy="256" rx="115" ry="22" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="600" y="261" text-anchor="middle" fill="#15803d" font-size="11">Create and Manage Courses</text>
+
+  <ellipse cx="600" cy="304" rx="115" ry="22" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="600" y="309" text-anchor="middle" fill="#15803d" font-size="11">Host Live Classroom Session</text>
+
+  <ellipse cx="600" cy="352" rx="115" ry="22" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="600" y="357" text-anchor="middle" fill="#15803d" font-size="11">Review and Grade Assignments</text>
+
+  <ellipse cx="600" cy="400" rx="115" ry="22" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="600" y="405" text-anchor="middle" fill="#15803d" font-size="11">Share Screen (with consent)</text>
+
+  <ellipse cx="600" cy="448" rx="115" ry="22" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="600" y="453" text-anchor="middle" fill="#15803d" font-size="11">Message Students</text>
+
+  <ellipse cx="600" cy="496" rx="115" ry="22" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="600" y="501" text-anchor="middle" fill="#15803d" font-size="11">View Earnings Dashboard</text>
+
+  <!-- Mentor → use cases -->
+  <line x1="830" y1="310" x2="718" y2="270" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrext)"/>
+  <line x1="830" y1="318" x2="718" y2="304" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrext)"/>
+  <line x1="830" y1="326" x2="718" y2="352" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrext)"/>
+  <line x1="830" y1="334" x2="718" y2="400" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrext)"/>
+  <line x1="830" y1="342" x2="718" y2="448" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrext)"/>
+  <line x1="830" y1="350" x2="718" y2="496" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrext)"/>
+
+  <!-- Mentor also uses Login -->
+  <line x1="830" y1="300" x2="718" y2="256" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrext)" stroke-dasharray="4,3"/>
+
+  <!-- --- ADMIN USE CASES --- -->
+  <ellipse cx="490" cy="564" rx="115" ry="22" fill="#fee2e2" stroke="#c0392b" stroke-width="1.5"/>
+  <text x="490" y="569" text-anchor="middle" fill="#991b1b" font-size="11">Manage Users and Roles</text>
+
+  <ellipse cx="490" cy="612" rx="115" ry="22" fill="#fee2e2" stroke="#c0392b" stroke-width="1.5"/>
+  <text x="490" y="617" text-anchor="middle" fill="#991b1b" font-size="11">Verify and Approve Mentors</text>
+
+  <ellipse cx="490" cy="660" rx="115" ry="22" fill="#fee2e2" stroke="#c0392b" stroke-width="1.5"/>
+  <text x="490" y="665" text-anchor="middle" fill="#991b1b" font-size="11">Moderate Content and Courses</text>
+
+  <!-- Admin → use cases -->
+  <line x1="830" y1="568" x2="608" y2="564" stroke="#c0392b" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="830" y1="578" x2="608" y2="612" stroke="#c0392b" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="830" y1="590" x2="608" y2="660" stroke="#c0392b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- SHARED: Login is also used by Mentor (dashed include arrow already drawn) -->
+  <!-- include relationship: Join Classroom includes Login -->
+  <line x1="380" y1="378" x2="380" y2="278" stroke="#2563eb" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrinc)"/>
+  <text x="320" y="328" fill="#2563eb" font-size="10" font-style="italic">«include»</text>
+
+  <!-- ========== LEGEND ========== -->
+  <rect x="192" y="640" width="260" height="66" rx="6" fill="#f0f4f8" stroke="#aaa" stroke-width="1"/>
+  <text x="205" y="656" fill="#333" font-size="11" font-weight="bold">Legend</text>
+  <line x1="205" y1="668" x2="240" y2="668" stroke="#888" stroke-width="1.8" marker-end="url(#arr)"/>
+  <text x="245" y="672" fill="#333" font-size="10">Actor uses feature</text>
+  <line x1="205" y1="684" x2="240" y2="684" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrinc)"/>
+  <text x="245" y="688" fill="#333" font-size="10">«include» relationship</text>
+  <ellipse cx="222" cy="700" rx="30" ry="10" fill="#dbeafe" stroke="#2563eb" stroke-width="1"/>
+  <text x="260" y="704" fill="#333" font-size="10">Use Case (oval shape)</text>
+</svg>
+
+<p class="caption">
+  Blue = Student interactions &nbsp;|&nbsp; Green = Mentor interactions &nbsp;|&nbsp;
+  Red = Admin interactions &nbsp;|&nbsp; Grey = Guest interactions
+</p>
+</body>
+</html>

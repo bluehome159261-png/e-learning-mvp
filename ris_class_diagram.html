@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>RIS Class Diagram</title>
+<style>
+  body { background: #f8f9fa; font-family: 'Segoe UI', Arial, sans-serif; display:flex; flex-direction:column; align-items:center; padding:30px; }
+  h2 { color: #1a3a5c; font-size: 16px; margin-bottom: 4px; }
+  p.caption { color: #555; font-size: 13px; margin-top:4px; font-style:italic; }
+  svg text { font-family: 'Segoe UI', Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h2>Figure 3.2 — Class Diagram of the RIS Platform Database</h2>
+<p class="caption">Showing main entities, attributes, and relationships with cardinalities</p>
+<svg width="860" height="600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1a3a5c"/>
+    </marker>
+    <marker id="arrowgray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- ===== USER entity ===== -->
+  <!-- Header -->
+  <rect x="30" y="40" width="200" height="30" rx="4" fill="#1a3a5c"/>
+  <text x="130" y="61" text-anchor="middle" fill="white" font-size="13" font-weight="bold">User</text>
+  <!-- Body -->
+  <rect x="30" y="70" width="200" height="155" rx="0" fill="white" stroke="#1a3a5c" stroke-width="1.5"/>
+  <line x1="30" y1="70" x2="230" y2="70" stroke="#1a3a5c" stroke-width="1.5"/>
+  <text x="42" y="90"  fill="#1a3a5c" font-size="12">+ id : INT (PK)</text>
+  <text x="42" y="108" fill="#333" font-size="12">+ full_name : VARCHAR</text>
+  <text x="42" y="126" fill="#333" font-size="12">+ email : VARCHAR (UNIQUE)</text>
+  <text x="42" y="144" fill="#333" font-size="12">+ password_hash : VARCHAR</text>
+  <text x="42" y="162" fill="#e05c00" font-size="12">+ role : ENUM</text>
+  <text x="42" y="180" fill="#555" font-size="11" font-style="italic">  (student | mentor | admin)</text>
+  <text x="42" y="198" fill="#333" font-size="12">+ created_at : DATETIME</text>
+  <!-- Divider for methods -->
+  <line x1="30" y1="208" x2="230" y2="208" stroke="#ccc" stroke-width="1"/>
+  <rect x="30" y="208" width="200" height="17" fill="#eef2f7" stroke="#1a3a5c" stroke-width="1.5"/>
+  <text x="42" y="221" fill="#1a3a5c" font-size="11" font-style="italic">+ authenticate() : bool</text>
+
+  <!-- ===== COURSE entity ===== -->
+  <rect x="330" y="40" width="210" height="30" rx="4" fill="#1a5c3a"/>
+  <text x="435" y="61" text-anchor="middle" fill="white" font-size="13" font-weight="bold">Course</text>
+  <rect x="330" y="70" width="210" height="172" rx="0" fill="white" stroke="#1a5c3a" stroke-width="1.5"/>
+  <line x1="330" y1="70" x2="540" y2="70" stroke="#1a5c3a" stroke-width="1.5"/>
+  <text x="342" y="90"  fill="#1a5c3a" font-size="12">+ id : INT (PK)</text>
+  <text x="342" y="108" fill="#333" font-size="12">+ title : VARCHAR</text>
+  <text x="342" y="126" fill="#333" font-size="12">+ specialty_category : VARCHAR</text>
+  <text x="342" y="144" fill="#e05c00" font-size="12">+ mentor_id : INT (FK)</text>
+  <text x="342" y="162" fill="#333" font-size="12">+ description : TEXT</text>
+  <text x="342" y="180" fill="#333" font-size="12">+ price : DECIMAL</text>
+  <text x="342" y="198" fill="#333" font-size="12">+ created_at : DATETIME</text>
+  <line x1="330" y1="208" x2="540" y2="208" stroke="#ccc" stroke-width="1"/>
+  <rect x="330" y="208" width="210" height="17" fill="#eef7f2" stroke="#1a5c3a" stroke-width="1.5"/>
+  <text x="342" y="221" fill="#1a5c3a" font-size="11" font-style="italic">+ getEnrolledCount() : int</text>
+
+  <!-- ===== ENROLLMENT entity ===== -->
+  <rect x="150" y="340" width="210" height="30" rx="4" fill="#5c3a1a"/>
+  <text x="255" y="361" text-anchor="middle" fill="white" font-size="13" font-weight="bold">Enrollment</text>
+  <rect x="150" y="370" width="210" height="102" rx="0" fill="white" stroke="#5c3a1a" stroke-width="1.5"/>
+  <line x1="150" y1="370" x2="360" y2="370" stroke="#5c3a1a" stroke-width="1.5"/>
+  <text x="162" y="390" fill="#5c3a1a" font-size="12">+ id : INT (PK)</text>
+  <text x="162" y="408" fill="#e05c00" font-size="12">+ student_id : INT (FK)</text>
+  <text x="162" y="426" fill="#e05c00" font-size="12">+ course_id : INT (FK)</text>
+  <text x="162" y="444" fill="#333" font-size="12">+ enrolled_at : DATETIME</text>
+  <line x1="150" y1="454" x2="360" y2="454" stroke="#ccc" stroke-width="1"/>
+  <rect x="150" y="454" width="210" height="17" fill="#f7f0ea" stroke="#5c3a1a" stroke-width="1.5"/>
+  <text x="162" y="467" fill="#5c3a1a" font-size="11" font-style="italic">+ isActive() : bool</text>
+
+  <!-- ===== SESSION entity ===== -->
+  <rect x="590" y="220" width="210" height="30" rx="4" fill="#3a1a5c"/>
+  <text x="695" y="241" text-anchor="middle" fill="white" font-size="13" font-weight="bold">Session</text>
+  <rect x="590" y="250" width="210" height="136" rx="0" fill="white" stroke="#3a1a5c" stroke-width="1.5"/>
+  <line x1="590" y1="250" x2="800" y2="250" stroke="#3a1a5c" stroke-width="1.5"/>
+  <text x="602" y="270" fill="#3a1a5c" font-size="12">+ id : INT (PK)</text>
+  <text x="602" y="288" fill="#e05c00" font-size="12">+ course_id : INT (FK)</text>
+  <text x="602" y="306" fill="#e05c00" font-size="12">+ mentor_id : INT (FK)</text>
+  <text x="602" y="324" fill="#333" font-size="12">+ scheduled_at : DATETIME</text>
+  <text x="602" y="342" fill="#333" font-size="12">+ duration_minutes : INT</text>
+  <text x="602" y="360" fill="#e05c00" font-size="12">+ status : ENUM</text>
+  <text x="602" y="375" fill="#555" font-size="11" font-style="italic">  (scheduled|live|ended)</text>
+  <line x1="590" y1="380" x2="800" y2="380" stroke="#ccc" stroke-width="1"/>
+  <rect x="590" y="380" width="210" height="17" fill="#eeebf7" stroke="#3a1a5c" stroke-width="1.5"/>
+  <text x="602" y="393" fill="#3a1a5c" font-size="11" font-style="italic">+ start() : void</text>
+
+  <!-- ===== PROGRESS entity ===== -->
+  <rect x="400" y="420" width="210" height="30" rx="4" fill="#1a5c5c"/>
+  <text x="505" y="441" text-anchor="middle" fill="white" font-size="13" font-weight="bold">Progress</text>
+  <rect x="400" y="450" width="210" height="120" rx="0" fill="white" stroke="#1a5c5c" stroke-width="1.5"/>
+  <line x1="400" y1="450" x2="610" y2="450" stroke="#1a5c5c" stroke-width="1.5"/>
+  <text x="412" y="470" fill="#1a5c5c" font-size="12">+ id : INT (PK)</text>
+  <text x="412" y="488" fill="#e05c00" font-size="12">+ student_id : INT (FK)</text>
+  <text x="412" y="506" fill="#e05c00" font-size="12">+ course_id : INT (FK)</text>
+  <text x="412" y="524" fill="#333" font-size="12">+ percent_complete : INT</text>
+  <text x="412" y="542" fill="#333" font-size="12">+ updated_at : DATETIME</text>
+  <line x1="400" y1="552" x2="610" y2="552" stroke="#ccc" stroke-width="1"/>
+  <rect x="400" y="552" width="210" height="17" fill="#eaf7f7" stroke="#1a5c5c" stroke-width="1.5"/>
+  <text x="412" y="565" fill="#1a5c5c" font-size="11" font-style="italic">+ update(value) : void</text>
+
+  <!-- ===== RELATIONSHIPS ===== -->
+
+  <!-- User (mentor) 1 → N Course -->
+  <line x1="230" y1="140" x2="330" y2="130" stroke="#1a3a5c" stroke-width="1.8" marker-end="url(#arrow)" stroke-dasharray="none"/>
+  <text x="245" y="118" fill="#c0392b" font-size="12" font-weight="bold">1</text>
+  <text x="308" y="118" fill="#c0392b" font-size="12" font-weight="bold">N</text>
+  <text x="255" y="108" fill="#555" font-size="11" font-style="italic">teaches</text>
+
+  <!-- User (student) N → M Enrollment -->
+  <line x1="130" y1="225" x2="210" y2="340" stroke="#5c3a1a" stroke-width="1.8" marker-end="url(#arrowgray)"/>
+  <text x="130" y="268" fill="#c0392b" font-size="12" font-weight="bold">1</text>
+  <text x="192" y="336" fill="#c0392b" font-size="12" font-weight="bold">N</text>
+  <text x="135" y="285" fill="#555" font-size="11" font-style="italic">enrolls</text>
+
+  <!-- Course N → M Enrollment -->
+  <line x1="380" y1="242" x2="320" y2="340" stroke="#5c3a1a" stroke-width="1.8" marker-end="url(#arrowgray)"/>
+  <text x="390" y="282" fill="#c0392b" font-size="12" font-weight="bold">1</text>
+  <text x="318" y="336" fill="#c0392b" font-size="12" font-weight="bold">N</text>
+  <text x="335" y="305" fill="#555" font-size="11" font-style="italic">has</text>
+
+  <!-- Course 1 → N Session -->
+  <line x1="540" y1="150" x2="590" y2="255" stroke="#3a1a5c" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <text x="548" y="185" fill="#c0392b" font-size="12" font-weight="bold">1</text>
+  <text x="574" y="250" fill="#c0392b" font-size="12" font-weight="bold">N</text>
+  <text x="546" y="210" fill="#555" font-size="11" font-style="italic">hosts</text>
+
+  <!-- User (student) 1 → N Progress -->
+  <line x1="130" y1="225" x2="430" y2="420" stroke="#1a5c5c" stroke-width="1.8" marker-end="url(#arrowgray)" stroke-dasharray="5,3"/>
+  <text x="195" y="320" fill="#c0392b" font-size="12" font-weight="bold">1</text>
+  <text x="415" y="418" fill="#c0392b" font-size="12" font-weight="bold">N</text>
+  <text x="220" y="340" fill="#555" font-size="11" font-style="italic">tracks</text>
+
+  <!-- Course 1 → N Progress -->
+  <line x1="435" y1="242" x2="490" y2="420" stroke="#1a5c5c" stroke-width="1.8" marker-end="url(#arrowgray)" stroke-dasharray="5,3"/>
+  <text x="440" y="310" fill="#c0392b" font-size="12" font-weight="bold">1</text>
+  <text x="488" y="416" fill="#c0392b" font-size="12" font-weight="bold">N</text>
+
+  <!-- LEGEND -->
+  <rect x="30" y="500" width="110" height="75" rx="4" fill="#f0f0f0" stroke="#aaa" stroke-width="1"/>
+  <text x="38" y="516" fill="#333" font-size="11" font-weight="bold">Legend</text>
+  <line x1="38" y1="528" x2="68" y2="528" stroke="#1a3a5c" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="72" y="532" fill="#333" font-size="10">Association</text>
+  <line x1="38" y1="545" x2="68" y2="545" stroke="#555" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrowgray)"/>
+  <text x="72" y="549" fill="#333" font-size="10">Dependency</text>
+  <text x="38" y="563" fill="#e05c00" font-size="10">Orange = FK field</text>
+  <text x="38" y="575" fill="#c0392b" font-size="10">Red labels = Cardinality</text>
+</svg>
+<p class="caption">PK = Primary Key &nbsp;|&nbsp; FK = Foreign Key &nbsp;|&nbsp; ENUM = Enumeration type</p>
+</body>
+</html>
