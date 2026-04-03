@@ -28,67 +28,70 @@
             font-family: 'Inter', sans-serif;
             background-color: var(--light);
             color: var(--dark);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            line-height: 1.5;
             min-height: 100vh;
-            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 15px;
         }
         
-        .register-card {
-            background: var(--white);
+        .register-container {
             width: 100%;
             max-width: 450px;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin: auto;
+            background: var(--white);
+            padding: 30px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
         
-        .logo-container {
+        .logo-header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
         
-        .logo-container img {
-            height: 60px;
+        .logo-header img {
+            height: 55px;
+            width: auto;
             margin-bottom: 10px;
         }
         
         h1 {
             font-family: 'Montserrat', sans-serif;
-            font-size: 1.8rem;
-            text-align: center;
-            margin-bottom: 10px;
+            font-size: 1.6rem;
             color: var(--primary);
+            margin-bottom: 5px;
         }
         
-        p.subtitle {
-            text-align: center;
+        .subtitle {
             color: var(--gray);
-            margin-bottom: 30px;
             font-size: 0.9rem;
+            margin-bottom: 25px;
         }
         
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
+            text-align: left;
         }
         
         label {
             display: block;
-            margin-bottom: 8px;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            color: var(--dark);
         }
         
         input, select {
             width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
+            height: 48px; /* Ensuring 44px+ touch target */
+            padding: 0 15px;
+            border: 1.5px solid #e1e1e1;
             border-radius: 8px;
             font-family: 'Inter', sans-serif;
             font-size: 1rem;
+            background-color: var(--white);
             transition: var(--transition);
-            min-height: 44px;
         }
         
         input:focus, select:focus {
@@ -97,67 +100,72 @@
             box-shadow: 0 0 0 3px rgba(0, 135, 81, 0.1);
         }
         
-        .phone-input-group {
+        .phone-row {
             display: flex;
             gap: 10px;
         }
         
-        .phone-input-group select {
-            width: 120px;
+        .phone-row select {
+            width: 110px;
             flex-shrink: 0;
         }
         
-        .btn-register {
+        #mentor-passkey-group {
+            display: none;
+            background: #fff9e6;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px dashed var(--secondary);
+            margin-bottom: 18px;
+        }
+        
+        .btn-submit {
             width: 100%;
-            background: var(--primary);
+            height: 52px;
+            background-color: var(--primary);
             color: var(--white);
-            padding: 14px;
             border: none;
             border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
             font-weight: 700;
             font-size: 1rem;
             cursor: pointer;
             transition: var(--transition);
             margin-top: 10px;
-            min-height: 44px;
         }
         
-        .btn-register:hover {
-            background: #006b40;
+        .btn-submit:hover {
+            background-color: #006b40;
+            transform: translateY(-1px);
         }
         
-        .login-link {
+        .footer-links {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 25px;
             font-size: 0.9rem;
+            color: var(--gray);
         }
         
-        .login-link a {
+        .footer-links a {
             color: var(--primary);
             text-decoration: none;
             font-weight: 700;
         }
         
-        #mentor-passkey-group {
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @media (max-width: 480px) {
-            .register-card {
-                padding: 25px;
+        /* Mobile-first adjustments */
+        @media (max-width: 360px) {
+            .register-container {
+                padding: 20px 15px;
+            }
+            h1 {
+                font-size: 1.4rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="register-card">
-        <div class="logo-container">
+    <div class="register-container">
+        <div class="logo-header">
             <a href="index.html">
                 <img src="assets/images/Screenshot_20260325-094957.jpg" alt="Projet RIS Logo">
             </a>
@@ -165,39 +173,35 @@
             <p class="subtitle">Join the RIS community today</p>
         </div>
         
-        <form id="registerForm">
+        <form id="regForm">
             <div class="form-group">
                 <label for="fullname">Full Name</label>
-                <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
+                <input type="text" id="fullname" name="fullname" placeholder="e.g. Jean-Paul Biya" required>
             </div>
             
             <div class="form-group">
                 <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" placeholder="example@email.com" required>
+                <input type="email" id="email" name="email" placeholder="name@example.com" required>
             </div>
             
             <div class="form-group">
                 <label for="phone">Phone Number</label>
-                <div class="phone-input-group">
-                    <select id="country-code" name="country-code">
+                <div class="phone-row">
+                    <select id="country" name="country">
                         <option value="+237" selected>🇨🇲 +237</option>
                         <option value="+234">🇳🇬 +234</option>
                         <option value="+221">🇸🇳 +221</option>
                         <option value="+225">🇨🇮 +225</option>
                         <option value="+233">🇬🇭 +233</option>
-                        <option value="+254">🇰🇪 +254</option>
-                        <option value="+212">🇲🇦 +212</option>
-                        <option value="+20">🇪🇬 +20</option>
-                        <option value="+27">🇿🇦 +27</option>
                     </select>
                     <input type="tel" id="phone" name="phone" placeholder="6XX XXX XXX" required>
                 </div>
             </div>
             
             <div class="form-group">
-                <label for="role">I am a...</label>
+                <label for="role">Register as</label>
                 <select id="role" name="role" required>
-                    <option value="" disabled selected>Select your role</option>
+                    <option value="" disabled selected>Choose your role</option>
                     <option value="student">Student (Athlete/Youth)</option>
                     <option value="mentor">Mentor (Consultant)</option>
                 </select>
@@ -205,53 +209,41 @@
             
             <div id="mentor-passkey-group" class="form-group">
                 <label for="passkey">Mentor Passkey</label>
-                <input type="password" id="passkey" name="passkey" placeholder="Enter your mentor verification code">
+                <input type="password" id="passkey" name="passkey" placeholder="Enter verification code">
             </div>
             
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Create a strong password" required>
+                <input type="password" id="password" name="password" placeholder="Min. 8 characters" required>
             </div>
             
-            <button type="submit" class="btn-register">Register Now</button>
+            <button type="submit" class="btn-submit">Register Now</button>
         </form>
         
-        <div class="login-link">
-            Already have an account? <a href="login.html">Login</a>
+        <div class="footer-links">
+            Already have an account? <a href="login.html">Login here</a>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const roleSelect = document.getElementById('role');
-            const mentorPasskeyGroup = document.getElementById('mentor-passkey-group');
+            const passkeyGroup = document.getElementById('mentor-passkey-group');
             const passkeyInput = document.getElementById('passkey');
-            const registerForm = document.getElementById('registerForm');
 
-            // Role selection logic
-            roleSelect.addEventListener('change', (e) => {
-                if (e.target.value === 'mentor') {
-                    mentorPasskeyGroup.style.display = 'block';
+            roleSelect.addEventListener('change', function() {
+                if (this.value === 'mentor') {
+                    passkeyGroup.style.display = 'block';
                     passkeyInput.setAttribute('required', 'required');
                 } else {
-                    mentorPasskeyGroup.style.display = 'none';
+                    passkeyGroup.style.display = 'none';
                     passkeyInput.removeAttribute('required');
                 }
             });
 
-            // Form submission
-            registerForm.addEventListener('submit', (e) => {
+            document.getElementById('regForm').addEventListener('submit', function(e) {
                 e.preventDefault();
-                
-                // For MVP, we just log the data and show a message
-                const formData = new FormData(registerForm);
-                const data = Object.fromEntries(formData.entries());
-                
-                console.log('Registration Data:', data);
-                alert('Registration successful! (This is a frontend demo. Backend integration is Phase 2)');
-                
-                // Redirect to login or dashboard
-                // window.location.href = 'login.html';
+                alert('Registration submitted! (Backend integration in Phase 2)');
             });
         });
     </script>
