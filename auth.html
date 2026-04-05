@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>RIS | Empower Young Athletes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #008751;
+            --secondary: #FCD116;
+            --accent: #EF3340;
+            --dark: #1a1a1a;
+            --gray: #6c757d;
+            --light: #f4f7f4;
+            --white: #ffffff;
+            --blue-gradient: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--light);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* ---------- DESKTOP LAYOUT (≥769px) ---------- */
+        .auth-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            height: 620px;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+
+        /* Form boxes (sliding) */
+        .form-box {
+    position: absolute;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    /* Added more horizontal padding to prevent elements from touching the edges */
+    padding: 40px 45px; 
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Changed to start to handle scrolling better */
+    transition: .6s ease-in-out 1.0s, visibility 0s 1s;
+    overflow-y: auto;
+    /* Hide scrollbar for Chrome/Safari/Webkit */
+}
+
+.form-box::-webkit-scrollbar {
+    display: none;
+}
+
+.form-box.registration {
+    right: 50%;
+    transform: translateX(-100%);
+    visibility: hidden;
+    /* Ensure no internal borders are causing that gray line */
+    border: none; 
+}
+
+
+        .auth-container.active .form-box {
+            right: 50%;
+        }
+
+        .auth-container.active .form-box.login {
+            transform: translateX(-100%);
+            visibility: hidden;
+        }
+
+        .auth-container.active .form-box.registration {
+            right: 50%; /* Keeps the registration form locked to the left 50% */
+            transform: translateX(0); /* Slides it into view */
+            visibility: visible;
+        }
+
+
+        /* RIS Logo (circular) */
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .logo {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #2980b9, #1a5276);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            font-family: 'Montserrat', sans-serif;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Form header */
+        .form-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 6px;
+        }
+        .form-header p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Form elements */
+        .form-group {
+            margin-bottom: 16px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            color: var(--dark);
+        }
+        input, select {
+    width: 100%;
+    height: 45px;
+    padding: 0 12px;
+    /* Changed from #eee to a lighter touch or transparent */
+    border: 1px solid #f0f0f0; 
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    background-color: #f8f9fa;
+    transition: var(--transition);
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary);
+    background-color: var(--white);
+    /* Softer shadow for a cleaner look */
+    box-shadow: 0 0 0 4px rgba(0, 135, 81, 0.05);
+}
+
+
+        /* Phone row */
+                      .phone-row {
+            display: flex;
+            align-items: center;
+            gap: 0; 
+            border: 1.5px solid #eee; /* Matches your other inputs */
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        /* Highlight the whole row when you click inside */
+        .phone-row:focus-within {
+            border-color: var(--primary);
+            background-color: var(--white);
+            box-shadow: 0 0 0 3px rgba(0, 135, 81, 0.1);
+        }
+
+        .phone-row select {
+            width: 130px; /* Increased length for country code section */
+            height: 45px;
+            border: none !important; /* Removes internal gray lines */
+            border-right: 1px solid #eee !important; /* Adds clean divider */
+            border-radius: 0;
+            background: transparent;
+            padding: 0 10px;
+            flex-shrink: 0;
+            font-size: 0.95rem;
+        }
+
+        .phone-row input {
+            border: none !important; /* Removes internal gray lines */
+            background: transparent;
+            flex: 1;
+            height: 45px;
+            box-shadow: none !important;
+        }
+
+        /* Remember & forgot (login only) */
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0 20px;
+            font-size: 0.85rem;
+        }
+        .remember-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .remember-group input {
+            width: 18px;
+            height: 18px;
+        }
+        .forgot-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Conditional fields (student/mentor) */
+        .conditional-group {
+            display: none;
+            background: #f9f9f9;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            margin-bottom: 16px;
+        }
+        .conditional-group.active {
+            display: block;
+        }
+
+        /* Terms */
+        .terms-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        .terms-group input {
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
+        }
+        .terms-group label {
+            font-weight: 400;
+            font-size: 0.8rem;
+        }
+        .terms-group a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Buttons */
+        .btn-submit {
+            width: 100%;
+            height: 48px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(0, 135, 81, 0.2);
+            margin-top: 5px;
+        }
+        .btn-submit:hover {
+            background-color: #006b40;
+            transform: translateY(-2px);
+        }
+        .btn-submit:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Social login */
+        .social-login {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 12px;
+            border-top: 1px solid #eee;
+        }
+        .social-login p {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        .social-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f5f5f5;
+            color: var(--dark);
+            font-size: 1rem;
+            transition: var(--transition);
+            border: 1px solid #eee;
+            text-decoration: none;
+        }
+        .social-icon:hover {
+            background: white;
+            transform: translateY(-2px);
+        }
+        .social-icon.google:hover { color: #db4437; }
+        .social-icon.facebook:hover { color: #4267B2; }
+        .social-icon.twitter:hover { color: #1DA1F2; }
+
+        /* Footer links */
+        .footer-links {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        .footer-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        /* ---------- DESKTOP TOGGLE PANEL (SLIDING BACKGROUND) ---------- */
+        .toggle-box {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        .toggle-box::before {
+            content: '';
+            position: absolute;
+            left: -250%;
+            width: 300%;
+            height: 100%;
+            background: var(--blue-gradient);
+            z-index: 2;
+            border-radius: 10rem;
+            transition: 1.8s ease-in-out;
+        }
+        .auth-container.active .toggle-box::before {
+            left: 50%;
+        }
+        .toggle-pannel {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 40px;
+            z-index: 3;
+            transition: .6s ease-in-out;
+            text-align: center;
+        }
+        .toggle-pannel h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .toggle-pannel p {
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+        .toggle-pannel.toggle-left {
+            left: 0;
+            transition-delay: 1.2s;
+        }
+        .auth-container.active .toggle-pannel.toggle-left {
+            left: -50%;
+            transition-delay: .6s;
+        }
+        .toggle-pannel.toggle-right {
+            right: -50%;
+        }
+        .auth-container.active .toggle-pannel.toggle-right {
+            right: 0;
+            transition-delay: 1.2s;
+        }
+        .toggle-pannel .btn-toggle {
+            background: transparent;
+            border: 2px solid white;
+            box-shadow: none;
+            width: 180px;
+            margin-top: 15px;
+            color: white;
+        }
+        .toggle-pannel .btn-toggle:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Messages (error/success) */
+        .message {
+            padding: 10px 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: none;
+            font-size: 0.85rem;
+        }
+        .message.error {
+            background: #fee;
+            color: #c33;
+            border: 1px solid #fcc;
+            display: block;
+        }
+        .message.success {
+            background: #efe;
+            color: #3c3;
+            border: 1px solid #cfc;
+            display: block;
+        }
+
+        /* Spinner */
+        .spinner {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid var(--primary);
+            border-radius: 50%;
+            width: 14px;
+            height: 14px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 6px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ---------- MOBILE VIEW (≤ 768px) – STACKED LAYOUT (YOUR ORIGINAL DESIGN) ---------- */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            .auth-container {
+                height: auto;
+                max-width: 100%;
+                overflow: visible;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            }
+            /* Disable absolute positioning and sliding */
+            .form-box {
+                position: relative !important;
+                width: 100% !important;
+                height: auto !important;
+                right: auto !important;
+                transform: none !important;
+                visibility: visible !important;
+                padding: 25px 20px;
+                transition: none;
+            }
+            .form-box.login {
+                display: block;
+            }
+            .form-box.registration {
+                display: none;
+            }
+            .auth-container.active .form-box.login {
+                display: none;
+            }
+            .auth-container.active .form-box.registration {
+                display: block;
+            }
+            /* Hide the animated toggle background */
+            .toggle-box {
+                display: none;
+            }
+            /* Show toggle panels as stacked cards (original mobile style) */
+            .toggle-pannel {
+                position: relative !important;
+                width: 100% !important;
+                height: auto !important;
+                left: 0 !important;
+                right: 0 !important;
+                background: linear-gradient(135deg, #2980b9, #1a5276);
+                border-radius: 0 0 20px 20px;
+                padding: 20px;
+                margin-top: 20px;
+                display: none;
+            }
+            .toggle-pannel.toggle-left {
+                display: block;
+            }
+            .auth-container.active .toggle-pannel.toggle-left {
+                display: none;
+            }
+            .toggle-pannel.toggle-right {
+                display: none;
+            }
+            .auth-container.active .toggle-pannel.toggle-right {
+                display: block;
+            }
+            .toggle-pannel h1 {
+                font-size: 1.5rem;
+            }
+            .toggle-pannel p {
+                font-size: 0.85rem;
+            }
+            .toggle-pannel .btn-toggle {
+                width: 100%;
+                max-width: 200px;
+                margin: 10px auto 0;
+            }
+            .logo-container {
+                margin-left: 0 !important;
+                justify-content: center;
+                margin-top: 0;
+            }
+            .form-header {
+                margin-left: 0 !important;
+                text-align: center;
+            }
+            .form-header h1 {
+                font-size: 1.5rem;
+            }
+            input, select {
+                height: 42px;
+                font-size: 0.9rem;
+            }
+            .btn-submit {
+                height: 44px;
+            }     
+            .phone-row {
+            display: flex;
+            align-items: center;
+            gap: 0; 
+            border: 1.5px solid #eee; /* Matches your other inputs */
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        /* Highlight the whole row when you click inside */
+              .phone-row {
+            display: flex;
+            align-items: center;
+            gap: 0; 
+            border: 1.5px solid #eee;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .phone-row select {
+            width: 130px; 
+            height: 45px;
+            border: none !important;
+            border-right: 1px solid #eee !important;
+            background: transparent;
+            padding: 0 10px;
+            flex-shrink: 0;
+        }
+
+        .phone-row input {
+            border: none !important;
+            background: transparent;
+            flex: 1;
+            height: 45px;
+            padding: 0 12px;
+        }
+
+
+        }
+
+        /* Extra small devices */
+        @media screen and (max-width: 400px) {
+            .form-box {
+                padding: 20px 15px;
+            }
+            .form-header h1 {
+                font-size: 1.3rem;
+            }
+            .phone-row select {
+                width: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="auth-container" id="authContainer">
+    <!-- ==================== LOGIN FORM ==================== -->
+    <div class="form-box login">
+        <div class="logo-container">
+            <div class="logo">RIS</div>
+        </div>
+        <div class="form-header">
+            <h1>Welcome Back</h1>
+            <p>Login to your RIS account</p>
+        </div>
+        <div id="loginMessage" class="message"></div>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="loginEmail">Email Address</label>
+                <input type="email" id="loginEmail" name="email" placeholder="name@example.com" required>
+            </div>
+            <div class="form-group">
+                <label for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" name="password" placeholder="Enter your password" required>
+            </div>
+            <div class="form-options">
+                <div class="remember-group">
+                    <input type="checkbox" id="rememberMe" name="remember">
+                    <label for="rememberMe">Remember me</label>
+                </div>
+                <a href="#" class="forgot-link">Forgot password?</a>
+            </div>
+            <button type="submit" class="btn-submit" id="loginBtn">Login</button>
+        </form>
+        <div class="social-login">
+            <p>or login with</p>
+            <div class="social-icons">
+                <a href="#" class="social-icon google"><i class="fab fa-google"></i></a>
+                <a href="#" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon twitter"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+        <div class="footer-links">
+            Don't have an account? <a href="#" id="mobileRegisterLink">Register here</a>
+        </div>
+    </div>
+
+    <!-- ==================== REGISTRATION FORM ==================== -->
+    <div class="form-box registration">
+        <div class="logo-container">
+            <div class="logo">RIS</div>
+        </div>
+        <div class="form-header">
+            <h1>Create Account</h1>
+            <p>Join the RIS community</p>
+        </div>
+        <div id="regMessage" class="message"></div>
+        <form id="regForm">
+            <div class="form-group">
+                <label for="firstname">First Name</label>
+                <input type="text" id="firstname" name="firstname" placeholder="Jean" required>
+            </div>
+            <div class="form-group">
+                <label for="lastname">Last Name</label>
+                <input type="text" id="lastname" name="lastname" placeholder="Biya" required>
+            </div>
+            <div class="form-group">
+                <label for="regEmail">Email Address</label>
+                <input type="email" id="regEmail" name="email" placeholder="name@example.com" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <div class="phone-row">
+                    <select id="countryCode" name="countryCode">
+                        <option value="+237" selected>🇨🇲 +237</option>
+                        <option value="+234">🇳🇬 +234</option>
+                        <option value="+221">🇸🇳 +221</option>
+                    </select>
+            <input type="tel" 
+       id="phoneNumber" 
+       name="phone" 
+       placeholder="6XXXXXXXX" 
+       maxlength="9" 
+       pattern="[0-9]{9}" 
+       oninput="this.value = this.value.replace(/[^0-9]/g, '');" 
+       required>
+ </div>
+            </div>
+            <div class="form-group">
+                <label for="role">Register as</label>
+                <select id="role" name="role" required>
+                    <option value="" disabled selected>Choose your role</option>
+                    <option value="student">Student</option>
+                    <option value="mentor">Mentor</option>
+                </select>
+            </div>
+               <!-- Student fields -->
+            <div id="studentFields" class="conditional-group">
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <select id="location" name="location">
+                        <option value="">Select city</option>
+                        <option value="yaounde">Yaoundé</option>
+                        <option value="douala">Douala</option>
+                        <option value="bafoussam">Bafoussam</option>
+                        <option value="garoua">Garoua</option>
+                        <option value="bamenda">Bamenda</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="sport">Sport</label>
+                    <select id="sport" name="sport">
+                        <option value="">Select sport</option>
+                        <option value="football">Football</option>
+                        <option value="basketball">Basketball</option>
+                        <option value="volleyball">Volleyball</option>
+                        <option value="handball">Handball</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Mentor fields -->
+            <div id="mentorFields" class="conditional-group">
+                <div class="form-group">
+                    <label for="passkey">Mentor Passkey</label>
+                    <input type="password" id="passkey" name="passkey" placeholder="Enter your mentor code">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="regPassword">Password</label>
+                <input type="password" id="regPassword" name="password" placeholder="Min. 8 characters" required>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Re-enter password" required>
+            </div>
+            <div class="terms-group">
+                <input type="checkbox" id="termsAgree" name="terms" required>
+                <label for="termsAgree">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+            </div>
+            <button type="submit" class="btn-submit" id="regBtn">Register Now</button>
+        </form>
+        <div class="social-login">
+            <p>or register with</p>
+            <div class="social-icons">
+                <a href="#" class="social-icon google"><i class="fab fa-google"></i></a>
+                <a href="#" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon twitter"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+        <div class="footer-links">
+            Already have an account? <a href="#" id="mobileLoginLink">Login here</a>
+        </div>
+    </div>
+
+    <!-- ==================== TOGGLE PANELS (DESKTOP & MOBILE) ==================== -->
+    <div class="toggle-box">
+        <div class="toggle-pannel toggle-left">
+            <h1>Hello, Athlete</h1>
+            <p>Don't have an account?</p>
+            <button class="btn-submit btn-toggle" id="desktopRegisterBtn">Register</button>
+        </div>
+        <div class="toggle-pannel toggle-right">
+            <h1>Welcome Back</h1>
+            <p>Already have an account?</p>
+            <button class="btn-submit btn-toggle" id="desktopLoginBtn">Login</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ---------- TOGGLE BETWEEN LOGIN & REGISTRATION (DESKTOP + MOBILE) ----------
+    const container = document.getElementById('authContainer');
+    const desktopRegister = document.getElementById('desktopRegisterBtn');
+    const desktopLogin = document.getElementById('desktopLoginBtn');
+    const mobileRegisterLink = document.getElementById('mobileRegisterLink');
+    const mobileLoginLink = document.getElementById('mobileLoginLink');
+
+    function showRegister() {
+        container.classList.add('active');
+    }
+    function showLogin() {
+        container.classList.remove('active');
+    }
+
+    if (desktopRegister) desktopRegister.addEventListener('click', showRegister);
+    if (desktopLogin) desktopLogin.addEventListener('click', showLogin);
+    if (mobileRegisterLink) mobileRegisterLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        showRegister();
+    });
+    if (mobileLoginLink) mobileLoginLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        showLogin();
+    });
+
+    // ---------- ROLE CONDITIONAL FIELDS (STUDENT / MENTOR) ----------
+    const roleSelect = document.getElementById('role');
+    const studentDiv = document.getElementById('studentFields');
+    const mentorDiv = document.getElementById('mentorFields');
+    const locationSelect = document.getElementById('location');
+    const sportSelect = document.getElementById('sport');
+    const passkeyInput = document.getElementById('passkey');
+
+    function toggleRoleFields() {
+        if (roleSelect.value === 'student') {
+            studentDiv.classList.add('active');
+            mentorDiv.classList.remove('active');
+            if (locationSelect) locationSelect.setAttribute('required', 'required');
+            if (sportSelect) sportSelect.setAttribute('required', 'required');
+            if (passkeyInput) passkeyInput.removeAttribute('required');
+        } else if (roleSelect.value === 'mentor') {
+            studentDiv.classList.remove('active');
+            mentorDiv.classList.add('active');
+            if (locationSelect) locationSelect.removeAttribute('required');
+            if (sportSelect) sportSelect.removeAttribute('required');
+            if (passkeyInput) passkeyInput.setAttribute('required', 'required');
+        } else {
+            studentDiv.classList.remove('active');
+            mentorDiv.classList.remove('active');
+        }
+    }
+    if (roleSelect) {
+        roleSelect.addEventListener('change', toggleRoleFields);
+        toggleRoleFields(); // initial state
+    }
+
+    // ---------- LOGIN SUBMIT (AJAX to php/login.php) ----------
+    const loginForm = document.getElementById('loginForm');
+    const loginBtn = document.getElementById('loginBtn');
+    const loginMsg = document.getElementById('loginMessage');
+
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value.trim();
+        const password = document.getElementById('loginPassword').value;
+        const remember = document.getElementById('rememberMe').checked;
+
+        if (!email || !password) {
+            loginMsg.innerHTML = 'Please enter email and password';
+            loginMsg.className = 'message error';
+            return;
+        }
+
+        loginBtn.disabled = true;
+        loginBtn.innerHTML = '<span class="spinner"></span>Logging in...';
+        loginMsg.className = 'message';
+
+        try {
+            const formData = new FormData();
+            formData.append('email', email);
+            formData.append('password', password);
+            formData.append('remember', remember);
+
+            const response = await fetch('php/login.php', { method: 'POST', body: formData });
+            const result = await response.json();
+
+            if (result.success) {
+                loginMsg.innerHTML = 'Login successful! Redirecting...';
+                loginMsg.className = 'message success';
+                setTimeout(() => {
+                    window.location.href = result.role === 'mentor' ? 'mentor_dashboard.php' : 'student_dashboard.php';
+                }, 1500);
+            } else {
+                loginMsg.innerHTML = result.error || 'Login failed';
+                loginMsg.className = 'message error';
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = 'Login';
+            }
+        } catch (err) {
+            loginMsg.innerHTML = 'Network error. Please try again.';
+            loginMsg.className = 'message error';
+            loginBtn.disabled = false;
+            loginBtn.innerHTML = 'Login';
+        }
+    });
+     // ---------- REGISTRATION SUBMIT (AJAX to php/register.php) ----------
+    const regForm = document.getElementById('regForm');
+    const regBtn = document.getElementById('regBtn');
+    const regMsg = document.getElementById('regMessage');
+
+    regForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const password = document.getElementById('regPassword').value;
+        const confirm = document.getElementById('confirmPassword').value;
+        const terms = document.getElementById('termsAgree').checked;
+
+        if (password !== confirm) {
+            regMsg.innerHTML = 'Passwords do not match';
+            regMsg.className = 'message error';
+            return;
+        }
+        if (password.length < 8) {
+            regMsg.innerHTML = 'Password must be at least 8 characters';
+            regMsg.className = 'message error';
+            return;
+        }
+        if (!terms) {
+            regMsg.innerHTML = 'You must agree to the Terms of Service';
+            regMsg.className = 'message error';
+            return;
+        }
+
+        regBtn.disabled = true;
+        regBtn.innerHTML = '<span class="spinner"></span>Registering...';
+        regMsg.className = 'message';
+
+        try {
+            const formData = new FormData(regForm);
+            const response = await fetch('php/register.php', { method: 'POST', body: formData });
+            const result = await response.json();
+
+            if (result.success) {
+                regMsg.innerHTML = 'Registration successful! Redirecting...';
+                regMsg.className = 'message success';
+                setTimeout(() => {
+                    window.location.href = result.role === 'mentor' ? 'mentor_dashboard.php' : 'student_dashboard.php';
+                }, 1500);
+            } else {
+                regMsg.innerHTML = result.error || 'Registration failed';
+                regMsg.className = 'message error';
+                regBtn.disabled = false;
+                regBtn.innerHTML = 'Register Now';
+            }
+        } catch (err) {
+            regMsg.innerHTML = 'Network error. Please try again.';
+            regMsg.className = 'message error';
+            regBtn.disabled = false;
+            regBtn.innerHTML = 'Register Now';
+        }
+    });
+</script>
+</body>
+</html>
