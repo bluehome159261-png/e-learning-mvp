@@ -36,7 +36,6 @@
   ::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
 
   /* ===== SIDEBAR ===== */
-  /* CUT: sidebar.php START */
   .sidebar {
     position: fixed;
     left: 0; top: 0;
@@ -48,11 +47,15 @@
     flex-direction: column;
     z-index: 40;
     overflow-y: auto;
+    transition: width 0.3s ease;
   }
 
   .sidebar-logo {
     padding: 24px 24px 16px;
     border-bottom: 1px solid #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .sidebar-logo .logo-text {
@@ -121,7 +124,6 @@
   }
 
   .nav-item i { width: 20px; font-size: 16px; text-align: center; }
-  /* CUT: sidebar.php END */
 
   /* ===== AVATAR ===== */
   .avatar {
@@ -135,41 +137,19 @@
     font-weight: 700;
     font-size: 14px;
     flex-shrink: 0;
-  }
-
-  .avatar.coach   { background: #1a1a2e; color: #fff; }
-  .avatar.student { background: var(--gold); color: #1a1a2e; }
-  .avatar.lg      { width: 56px; height: 56px; font-size: 18px; }
-  .avatar.sm      { width: 32px; height: 32px; font-size: 11px; }
-
-  /* ===== RANK BADGE ===== */
-  .rank-badge {
-    background: var(--dark);
+    background: var(--green);
     color: #fff;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 10px;
-    padding: 3px 10px;
-    border-radius: 20px;
-    letter-spacing: 0.5px;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
   }
-
-  .rank-badge i { font-size: 9px; }
 
   /* ===== MAIN FEED ===== */
-  /* CUT: main-feed.php START */
   .main-feed {
     margin-left: 280px;
-    margin-right: 360px;
     min-height: 100vh;
     padding: 24px 24px 100px;
+    transition: margin-left 0.3s ease;
   }
 
   /* ===== HEADER ===== */
-  /* CUT: header.php START */
   .feed-header {
     background: var(--card);
     border-radius: var(--radius);
@@ -177,15 +157,17 @@
     padding: 14px 20px;
     display: flex;
     align-items: center;
-    gap: 16px;
+    justify-content: space-between;
     margin-bottom: 20px;
     position: sticky;
     top: 12px;
     z-index: 30;
   }
 
-  .search-bar { flex: 1; position: relative; }
+  .header-left { display: flex; align-items: center; gap: 16px; flex: 1; }
+  .header-right { display: flex; align-items: center; gap: 16px; }
 
+  .search-bar { flex: 1; max-width: 400px; position: relative; }
   .search-bar input {
     width: 100%;
     background: var(--bg);
@@ -194,23 +176,9 @@
     padding: 10px 20px 10px 40px;
     font-family: 'Inter', sans-serif;
     font-size: 14px;
-    color: #1a1a2e;
     outline: none;
-    transition: box-shadow 0.2s;
   }
-
-  .search-bar input:focus { box-shadow: 0 0 0 2px rgba(0,135,81,0.2); }
-  .search-bar input::placeholder { color: var(--grey); }
-
-  .search-bar i {
-    position: absolute;
-    left: 14px; top: 50%;
-    transform: translateY(-50%);
-    color: var(--grey);
-    font-size: 14px;
-  }
-
-  .header-actions { display: flex; align-items: center; gap: 10px; }
+  .search-bar i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--grey); }
 
   .icon-btn {
     position: relative;
@@ -222,74 +190,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #1a1a2e;
-    font-size: 16px;
-    transition: all 0.2s;
+    color: #606770;
+    font-size: 18px;
   }
-
-  .icon-btn:hover { background: #e8ecf0; }
-  .icon-btn.trophy { color: var(--gold); background: rgba(252,209,22,0.12); }
-  .icon-btn.trophy:hover { background: rgba(252,209,22,0.22); }
 
   .notif-dot {
     position: absolute;
-    top: 6px; right: 6px;
+    top: 2px; right: 2px;
     width: 8px; height: 8px;
     background: var(--red);
     border-radius: 50%;
     border: 2px solid var(--card);
   }
-
-  /* Specialty Switcher (Mentor) */
-  .specialty-switcher {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--bg);
-    border-radius: 50px;
-    padding: 8px 14px;
-    border: 1.5px solid #e2e8f0;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: border-color 0.2s;
-  }
-
-  .specialty-switcher:hover { border-color: var(--green); }
-  .specialty-switcher i { color: var(--green); font-size: 12px; }
-
-  .specialty-switcher select {
-    background: none;
-    border: none;
-    outline: none;
-    font-size: 13px;
-    font-weight: 600;
-    color: #1a1a2e;
-    cursor: pointer;
-    -webkit-appearance: none;
-  }
-
-  /* Profile pill */
-  .profile-pill {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--bg);
-    border-radius: 50px;
-    padding: 4px 14px 4px 4px;
-    border: 1.5px solid #e2e8f0;
-    cursor: pointer;
-    transition: border-color 0.2s;
-  }
-
-  .profile-pill:hover { border-color: var(--green); }
-
-  .profile-pill .username {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 13px;
-  }
-  /* CUT: header.php END */
 
   /* ===== CARD ===== */
   .card {
@@ -298,2119 +210,243 @@
     box-shadow: var(--shadow);
     margin-bottom: 16px;
     overflow: hidden;
-    transition: box-shadow 0.2s ease;
   }
-
-  .card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.10); }
-  .card.active-card { border-left: 4px solid var(--green); }
-  .card.pinned-card { border: 2px solid var(--gold); }
 
   /* ===== POST CREATOR ===== */
   .post-creator { padding: 20px; }
-
-  .post-creator-top {
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-    margin-bottom: 12px;
-  }
-
+  .post-creator-top { display: flex; gap: 12px; margin-bottom: 12px; }
   .post-creator textarea {
-    flex: 1;
-    border: none;
-    background: var(--bg);
-    border-radius: 12px;
-    padding: 12px 16px;
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    resize: none;
-    outline: none;
-    min-height: 80px;
-    color: #1a1a2e;
-    transition: box-shadow 0.2s;
+    flex: 1; border: none; background: var(--bg); border-radius: 12px;
+    padding: 12px 16px; font-family: 'Inter', sans-serif; resize: none; outline: none; min-height: 80px;
   }
 
-  .post-creator textarea:focus { box-shadow: 0 0 0 2px rgba(0,135,81,0.2); }
-  .post-creator textarea::placeholder { color: var(--grey); }
-
-  .post-creator-actions { display: flex; justify-content: flex-end; gap: 8px; }
-
-  /* ===== SPECIALTY SWITCHER CARD (top of feed) ===== */
-  .switcher-card { padding: 16px 20px; }
-
-  .switcher-card-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-  }
-
-  .switcher-card-inner .switcher-label {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 13px;
-    color: var(--grey);
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-  }
-
-  .switcher-card-inner .current-specialty {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 15px;
-    color: var(--dark);
-  }
-
-  /* ===== BUTTONS ===== */
-  .btn-primary {
-    background: var(--green);
-    color: white;
-    border: none;
-    border-radius: 50px;
-    padding: 10px 24px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-    font-size: 13px;
-    cursor: pointer;
-    transition: opacity 0.2s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-  }
-
-  .btn-primary:hover:not(:disabled) { opacity: 0.85; }
-  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
-
-  .btn-gold {
-    background: var(--gold);
-    color: var(--dark);
-    border: none;
-    border-radius: 50px;
-    padding: 10px 20px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 13px;
-    cursor: pointer;
-    transition: opacity 0.2s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-  }
-
-  .btn-gold:hover { opacity: 0.85; }
-
-  .btn-red {
-    background: var(--red);
-    color: white;
-    border: none;
-    border-radius: 50px;
-    padding: 10px 20px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 13px;
-    cursor: pointer;
-    transition: opacity 0.2s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-  }
-
-  .btn-red:hover { opacity: 0.85; }
-
-  .btn-outline {
-    background: none;
-    color: var(--grey);
-    border: 1.5px solid #e2e8f0;
-    border-radius: 50px;
-    padding: 9px 18px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-    font-size: 12px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .btn-outline:hover { border-color: var(--green); color: var(--green); }
-
-  .btn-sm { padding: 7px 14px; font-size: 12px; }
-
-  /* ===== POST HEADER ===== */
-  .post-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 14px;
-  }
-
+  /* ===== FEED POSTS ===== */
+  .post { padding: 20px; }
+  .post-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
   .post-author-info { display: flex; align-items: center; gap: 10px; }
-  .post-author-info .post-author { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 14px; }
-  .post-author-info .post-meta   { font-size: 12px; color: var(--grey); }
+  .post-author { font-weight: 700; font-size: 14px; }
+  .post-meta { font-size: 12px; color: var(--grey); }
+  .post-content { font-size: 14px; line-height: 1.6; margin-bottom: 14px; }
+  .post-img { width: 100%; border-radius: 8px; margin-bottom: 12px; }
 
-  /* ===== COACH'S BOARD (Pinned) ===== */
-  .coaches-board { padding: 20px; }
+  /* ===== TABS CONTENT ===== */
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
 
-  .pin-badge {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 11px;
-    font-weight: 600;
-    color: #b8860b;
-    background: rgba(252,209,22,0.15);
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-family: 'Montserrat', sans-serif;
-  }
-
-  .post-content {
-    font-size: 14px;
-    line-height: 1.65;
-    color: #374151;
-    margin-bottom: 14px;
-  }
-
-  .post-content .pro-tip-label { font-weight: 700; color: #1a1a2e; }
-
-  .dismiss-btn {
-    background: none;
-    border: 1px solid #e2e8f0;
-    border-radius: 6px;
-    padding: 5px 12px;
-    font-size: 12px;
-    color: var(--grey);
-    cursor: pointer;
-    font-family: 'Inter', sans-serif;
-    transition: all 0.2s;
-  }
-
-  .dismiss-btn:hover { border-color: var(--red); color: var(--red); }
-
-  /* ===== STANDARD POST ===== */
-  .standard-post { padding: 20px; }
-
-  .post-actions {
-    display: flex;
-    gap: 6px;
-    padding-top: 14px;
-    border-top: 1px solid #f1f5f9;
-  }
-
-  .action-btn {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: none;
-    border: none;
-    color: var(--grey);
-    font-size: 13px;
-    cursor: pointer;
-    padding: 7px 14px;
-    border-radius: 8px;
-    transition: all 0.2s ease;
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-  }
-
-  .action-btn:hover { background: var(--bg); color: #1a1a2e; }
-  .action-btn i { font-size: 15px; }
-  .action-btn.liked { color: var(--green); }
-
-  /* ===== LIVE SESSION CARD ===== */
-  .live-session-card { padding: 20px; }
-
-  .live-video-stage {
-    width: 100%;
-    aspect-ratio: 16/9;
-    background: #0a0a0a;
-    border-radius: 10px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 14px 0;
-    overflow: hidden;
-  }
-
-  .live-video-stage::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(circle at 50% 50%, rgba(0,135,81,0.08) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .play-btn-large {
-    width: 60px; height: 60px;
-    background: var(--green);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border: none;
-    position: relative; z-index: 2;
-    transition: transform 0.2s, opacity 0.2s;
-    animation: playGlow 2s ease-out infinite;
-  }
-
-  .play-btn-large:hover { transform: scale(1.08); }
-  .play-btn-large i { color: white; font-size: 20px; margin-left: 3px; }
-
-  @keyframes playGlow {
-    0%   { box-shadow: 0 0 0 0 rgba(0,135,81,0.5); }
-    70%  { box-shadow: 0 0 0 14px rgba(0,135,81,0); }
-    100% { box-shadow: 0 0 0 0 rgba(0,135,81,0); }
-  }
-
-  .live-badge {
+  /* ===== PROFILE DROPDOWN ===== */
+  .profile-dropdown {
     position: absolute;
-    top: 12px; left: 12px;
-    background: var(--red);
-    color: white;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 11px;
-    padding: 4px 10px;
-    border-radius: 6px;
-    letter-spacing: 0.8px;
-    z-index: 3;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .live-badge i { animation: livePulse 1s ease-in-out infinite; font-size: 9px; }
-
-  @keyframes livePulse {
-    0%,100% { opacity: 1; }
-    50%      { opacity: 0.3; }
-  }
-
-  .live-meta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 4px;
-  }
-
-  .live-meta .module-title { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 14px; }
-  .peers-online { color: var(--green); font-weight: 600; font-size: 13px; }
-
-  /* ===== PLAYBOOK MANAGER ===== */
-  .playbook-manager { padding: 20px; }
-
-  .playbook-manager-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 18px;
-  }
-
-  .playbook-manager-header h3 { font-size: 16px; font-weight: 700; }
-
-  /* Create module form */
-  .create-module-form {
-    background: var(--bg);
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 18px;
+    top: 60px; right: 20px;
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    width: 240px;
     display: none;
+    z-index: 100;
+    padding: 10px;
   }
-
-  .create-module-form.open { display: block; }
-
-  .form-row {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
-
-  .form-input {
-    flex: 1;
-    background: var(--card);
-    border: 1.5px solid #e2e8f0;
-    border-radius: 10px;
-    padding: 10px 14px;
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    color: #1a1a2e;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-
-  .form-input:focus { border-color: var(--green); }
-  .form-input::placeholder { color: var(--grey); }
-
-  .form-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
-
-  /* Module list item */
-  .module-item {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 14px 0;
-    border-bottom: 1px solid #f1f5f9;
-  }
-
-  .module-item:last-child { border-bottom: none; }
-
-  .module-icon {
-    width: 44px; height: 44px;
-    background: rgba(0,135,81,0.08);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--green);
-    font-size: 18px;
-    flex-shrink: 0;
-  }
-
-  .module-icon.draft { background: rgba(239,51,64,0.08); color: var(--grey); }
-
-  .module-info { flex: 1; }
-  .module-info h4 { font-size: 13px; font-weight: 700; margin-bottom: 3px; }
-  .module-info p  { font-size: 11px; color: var(--grey); }
-
-  .draft-toggle {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    color: var(--grey);
-    font-weight: 500;
-  }
-
-  /* Toggle switch */
-  .toggle {
-    position: relative;
-    width: 36px; height: 20px;
-  }
-
-  .toggle input { display: none; }
-
-  .toggle-slider {
-    position: absolute; inset: 0;
-    background: #e2e8f0;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-
-  .toggle-slider::before {
-    content: '';
-    position: absolute;
-    width: 14px; height: 14px;
-    background: white;
-    border-radius: 50%;
-    top: 3px; left: 3px;
-    transition: transform 0.2s;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
-  }
-
-  .toggle input:checked + .toggle-slider { background: var(--green); }
-  .toggle input:checked + .toggle-slider::before { transform: translateX(16px); }
-
-  .module-crud {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    flex-shrink: 0;
-  }
-
-  .crud-btn {
-    width: 32px; height: 32px;
-    border-radius: 8px;
-    background: var(--bg);
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    color: var(--grey);
-    transition: all 0.2s;
-  }
-
-  .crud-btn:hover.edit  { background: rgba(0,135,81,0.1); color: var(--green); }
-  .crud-btn:hover.del   { background: rgba(239,51,64,0.1); color: var(--red); }
-
-  /* Draft badge */
-  .draft-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    background: rgba(239,51,64,0.10);
-    color: var(--red);
-    font-size: 10px;
-    font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 10px;
-    font-family: 'Montserrat', sans-serif;
-  }
-
-  /* ===== ROSTER TABLE ===== */
-  .roster-wrap { padding: 20px; }
-
-  .roster-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 16px;
-  }
-
-  .roster-header h3 { font-size: 16px; font-weight: 700; }
-
-  .roster-search {
-    position: relative;
-    width: 220px;
-  }
-
-  .roster-search input {
-    width: 100%;
-    background: var(--bg);
-    border: 1.5px solid #e2e8f0;
-    border-radius: 50px;
-    padding: 8px 16px 8px 36px;
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-
-  .roster-search input:focus { border-color: var(--green); }
-  .roster-search i {
-    position: absolute;
-    left: 12px; top: 50%;
-    transform: translateY(-50%);
-    color: var(--grey);
-    font-size: 12px;
-  }
-
-  .roster-table { width: 100%; border-collapse: collapse; }
-
-  .roster-table th {
-    text-align: left;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 11px;
-    color: var(--grey);
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    padding: 0 12px 12px;
-    border-bottom: 1px solid #f1f5f9;
-  }
-
-  .roster-table td {
-    padding: 14px 12px;
-    border-bottom: 1px solid #f1f5f9;
-    font-size: 13px;
-    vertical-align: middle;
-  }
-
-  .roster-table tr:last-child td { border-bottom: none; }
-  .roster-table tr:hover td { background: #fafafa; }
-
-  .student-cell { display: flex; align-items: center; gap: 10px; }
-  .student-cell .student-name { font-weight: 600; font-size: 13px; }
-  .student-cell .student-email { font-size: 11px; color: var(--grey); }
-
-  .progress-mini {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .progress-bar-mini {
-    width: 60px; height: 4px;
-    background: #e2e8f0;
-    border-radius: 2px;
-    overflow: hidden;
-  }
-
-  .progress-fill-mini { height: 100%; background: var(--green); border-radius: 2px; }
-  .progress-pct { font-size: 11px; color: var(--grey); font-weight: 600; width: 28px; }
-
-  /* Grade select */
-  .grade-select {
-    background: var(--bg);
-    border: 1.5px solid #e2e8f0;
-    border-radius: 8px;
-    padding: 6px 10px;
-    font-family: 'Inter', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    color: #1a1a2e;
-    outline: none;
-    cursor: pointer;
-    transition: border-color 0.2s;
-  }
-
-  .grade-select:focus { border-color: var(--green); }
-
-  /* Student rank pill */
-  .student-rank {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 10px;
-    padding: 3px 8px;
-    border-radius: 20px;
-    background: rgba(0,135,81,0.10);
-    color: var(--green);
-  }
-
-  /* ===== LOCKER ROOM ===== */
-  /* CUT: locker-room.php START */
-  .locker-room {
-    position: fixed;
-    right: 0; top: 0;
-    width: 360px;
-    height: 100vh;
-    background: var(--card);
-    box-shadow: -2px 0 20px rgba(0,0,0,0.06);
-    display: flex;
-    flex-direction: column;
-    z-index: 40;
-  }
-
-  .locker-header {
-    padding: 20px 20px 16px;
-    border-bottom: 1px solid #f1f5f9;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-shrink: 0;
-  }
-
-  .locker-header h3 {
-    font-size: 15px; font-weight: 700;
-    display: flex; align-items: center; gap: 8px;
-  }
-
-  .locker-header h3 i { color: var(--green); }
-
-  /* Go Live button inside locker */
-  .go-live-wrap {
-    padding: 14px 16px;
-    border-bottom: 1px solid #f1f5f9;
-    flex-shrink: 0;
-  }
-
-  .go-live-btn {
-    width: 100%;
-    background: var(--red);
-    color: white;
-    border: none;
-    border-radius: 10px;
+  .profile-dropdown.active { display: block; }
+  .dropdown-item {
     padding: 12px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 13px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    transition: opacity 0.2s;
-    letter-spacing: 0.3px;
-  }
-
-  .go-live-btn:hover { opacity: 0.88; }
-
-  .go-live-btn.live-active {
-    background: var(--dark);
-  }
-
-  .go-live-btn i { font-size: 14px; }
-
-  .locker-video {
-    aspect-ratio: 16/9;
-    background: #0a0a0a;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    overflow: hidden;
-  }
-
-  .locker-video::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(circle at 50% 50%, rgba(0,135,81,0.10) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .play-btn-sm {
-    width: 44px; height: 44px;
-    background: var(--green);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border: none;
-    position: relative; z-index: 2;
-    transition: transform 0.2s;
-    animation: playGlow 2s ease-out infinite;
-  }
-
-  .play-btn-sm:hover { transform: scale(1.08); }
-  .play-btn-sm i { color: white; font-size: 16px; margin-left: 2px; }
-
-  .locker-video .live-badge {
-    top: 10px; left: 10px;
-    font-size: 9px; padding: 3px 8px;
-  }
-
-  .locker-video-meta {
-    padding: 12px 18px;
-    border-bottom: 1px solid #f1f5f9;
-    flex-shrink: 0;
-  }
-
-  .locker-video-meta .module-name { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 13px; margin-bottom: 2px; }
-  .locker-video-meta .peers-count { font-size: 12px; color: var(--green); font-weight: 600; }
-
-  /* ===== CHAT ===== */
-  .chat-area {
-    flex: 1;
-    display: flex;
-    flex-direction: column-reverse; /* CRITICAL: newest message always visible */
-    overflow-y: auto;
-    padding: 14px 16px;
-    gap: 10px;
-  }
-
-  .chat-message { display: flex; gap: 9px; align-items: flex-start; }
-
-  .chat-bubble {
-    background: var(--bg);
-    border-radius: 10px;
-    padding: 8px 12px;
-    flex: 1;
-  }
-
-  .chat-bubble .chat-author {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 11px;
-    color: var(--green);
-    margin-bottom: 3px;
-  }
-
-  .chat-bubble .chat-author.coach-name { color: #1a1a2e; }
-  .chat-bubble .chat-message-text { font-size: 13px; color: #374151; line-height: 1.45; }
-
-  .chat-input-area {
-    padding: 12px 16px;
-    border-top: 1px solid #f1f5f9;
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    flex-shrink: 0;
-  }
-
-  .chat-input-area input {
-    flex: 1;
-    background: var(--bg);
-    border: 1.5px solid transparent;
-    border-radius: 50px;
-    padding: 10px 16px;
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-
-  .chat-input-area input:focus { border-color: var(--green); }
-  .chat-input-area input::placeholder { color: var(--grey); }
-
-  .send-btn {
-    width: 36px; height: 36px;
-    background: var(--green);
-    border: none;
-    border-radius: 50%;
-    color: white;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    flex-shrink: 0;
-    transition: opacity 0.2s;
-  }
-
-  .send-btn:hover { opacity: 0.85; }
-  /* CUT: locker-room.php END */
-
-  /* ===== SECTION LABEL ===== */
-  .section-label {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: var(--grey);
-    text-transform: uppercase;
-    margin-bottom: 14px;
-    padding-left: 2px;
-  }
-
-  /* ===== MOBILE HEADER ===== */
-  /* CUT: header.php (mobile) START */
-  .mobile-header {
-    display: none;
-    position: sticky;
-    top: 0;
-    background: var(--card);
-    box-shadow: var(--shadow);
-    padding: 12px 16px;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    z-index: 50;
-  }
-
-  .mobile-logo {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 800;
-    font-size: 20px;
-    color: var(--green);
-  }
-
-  .mobile-logo span { color: var(--gold); }
-
-  .mobile-search { flex: 1; position: relative; }
-
-  .mobile-search input {
-    width: 100%;
-    background: var(--bg);
-    border: 1.5px solid transparent;
-    border-radius: 50px;
-    padding: 8px 16px 8px 36px;
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-
-  .mobile-search input:focus { border-color: var(--green); }
-  .mobile-search input::placeholder { color: var(--grey); }
-
-  .mobile-search i {
-    position: absolute;
-    left: 12px; top: 50%;
-    transform: translateY(-50%);
-    color: var(--grey);
-    font-size: 12px;
-    pointer-events: none;
-  }
-
-  .mobile-header-right { display: flex; align-items: center; gap: 6px; }
-  /* CUT: header.php (mobile) END */
-
-  /* ===== BOTTOM NAV ===== */
-  .bottom-nav {
-    display: none;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background: var(--card);
-    box-shadow: 0 -2px 16px rgba(0,0,0,0.08);
-    z-index: 50;
-    padding: 8px 0 12px;
-  }
-
-  .bottom-nav-inner { display: flex; justify-content: space-around; }
-
-  .bottom-nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3px;
-    color: var(--grey);
-    font-size: 10px;
-    font-weight: 600;
-    font-family: 'Montserrat', sans-serif;
-    letter-spacing: 0.3px;
-    padding: 4px 10px;
-    border: none;
-    background: none;
-    cursor: pointer;
-    transition: color 0.15s ease;
-  }
-
-  .bottom-nav-item i { font-size: 20px; }
-  .bottom-nav-item.active { color: var(--green); }
-
-  /* ===== TAB PANELS ===== */
-  .tab-panel { display: none; }
-  .tab-panel.active { display: block; }
-
-  /* ===== MOBILE ROSTER ===== */
-  .roster-mobile { padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
-
-  .student-card-mobile {
-    background: var(--card);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 14px 16px;
-  }
-
-  .student-card-top {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
-  }
-
-  .student-card-top .student-name { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 14px; }
-  .student-card-top .student-email { font-size: 11px; color: var(--grey); }
-
-  .student-card-stats {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 12px;
-  }
-
-  .stat-pill {
-    background: var(--bg);
     border-radius: 8px;
-    padding: 6px 12px;
-    flex: 1;
-    text-align: center;
-  }
-
-  .stat-pill .sp-val { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 16px; color: var(--green); }
-  .stat-pill .sp-lbl { font-size: 10px; color: var(--grey); font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; }
-
-  .student-card-actions {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-  }
-
-  /* ===== MOBILE LOCKER ROOM ===== */
-  .mobile-locker {
-    background: var(--card);
-    display: flex;
-    flex-direction: column;
-    min-height: calc(100vh - 130px);
-  }
-
-  .mobile-locker .locker-video-mobile {
-    width: 100%;
-    aspect-ratio: 16/9;
-    background: #0a0a0a;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-
-  .mobile-locker .locker-video-mobile::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(circle at 50% 50%, rgba(0,135,81,0.10) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .mobile-chat-area {
-    flex: 1;
-    display: flex;
-    flex-direction: column-reverse;
-    overflow-y: auto;
-    padding: 12px 16px;
     gap: 10px;
-    min-height: 260px;
-    max-height: 380px;
+    cursor: pointer;
+    transition: 0.2s;
+    color: var(--dark);
+    text-decoration: none;
+    font-size: 14px;
+  }
+  .dropdown-item:hover { background: var(--bg); }
+
+  /* Specialty Switcher in Profile */
+  .specialty-box {
+    padding: 10px;
+    border-top: 1px solid #eee;
+    margin-top: 5px;
+  }
+  .specialty-box label { font-size: 11px; font-weight: 700; color: var(--grey); text-transform: uppercase; }
+  .specialty-box select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    margin-top: 5px;
+    font-family: 'Inter', sans-serif;
   }
 
-  /* ===== MOBILE PLAYBOOK MANAGER ===== */
-  .playbook-mobile { padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
-
-  .module-card-mobile {
-    background: var(--card);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 14px 16px;
+  /* Mobile */
+  @media (max-width: 768px) {
+    .sidebar { width: 0; overflow: hidden; }
+    .main-feed { margin-left: 0; padding: 10px; }
+    .sidebar.active { width: 280px; }
+    .mobile-nav {
+        position: fixed; bottom: 0; left: 0; width: 100%;
+        background: var(--card); display: flex; justify-content: space-around;
+        padding: 12px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 50;
+    }
+    .mobile-nav-item { color: var(--grey); font-size: 20px; }
+    .mobile-nav-item.active { color: var(--green); }
   }
-
-  .module-card-top {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 10px;
-  }
-
-  .module-card-top .module-icon { width: 38px; height: 38px; font-size: 15px; border-radius: 8px; }
-  .module-card-top h4 { font-size: 13px; font-weight: 700; flex: 1; }
-
-  .module-card-bottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-  }
-
-  /* ===== RESPONSIVE ===== */
-  /* CUT: layout-wrapper.php START */
-  @media (max-width: 1024px) {
-    .sidebar     { display: none; }
-    .locker-room { display: none; }
-    .main-feed   { margin: 0; padding: 0 0 80px; }
-    .feed-header { display: none; }
-    .mobile-header { display: flex; }
-    .bottom-nav  { display: block; }
-
-    .card        { border-radius: 0; box-shadow: none; border-bottom: 1px solid #f1f5f9; margin-bottom: 0; }
-    .card:hover  { box-shadow: none; }
-    .card.pinned-card { border-radius: 0; border-left: none; border-right: none; border-top: none; border-bottom: 2px solid var(--gold); }
-    .card.active-card { border-radius: 0; border-left: 4px solid var(--green); border-right: none; border-top: none; border-bottom: 1px solid #f1f5f9; }
-  }
-
-  @media (min-width: 1025px) {
-    .tab-panel { display: block !important; }
-    .mobile-locker, .playbook-mobile, .roster-mobile { display: none !important; }
-  }
-  /* CUT: layout-wrapper.php END */
 </style>
 </head>
 <body>
 
-<!-- ============================================================
-     MOBILE HEADER
-     CUT: header.php (mobile portion)
-     ============================================================ -->
-<header class="mobile-header">
-  <div class="mobile-logo">RIS<span>.</span></div>
-
-  <form action="search.php" method="GET" class="mobile-search">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <input type="text" name="query" placeholder="Search...">
-  </form>
-
-  <div class="mobile-header-right">
-    <div style="position:relative;">
-      <button class="icon-btn">
-        <i class="fa-solid fa-bell"></i>
-      </button>
-      <span class="notif-dot"></span>
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-text">Projet <span>RIS</span></div>
+      <i class="fas fa-bars" onclick="toggleSidebar()" style="cursor:pointer; color: var(--grey);"></i>
     </div>
-    <button class="icon-btn trophy">
-      <i class="fa-solid fa-trophy"></i>
-    </button>
-    <div class="avatar coach" style="width:34px;height:34px;font-size:12px;">CB</div>
-  </div>
-</header>
-
-<!-- ============================================================
-     LEFT SIDEBAR
-     CUT: sidebar.php
-     ============================================================ -->
-<aside class="sidebar">
-
-  <div class="sidebar-logo">
-    <div class="logo-text">RIS<span>.</span></div>
+    <div class="sidebar-profile">
+      <div class="avatar lg" id="sidebar-avatar">M</div>
+      <div class="user-name" id="sidebar-name">Mentor Name</div>
+      <div class="user-specialty" id="sidebar-specialty">Digital Marketing</div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" onclick="switchTab('home', this)"><i class="fa-solid fa-house"></i> Home</a>
+      <a href="#" class="nav-item" onclick="switchTab('courses', this)"><i class="fa-solid fa-clipboard-list"></i> My Courses</a>
+      <a href="#" class="nav-item" onclick="switchTab('messages', this)"><i class="fa-solid fa-envelope"></i> Messages</a>
+      <a href="#" class="nav-item" onclick="switchTab('locker', this)"><i class="fa-solid fa-door-open"></i> Locker Room</a>
+      <a href="#" class="nav-item" onclick="switchTab('performance', this)"><i class="fa-solid fa-chart-simple"></i> Performance</a>
+    </nav>
   </div>
 
-  <div class="sidebar-profile">
-    <div class="avatar coach lg">CB</div>
-    <!-- Mentor badge is dark, not gold -->
-    <span class="rank-badge"><i class="fa-solid fa-whistle"></i> MENTOR</span>
-    <div class="user-name"><span class="username"><?php /*echo $user['username'];*/ ?>Coach Biya</span></div>
-    <div class="user-specialty"><?php /*echo $user['specialty'];*/ ?>Digital Marketing</div>
-  </div>
-
-  <!-- PHP: $current_page = basename($_SERVER['PHP_SELF'], '.php'); -->
-  <nav class="sidebar-nav">
-    <a href="index.php" class="nav-item active" data-page="home">
-      <i class="fa-solid fa-house"></i>
-      Home
-    </a>
-    <a href="playbook.php" class="nav-item" data-page="playbook">
-      <i class="fa-solid fa-clipboard-list"></i>
-      Playbook
-    </a>
-    <a href="messages.php" class="nav-item" data-page="messages">
-      <i class="fa-solid fa-envelope"></i>
-      Messages
-    </a>
-    <!-- Mentor 4th item -->
-    <a href="roster.php" class="nav-item" data-page="roster">
-      <i class="fa-solid fa-users"></i>
-      Roster
-    </a>
-  </nav>
-</aside>
-
-<!-- ============================================================
-     MAIN FEED
-     CUT: main-feed.php
-     ============================================================ -->
-<main class="main-feed">
-
-  <!-- ===== DESKTOP HEADER ===== -->
-  <!-- CUT: header.php (desktop) -->
-  <div class="feed-header">
-    <form action="search.php" method="GET" class="search-bar">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" name="query" placeholder="Search...">
-    </form>
-
-    <div class="header-actions">
-      <div style="position:relative;">
+  <!-- Main Content -->
+  <main class="main-feed">
+    <header class="feed-header">
+      <div class="header-left">
+        <div class="search-bar">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" placeholder="The Scout: Search posts, lessons...">
+        </div>
+      </div>
+      <div class="header-right">
         <button class="icon-btn">
           <i class="fa-solid fa-bell"></i>
+          <div class="notif-dot"></div>
         </button>
-        <span class="notif-dot"></span>
+        <div class="avatar" id="header-avatar" onclick="toggleProfile()">M</div>
       </div>
 
-      <button class="icon-btn trophy" title="Achievements">
-        <i class="fa-solid fa-trophy"></i>
-      </button>
-
-      <!-- Specialty Switcher (always visible for Mentor) -->
-      <form action="switch_specialty.php" method="POST">
-        <div class="specialty-switcher">
-          <i class="fa-solid fa-rotate"></i>
-          <select name="specialty_id">
-            <option value="1"><?php /*echo $specialty['name'];*/ ?>Digital Marketing</option>
-            <option value="2">Graphic Design</option>
-            <option value="3">Web Dev</option>
-          </select>
-        </div>
-      </form>
-
-      <div class="profile-pill">
-        <div class="avatar coach" style="width:30px;height:30px;font-size:11px;">CB</div>
-        <span class="username"><?php /*echo $user['username'];*/ ?>Coach Biya</span>
-        <span class="rank-badge" style="padding:2px 8px;font-size:9px;"><i class="fa-solid fa-whistle"></i> MENTOR</span>
-      </div>
-    </div>
-  </div>
-  <!-- CUT: header.php END -->
-
-  <!-- ============================================================
-       TAB: HOME
-       ============================================================ -->
-  <div class="tab-panel active" id="tab-home">
-
-    <!-- SPECIALTY SWITCHER CARD (desktop feed top) -->
-    <div class="card">
-      <div class="switcher-card">
-        <div class="switcher-card-inner">
-          <div>
-            <div class="switcher-label">Active Specialty</div>
-            <div class="current-specialty"><?php /*echo $specialty['name'];*/ ?>Digital Marketing</div>
-          </div>
-          <form action="switch_specialty.php" method="POST" style="display:flex;align-items:center;gap:8px;">
-            <select name="specialty_id" class="form-input" style="width:auto;padding:8px 14px;">
-              <option value="1">Digital Marketing</option>
-              <option value="2">Graphic Design</option>
-              <option value="3">Web Dev</option>
+      <!-- Profile Dropdown -->
+      <div class="profile-dropdown" id="profileDropdown">
+        <div class="dropdown-item"><i class="fas fa-user"></i> My Profile</div>
+        <div class="dropdown-item"><i class="fas fa-cog"></i> Settings</div>
+        <div class="specialty-box">
+            <label>Change Specialty</label>
+            <select onchange="updateSpecialty(this.value)">
+                <option value="Digital Marketing">Digital Marketing</option>
+                <option value="Graphic Design">Graphic Design</option>
+                <option value="Entrepreneurship">Entrepreneurship</option>
             </select>
-            <button type="submit" class="btn-primary btn-sm">
-              <i class="fa-solid fa-rotate"></i> Switch
-            </button>
-          </form>
+        </div>
+        <div class="dropdown-item" onclick="logout()" style="color: var(--red); border-top: 1px solid #eee; margin-top: 5px;">
+            <i class="fas fa-sign-out-alt"></i> Logout
         </div>
       </div>
-    </div>
+    </header>
 
-    <!-- LIVE SESSION CARD -->
-    <div class="card active-card">
-      <div class="live-session-card">
-        <div class="post-author-info">
-          <div class="avatar coach">CB</div>
-          <div>
-            <div class="post-author">Coach Biya</div>
-            <div class="post-meta">Live session active in Digital Marketing &bull; Now</div>
-          </div>
-        </div>
-        <div class="live-video-stage">
-          <!-- PHP: if ($specialty['is_live']): -->
-          <span class="live-badge">
-            <i class="fa-solid fa-circle-dot"></i> LIVE
-          </span>
-          <button class="play-btn-large">
-            <i class="fa-solid fa-play"></i>
-          </button>
-          <!-- PHP: endif; -->
-        </div>
-        <div class="live-meta">
-          <span class="module-title"><?php /*echo $module['title'];*/ ?>Module 3: Facebook Ads Strategy</span>
-          <span class="peers-online"><?php /*echo $peers_count;*/ ?>42 Students watching</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- COACH'S BOARD (Pinned) -->
-    <div class="card pinned-card" id="coaches-board">
-      <div class="coaches-board">
-        <div class="post-header">
-          <div class="post-author-info">
-            <div class="avatar coach">CB</div>
-            <div>
-              <div class="post-author">Coach's Board</div>
-              <div class="post-meta">You pinned a message &bull; Yesterday</div>
+    <!-- Home Tab (Facebook Style) -->
+    <div id="home" class="tab-content active">
+        <div class="card post-creator">
+            <div class="post-creator-top">
+                <div class="avatar">M</div>
+                <textarea placeholder="Share a pro-tip or update with your students..."></textarea>
             </div>
-          </div>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <div class="pin-badge">
-              <i class="fa-solid fa-thumbtack"></i> Pinned
+            <div style="display: flex; justify-content: flex-end;">
+                <button class="btn-primary">Post Update</button>
             </div>
-            <button class="dismiss-btn" id="dismiss-board">Dismiss</button>
-          </div>
         </div>
-        <p class="post-content">
-          <span class="pro-tip-label">Pro-Tip:</span>
-          <?php /*echo $post['content'];*/ ?>
-          Always A/B test your ad creatives. Never assume you know what the audience wants. Check the PDF I uploaded in the Locker Room!
-        </p>
-      </div>
+
+        <!-- Flooded Feed -->
+        <div id="feed-container">
+            <!-- Posts will be injected here -->
+        </div>
     </div>
 
-    <!-- POST CREATOR -->
-    <div class="card">
-      <div class="post-creator">
-        <div class="post-creator-top">
-          <div class="avatar coach">CB</div>
-          <form action="post.php" method="POST" style="flex:1;display:flex;flex-direction:column;gap:10px;">
-            <textarea name="content" id="post-textarea" placeholder="Share an update with your students..."></textarea>
-            <div class="post-creator-actions">
-              <button type="submit" class="btn-primary" id="post-btn" disabled>
-                <i class="fa-solid fa-paper-plane"></i> Post
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+    <!-- Other Tabs (Placeholders) -->
+    <div id="courses" class="tab-content"><h2>My Courses</h2><p>Manage your curriculum here.</p></div>
+    <div id="messages" class="tab-content"><h2>Messages</h2><p>Chat with your students.</p></div>
+    <div id="locker" class="tab-content"><h2>Locker Room</h2><p>Live session hub.</p></div>
+    <div id="performance" class="tab-content"><h2>Performance</h2><p>Track student progress.</p></div>
 
-    <!-- STANDARD POST 1 -->
-    <!-- PHP: foreach ($posts as $post): -->
-    <div class="card">
-      <div class="standard-post">
-        <div class="post-header">
-          <div class="post-author-info">
-            <div class="avatar student">MB</div>
-            <div>
-              <div class="post-author"><?php /*echo $post['author'];*/ ?>Marie Bongo</div>
-              <div class="post-meta">4 hours ago</div>
-            </div>
-          </div>
-        </div>
-        <p class="post-content" style="margin-bottom:0;"><?php /*echo $post['content'];*/ ?>
-          Just finished Module 2 — the targeting section blew my mind. Already seeing results on my test campaign! 🚀
-        </p>
-        <div class="post-actions">
-          <button class="action-btn like-btn" data-id="1">
-            <i class="fa-solid fa-thumbs-up"></i>
-            <form action="like.php" method="POST" style="display:inline;">
-              <input type="hidden" name="post_id" value="1">
-              <span>17</span>
-            </form>
-          </button>
-          <button class="action-btn">
-            <i class="fa-regular fa-comment"></i>
-            <span>5</span>
-          </button>
-        </div>
-      </div>
-    </div>
+  </main>
 
-    <div class="card">
-      <div class="standard-post">
-        <div class="post-header">
-          <div class="post-author-info">
-            <div class="avatar" style="background:#7c3aed;color:white;">AK</div>
-            <div>
-              <div class="post-author"><?php /*echo $post['author'];*/ ?>Alex Kamga</div>
-              <div class="post-meta">6 hours ago</div>
-            </div>
-          </div>
-        </div>
-        <p class="post-content" style="margin-bottom:0;"><?php /*echo $post['content'];*/ ?>
-          Anyone else find the pixel setup confusing? Watched it 3x — finally got it working 😅
-        </p>
-        <div class="post-actions">
-          <button class="action-btn like-btn" data-id="2">
-            <i class="fa-solid fa-thumbs-up"></i>
-            <form action="like.php" method="POST" style="display:inline;">
-              <input type="hidden" name="post_id" value="2">
-              <span>9</span>
-            </form>
-          </button>
-          <button class="action-btn">
-            <i class="fa-regular fa-comment"></i>
-            <span>12</span>
-          </button>
-        </div>
-      </div>
-    </div>
-    <!-- PHP: endforeach; -->
-
-  </div><!-- /tab-home -->
-
-  <!-- ============================================================
-       TAB: PLAYBOOK MANAGER
-       ============================================================ -->
-  <div class="tab-panel" id="tab-playbook">
-
-    <!-- DESKTOP: Playbook Manager card -->
-    <div class="card" style="display:block;">
-      <div class="playbook-manager">
-        <div class="playbook-manager-header">
-          <h3><i class="fa-solid fa-clipboard-list" style="color:var(--green);margin-right:8px;"></i>Playbook Manager</h3>
-          <button class="btn-primary btn-sm" id="toggle-create-form">
-            <i class="fa-solid fa-plus"></i> New Module
-          </button>
-        </div>
-
-        <!-- Create Module Form -->
-        <div class="create-module-form" id="create-module-form">
-          <form action="create_module.php" method="POST">
-            <div class="form-row">
-              <input type="text" name="title" class="form-input" placeholder="Module title...">
-              <input type="text" name="description" class="form-input" placeholder="Short description...">
-            </div>
-            <div class="form-row">
-              <input type="text" name="file_url" class="form-input" placeholder="File URL or upload link...">
-              <input type="number" name="duration" class="form-input" placeholder="Duration (mins)">
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;margin-top:4px;">
-              <label class="draft-toggle">
-                <label class="toggle">
-                  <input type="checkbox" name="is_draft" value="1">
-                  <span class="toggle-slider"></span>
-                </label>
-                Save as Draft
-              </label>
-            </div>
-            <div class="form-actions">
-              <button type="button" class="btn-outline" id="cancel-create">Cancel</button>
-              <button type="submit" class="btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save Module</button>
-            </div>
-          </form>
-        </div>
-
-        <!-- Module List -->
-        <!-- PHP: foreach ($modules as $module): -->
-        <div class="module-item">
-          <div class="module-icon"><i class="fa-solid fa-bullseye"></i></div>
-          <div class="module-info">
-            <h4><?php /*echo $module['title'];*/ ?>Module 1: Marketing Fundamentals</h4>
-            <p>8 lessons &bull; 45 min &bull; <span style="color:var(--green);font-weight:600;">Published</span></p>
-          </div>
-          <div class="draft-toggle">
-            <label class="toggle">
-              <input type="checkbox" checked onchange="updateDraft(1, this.checked)">
-              <span class="toggle-slider"></span>
-            </label>
-            <span>Published</span>
-          </div>
-          <div class="module-crud">
-            <form action="edit_module.php" method="POST" style="display:inline;">
-              <input type="hidden" name="module_id" value="1">
-              <button type="button" class="crud-btn edit" title="Edit"><i class="fa-solid fa-pen"></i></button>
-            </form>
-            <form action="delete_module.php" method="POST" style="display:inline;">
-              <input type="hidden" name="module_id" value="1">
-              <button type="submit" class="crud-btn del" title="Delete" onclick="return confirm('Delete this module?')"><i class="fa-solid fa-trash"></i></button>
-            </form>
-          </div>
-        </div>
-
-        <div class="module-item">
-          <div class="module-icon"><i class="fa-solid fa-chart-line"></i></div>
-          <div class="module-info">
-            <h4><?php /*echo $module['title'];*/ ?>Module 2: Audience Targeting</h4>
-            <p>6 lessons &bull; 38 min &bull; <span style="color:var(--green);font-weight:600;">Published</span></p>
-          </div>
-          <div class="draft-toggle">
-            <label class="toggle">
-              <input type="checkbox" checked onchange="updateDraft(2, this.checked)">
-              <span class="toggle-slider"></span>
-            </label>
-            <span>Published</span>
-          </div>
-          <div class="module-crud">
-            <form action="edit_module.php" method="POST" style="display:inline;">
-              <input type="hidden" name="module_id" value="2">
-              <button type="button" class="crud-btn edit" title="Edit"><i class="fa-solid fa-pen"></i></button>
-            </form>
-            <form action="delete_module.php" method="POST" style="display:inline;">
-              <input type="hidden" name="module_id" value="2">
-              <button type="submit" class="crud-btn del" title="Delete" onclick="return confirm('Delete this module?')"><i class="fa-solid fa-trash"></i></button>
-            </form>
-          </div>
-        </div>
-
-        <div class="module-item">
-          <div class="module-icon"><i class="fa-brands fa-facebook"></i></div>
-          <div class="module-info">
-            <h4><?php /*echo $module['title'];*/ ?>Module 3: Facebook Ads Strategy</h4>
-            <p>10 lessons &bull; 1h 20min &bull; <span style="color:var(--green);font-weight:600;">Published</span></p>
-          </div>
-          <div class="draft-toggle">
-            <label class="toggle">
-              <input type="checkbox" checked onchange="updateDraft(3, this.checked)">
-              <span class="toggle-slider"></span>
-            </label>
-            <span>Published</span>
-          </div>
-          <div class="module-crud">
-            <form action="edit_module.php" method="POST" style="display:inline;">
-              <input type="hidden" name="module_id" value="3">
-              <button type="button" class="crud-btn edit" title="Edit"><i class="fa-solid fa-pen"></i></button>
-            </form>
-            <form action="delete_module.php" method="POST" style="display:inline;">
-              <input type="hidden" name="module_id" value="3">
-              <button type="submit" class="crud-btn del" title="Delete" onclick="return confirm('Delete this module?')"><i class="fa-solid fa-trash"></i></button>
-            </form>
-          </div>
-        </div>
-
-        <!-- Draft module example -->
-        <div class="module-item">
-          <div class="module-icon draft"><i class="fa-solid fa-file-pen"></i></div>
-          <div class="module-info">
-            <h4>
-              <?php /*echo $module['title'];*/ ?>Module 4: Analytics &amp; ROI
-              <span class="draft-badge"><i class="fa-solid fa-eye-slash"></i> Draft</span>
-            </h4>
-            <p>7 lessons &bull; 55 min &bull; <span style="color:var(--red);font-weight:600;">Hidden from students</span></p>
-          </div>
-          <div class="draft-toggle">
-            <label class="toggle">
-              <input type="checkbox" onchange="updateDraft(4, this.checked)">
-              <span class="toggle-slider"></span>
-            </label>
-            <span>Draft</span>
-          </div>
-          <div class="module-crud">
-            <form action="edit_module.php" method="POST" style="display:inline;">
-              <input type="hidden" name="module_id" value="4">
-              <button type="button" class="crud-btn edit" title="Edit"><i class="fa-solid fa-pen"></i></button>
-            </form>
-            <form action="delete_module.php" method="POST" style="display:inline;">
-              <input type="hidden" name="module_id" value="4">
-              <button type="submit" class="crud-btn del" title="Delete" onclick="return confirm('Delete this module?')"><i class="fa-solid fa-trash"></i></button>
-            </form>
-          </div>
-        </div>
-        <!-- PHP: endforeach; -->
-
-      </div>
-    </div>
-
-    <!-- MOBILE: Playbook Manager cards -->
-    <div class="playbook-mobile">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-        <p class="section-label" style="margin-bottom:0;">Your Modules</p>
-        <button class="btn-primary btn-sm" style="border-radius:8px;">
-          <i class="fa-solid fa-plus"></i> New
-        </button>
-      </div>
-
-      <!-- PHP: foreach ($modules as $module): -->
-      <div class="module-card-mobile">
-        <div class="module-card-top">
-          <div class="module-icon"><i class="fa-solid fa-bullseye"></i></div>
-          <h4><?php /*echo $module['title'];*/ ?>Module 1: Marketing Fundamentals</h4>
-          <span style="color:var(--green);font-size:11px;font-weight:700;">Live</span>
-        </div>
-        <div class="module-card-bottom">
-          <span style="font-size:11px;color:var(--grey);">8 lessons &bull; 45 min</span>
-          <div style="display:flex;gap:6px;">
-            <button class="crud-btn edit"><i class="fa-solid fa-pen"></i></button>
-            <button class="crud-btn del"><i class="fa-solid fa-trash"></i></button>
-          </div>
-        </div>
-      </div>
-
-      <div class="module-card-mobile">
-        <div class="module-card-top">
-          <div class="module-icon"><i class="fa-solid fa-chart-line"></i></div>
-          <h4><?php /*echo $module['title'];*/ ?>Module 2: Audience Targeting</h4>
-          <span style="color:var(--green);font-size:11px;font-weight:700;">Live</span>
-        </div>
-        <div class="module-card-bottom">
-          <span style="font-size:11px;color:var(--grey);">6 lessons &bull; 38 min</span>
-          <div style="display:flex;gap:6px;">
-            <button class="crud-btn edit"><i class="fa-solid fa-pen"></i></button>
-            <button class="crud-btn del"><i class="fa-solid fa-trash"></i></button>
-          </div>
-        </div>
-      </div>
-
-      <div class="module-card-mobile">
-        <div class="module-card-top">
-          <div class="module-icon draft"><i class="fa-solid fa-file-pen"></i></div>
-          <h4><?php /*echo $module['title'];*/ ?>Module 4: Analytics &amp; ROI</h4>
-          <span class="draft-badge"><i class="fa-solid fa-eye-slash"></i> Draft</span>
-        </div>
-        <div class="module-card-bottom">
-          <span style="font-size:11px;color:var(--grey);">7 lessons &bull; 55 min</span>
-          <div style="display:flex;gap:6px;">
-            <button class="crud-btn edit"><i class="fa-solid fa-pen"></i></button>
-            <button class="crud-btn del"><i class="fa-solid fa-trash"></i></button>
-          </div>
-        </div>
-      </div>
-      <!-- PHP: endforeach; -->
-    </div>
-
-  </div><!-- /tab-playbook -->
-
-  <!-- ============================================================
-       TAB: MESSAGES
-       ============================================================ -->
-  <div class="tab-panel" id="tab-messages">
-    <div class="card" style="display:block;padding:20px;">
-      <p class="section-label">Direct Messages</p>
-      <div style="display:flex;flex-direction:column;gap:10px;">
-
-        <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg);border-radius:10px;cursor:pointer;">
-          <div class="avatar student">MB</div>
-          <div style="flex:1;min-width:0;">
-            <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;margin-bottom:2px;">Marie Bongo</div>
-            <div style="font-size:12px;color:var(--grey);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Coach I have a question about the pixel...</div>
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;">
-            <span style="font-size:11px;color:var(--grey);">2h ago</span>
-            <span style="width:7px;height:7px;background:var(--green);border-radius:50%;display:block;"></span>
-          </div>
-        </div>
-
-        <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg);border-radius:10px;cursor:pointer;">
-          <div class="avatar" style="background:#7c3aed;color:white;">AK</div>
-          <div style="flex:1;min-width:0;">
-            <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;margin-bottom:2px;">Alex Kamga</div>
-            <div style="font-size:12px;color:var(--grey);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Thanks for the feedback on my campaign!</div>
-          </div>
-          <span style="font-size:11px;color:var(--grey);">5h ago</span>
-        </div>
-
-        <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg);border-radius:10px;cursor:pointer;">
-          <div class="avatar" style="background:#0891b2;color:white;">MN</div>
-          <div style="flex:1;min-width:0;">
-            <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;margin-bottom:2px;">Mireille Ngo</div>
-            <div style="font-size:12px;color:var(--grey);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">When is the next live session scheduled?</div>
-          </div>
-          <span style="font-size:11px;color:var(--grey);">Yesterday</span>
-        </div>
-
-      </div>
-    </div>
-  </div><!-- /tab-messages -->
-
-  <!-- ============================================================
-       TAB: ROSTER
-       ============================================================ -->
-  <div class="tab-panel" id="tab-roster">
-
-    <!-- DESKTOP: Full Roster Table -->
-    <div class="card" style="display:block;">
-      <div class="roster-wrap">
-        <div class="roster-header">
-          <h3><i class="fa-solid fa-users" style="color:var(--green);margin-right:8px;"></i>Roster — Digital Marketing</h3>
-          <div class="roster-search">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="roster-search-input" placeholder="Search students...">
-          </div>
-        </div>
-
-        <table class="roster-table" id="roster-table">
-          <thead>
-            <tr>
-              <th>Student</th>
-              <th>Rank</th>
-              <th>Progress</th>
-              <th>Sessions</th>
-              <th>Grade</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- PHP: foreach ($students as $student): -->
-            <tr>
-              <td>
-                <div class="student-cell">
-                  <div class="avatar student" style="width:34px;height:34px;font-size:12px;">MB</div>
-                  <div>
-                    <div class="student-name"><?php /*echo $student['username'];*/ ?>Marie Bongo</div>
-                    <div class="student-email"><?php /*echo $student['email'];*/ ?>marie@email.com</div>
-                  </div>
-                </div>
-              </td>
-              <td><span class="student-rank"><i class="fa-solid fa-star"></i> Rookie</span></td>
-              <td>
-                <div class="progress-mini">
-                  <div class="progress-bar-mini"><div class="progress-fill-mini" style="width:75%"></div></div>
-                  <span class="progress-pct">75%</span>
-                </div>
-              </td>
-              <td style="font-weight:600;font-size:13px;"><?php /*echo $student['sessions'];*/ ?>5</td>
-              <td>
-                <form action="update_grade.php" method="POST">
-                  <input type="hidden" name="student_id" value="1">
-                  <select name="grade" class="grade-select" onchange="this.form.submit()">
-                    <option>Rookie</option>
-                    <option selected>Novice</option>
-                    <option>Professional</option>
-                    <option>Expert</option>
-                  </select>
-                </form>
-              </td>
-              <td>
-                <button class="btn-outline btn-sm">
-                  <i class="fa-solid fa-envelope"></i> Message
-                </button>
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                <div class="student-cell">
-                  <div class="avatar" style="background:#7c3aed;color:white;width:34px;height:34px;font-size:12px;">AK</div>
-                  <div>
-                    <div class="student-name"><?php /*echo $student['username'];*/ ?>Alex Kamga</div>
-                    <div class="student-email"><?php /*echo $student['email'];*/ ?>alex@email.com</div>
-                  </div>
-                </div>
-              </td>
-              <td><span class="student-rank"><i class="fa-solid fa-star"></i> Rookie</span></td>
-              <td>
-                <div class="progress-mini">
-                  <div class="progress-bar-mini"><div class="progress-fill-mini" style="width:50%"></div></div>
-                  <span class="progress-pct">50%</span>
-                </div>
-              </td>
-              <td style="font-weight:600;font-size:13px;">3</td>
-              <td>
-                <form action="update_grade.php" method="POST">
-                  <input type="hidden" name="student_id" value="2">
-                  <select name="grade" class="grade-select" onchange="this.form.submit()">
-                    <option selected>Rookie</option>
-                    <option>Novice</option>
-                    <option>Professional</option>
-                    <option>Expert</option>
-                  </select>
-                </form>
-              </td>
-              <td>
-                <button class="btn-outline btn-sm">
-                  <i class="fa-solid fa-envelope"></i> Message
-                </button>
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                <div class="student-cell">
-                  <div class="avatar" style="background:#0891b2;color:white;width:34px;height:34px;font-size:12px;">MN</div>
-                  <div>
-                    <div class="student-name"><?php /*echo $student['username'];*/ ?>Mireille Ngo</div>
-                    <div class="student-email"><?php /*echo $student['email'];*/ ?>mireille@email.com</div>
-                  </div>
-                </div>
-              </td>
-              <td><span class="student-rank"><i class="fa-solid fa-star"></i> Novice</span></td>
-              <td>
-                <div class="progress-mini">
-                  <div class="progress-bar-mini"><div class="progress-fill-mini" style="width:90%"></div></div>
-                  <span class="progress-pct">90%</span>
-                </div>
-              </td>
-              <td style="font-weight:600;font-size:13px;">8</td>
-              <td>
-                <form action="update_grade.php" method="POST">
-                  <input type="hidden" name="student_id" value="3">
-                  <select name="grade" class="grade-select" onchange="this.form.submit()">
-                    <option>Rookie</option>
-                    <option selected>Novice</option>
-                    <option>Professional</option>
-                    <option>Expert</option>
-                  </select>
-                </form>
-              </td>
-              <td>
-                <button class="btn-outline btn-sm">
-                  <i class="fa-solid fa-envelope"></i> Message
-                </button>
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                <div class="student-cell">
-                  <div class="avatar student" style="width:34px;height:34px;font-size:12px;">JB</div>
-                  <div>
-                    <div class="student-name"><?php /*echo $student['username'];*/ ?>Jean Biya</div>
-                    <div class="student-email"><?php /*echo $student['email'];*/ ?>jean@email.com</div>
-                  </div>
-                </div>
-              </td>
-              <td><span class="student-rank"><i class="fa-solid fa-star"></i> Rookie</span></td>
-              <td>
-                <div class="progress-mini">
-                  <div class="progress-bar-mini"><div class="progress-fill-mini" style="width:30%"></div></div>
-                  <span class="progress-pct">30%</span>
-                </div>
-              </td>
-              <td style="font-weight:600;font-size:13px;">2</td>
-              <td>
-                <form action="update_grade.php" method="POST">
-                  <input type="hidden" name="student_id" value="4">
-                  <select name="grade" class="grade-select" onchange="this.form.submit()">
-                    <option selected>Rookie</option>
-                    <option>Novice</option>
-                    <option>Professional</option>
-                    <option>Expert</option>
-                  </select>
-                </form>
-              </td>
-              <td>
-                <button class="btn-outline btn-sm">
-                  <i class="fa-solid fa-envelope"></i> Message
-                </button>
-              </td>
-            </tr>
-            <!-- PHP: endforeach; -->
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- MOBILE: Roster student cards -->
-    <div class="roster-mobile">
-      <p class="section-label">Digital Marketing — Students</p>
-
-      <!-- PHP: foreach ($students as $student): -->
-      <div class="student-card-mobile">
-        <div class="student-card-top">
-          <div class="avatar student">MB</div>
-          <div>
-            <div class="student-name"><?php /*echo $student['username'];*/ ?>Marie Bongo</div>
-            <div class="student-email">marie@email.com</div>
-          </div>
-          <span class="student-rank" style="margin-left:auto;"><i class="fa-solid fa-star"></i> Novice</span>
-        </div>
-        <div class="student-card-stats">
-          <div class="stat-pill">
-            <div class="sp-val">75%</div>
-            <div class="sp-lbl">Progress</div>
-          </div>
-          <div class="stat-pill">
-            <div class="sp-val">5</div>
-            <div class="sp-lbl">Sessions</div>
-          </div>
-          <div class="stat-pill">
-            <div class="sp-val">12</div>
-            <div class="sp-lbl">Posts</div>
-          </div>
-        </div>
-        <div class="student-card-actions">
-          <form action="update_grade.php" method="POST" style="flex:1;">
-            <input type="hidden" name="student_id" value="1">
-            <select name="grade" class="grade-select" style="width:100%;" onchange="this.form.submit()">
-              <option>Rookie</option>
-              <option selected>Novice</option>
-              <option>Professional</option>
-              <option>Expert</option>
-            </select>
-          </form>
-          <button class="btn-outline btn-sm"><i class="fa-solid fa-envelope"></i> DM</button>
-        </div>
-      </div>
-
-      <div class="student-card-mobile">
-        <div class="student-card-top">
-          <div class="avatar" style="background:#7c3aed;color:white;">AK</div>
-          <div>
-            <div class="student-name"><?php /*echo $student['username'];*/ ?>Alex Kamga</div>
-            <div class="student-email">alex@email.com</div>
-          </div>
-          <span class="student-rank" style="margin-left:auto;"><i class="fa-solid fa-star"></i> Rookie</span>
-        </div>
-        <div class="student-card-stats">
-          <div class="stat-pill">
-            <div class="sp-val">50%</div>
-            <div class="sp-lbl">Progress</div>
-          </div>
-          <div class="stat-pill">
-            <div class="sp-val">3</div>
-            <div class="sp-lbl">Sessions</div>
-          </div>
-          <div class="stat-pill">
-            <div class="sp-val">6</div>
-            <div class="sp-lbl">Posts</div>
-          </div>
-        </div>
-        <div class="student-card-actions">
-          <form action="update_grade.php" method="POST" style="flex:1;">
-            <input type="hidden" name="student_id" value="2">
-            <select name="grade" class="grade-select" style="width:100%;" onchange="this.form.submit()">
-              <option selected>Rookie</option>
-              <option>Novice</option>
-              <option>Professional</option>
-              <option>Expert</option>
-            </select>
-          </form>
-          <button class="btn-outline btn-sm"><i class="fa-solid fa-envelope"></i> DM</button>
-        </div>
-      </div>
-
-      <div class="student-card-mobile">
-        <div class="student-card-top">
-          <div class="avatar" style="background:#0891b2;color:white;">MN</div>
-          <div>
-            <div class="student-name"><?php /*echo $student['username'];*/ ?>Mireille Ngo</div>
-            <div class="student-email">mireille@email.com</div>
-          </div>
-          <span class="student-rank" style="margin-left:auto;"><i class="fa-solid fa-star"></i> Novice</span>
-        </div>
-        <div class="student-card-stats">
-          <div class="stat-pill">
-            <div class="sp-val">90%</div>
-            <div class="sp-lbl">Progress</div>
-          </div>
-          <div class="stat-pill">
-            <div class="sp-val">8</div>
-            <div class="sp-lbl">Sessions</div>
-          </div>
-          <div class="stat-pill">
-            <div class="sp-val">20</div>
-            <div class="sp-lbl">Posts</div>
-          </div>
-        </div>
-        <div class="student-card-actions">
-          <form action="update_grade.php" method="POST" style="flex:1;">
-            <input type="hidden" name="student_id" value="3">
-            <select name="grade" class="grade-select" style="width:100%;" onchange="this.form.submit()">
-              <option>Rookie</option>
-              <option selected>Novice</option>
-              <option>Professional</option>
-              <option>Expert</option>
-            </select>
-          </form>
-          <button class="btn-outline btn-sm"><i class="fa-solid fa-envelope"></i> DM</button>
-        </div>
-      </div>
-      <!-- PHP: endforeach; -->
-    </div>
-
-  </div><!-- /tab-roster -->
-
-  <!-- ============================================================
-       TAB: LOCKER ROOM (Mobile only)
-       CUT: locker-room.php (mobile portion)
-       ============================================================ -->
-  <div class="tab-panel" id="tab-locker">
-    <div class="mobile-locker">
-
-      <!-- Go Live Button (mobile) -->
-      <div style="padding:14px 16px;background:var(--card);border-bottom:1px solid #f1f5f9;">
-        <form action="go_live.php" method="POST">
-          <input type="hidden" name="specialty_id" value="<?php /*echo $specialty['id'];*/ ?>1">
-          <input type="hidden" name="is_live" value="1">
-          <button type="submit" class="go-live-btn" id="go-live-mobile">
-            <i class="fa-solid fa-tower-broadcast"></i> Go Live
-          </button>
-        </form>
-      </div>
-
-      <div class="locker-video-mobile">
-        <span class="live-badge" style="top:10px;left:10px;font-size:9px;padding:3px 8px;">
-          <i class="fa-solid fa-circle-dot"></i> LIVE
-        </span>
-        <button class="play-btn-sm"><i class="fa-solid fa-play"></i></button>
-      </div>
-
-      <div style="padding:12px 16px;border-bottom:1px solid #f1f5f9;background:var(--card);">
-        <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;margin-bottom:2px;"><?php /*echo $module['title'];*/ ?>Module 3: Facebook Ads Strategy</div>
-        <div style="font-size:12px;color:var(--green);font-weight:600;"><?php /*echo $peers_count;*/ ?>42 Students watching</div>
-      </div>
-
-      <div class="mobile-chat-area">
-        <!-- PHP: foreach ($messages as $msg): -->
-        <div class="chat-message">
-          <div class="avatar student sm" style="flex-shrink:0;">MB</div>
-          <div class="chat-bubble">
-            <div class="chat-author"><?php /*echo $msg['author'];*/ ?>Marie Bongo</div>
-            <div class="chat-message-text"><?php /*echo $msg['message'];*/ ?>Coach when does Module 4 drop?</div>
-          </div>
-        </div>
-        <div class="chat-message">
-          <div class="avatar coach sm" style="flex-shrink:0;">CB</div>
-          <div class="chat-bubble">
-            <div class="chat-author coach-name"><?php /*echo $msg['author'];*/ ?>Coach Biya</div>
-            <div class="chat-message-text"><?php /*echo $msg['message'];*/ ?>Next week! Focus on mastering Module 3 first 💪</div>
-          </div>
-        </div>
-        <div class="chat-message">
-          <div class="avatar" style="background:#7c3aed;color:white;" class="sm">AK</div>
-          <div class="chat-bubble">
-            <div class="chat-author"><?php /*echo $msg['author'];*/ ?>Alex Kamga</div>
-            <div class="chat-message-text"><?php /*echo $msg['message'];*/ ?>This retargeting example is 🔥</div>
-          </div>
-        </div>
-        <!-- PHP: endforeach; -->
-      </div>
-
-      <div class="chat-input-area" style="background:var(--card);">
-        <form action="send_chat.php" method="POST" id="chat-form" style="display:flex;gap:8px;flex:1;">
-          <input type="text" name="chat_msg" placeholder="Reply to your students...">
-          <button type="submit" class="send-btn"><i class="fa-solid fa-paper-plane"></i></button>
-        </form>
-      </div>
-
-    </div>
-  </div><!-- /tab-locker -->
-
-</main>
-<!-- CUT: main-feed.php END -->
-
-<!-- ============================================================
-     RIGHT LOCKER ROOM (Desktop)
-     CUT: locker-room.php
-     ============================================================ -->
-<aside class="locker-room">
-
-  <div class="locker-header">
-    <h3><i class="fa-solid fa-tower-broadcast"></i> Locker Room</h3>
-    <span class="peers-online" style="font-size:12px;"><?php /*echo $peers_count;*/ ?>42 watching</span>
+  <!-- Mobile Nav -->
+  <div class="mobile-nav">
+    <a href="#" class="mobile-nav-item active" onclick="switchTab('home', this)"><i class="fa-solid fa-house"></i></a>
+    <a href="#" class="mobile-nav-item" onclick="switchTab('courses', this)"><i class="fa-solid fa-clipboard-list"></i></a>
+    <a href="#" class="mobile-nav-item" onclick="switchTab('messages', this)"><i class="fa-solid fa-envelope"></i></a>
+    <a href="#" class="mobile-nav-item" onclick="switchTab('locker', this)"><i class="fa-solid fa-door-open"></i></a>
+    <a href="#" class="mobile-nav-item" onclick="switchTab('performance', this)"><i class="fa-solid fa-chart-simple"></i></a>
   </div>
 
-  <!-- Go Live Button -->
-  <div class="go-live-wrap">
-    <form action="go_live.php" method="POST">
-      <input type="hidden" name="specialty_id" value="<?php /*echo $specialty['id'];*/ ?>1">
-      <input type="hidden" name="is_live" value="1">
-      <button type="submit" class="go-live-btn" id="go-live-desktop">
-        <i class="fa-solid fa-tower-broadcast"></i> Go Live
-      </button>
-    </form>
-  </div>
+  <script>
+    const posts = [
+        { author: "Coach Charles", time: "2h ago", content: "Great session today on digital marketing! Remember: Consistency is key to building your personal brand.", img: "assets/images/feed/img1.png" },
+        { author: "BEF Expertise", time: "5h ago", content: "Our new entrepreneurship module is now live. Check your Playbook!", img: "assets/images/feed/img2.jpg" },
+        { author: "Mentor Sarah", time: "1d ago", content: "Check out these amazing designs from our Graphic Design students. The talent is incredible!", img: "assets/images/feed/img3.jpg" },
+        { author: "Projet RIS", time: "2d ago", content: "Registration for the next cohort is opening soon. Tag an athlete who needs this!", img: "assets/images/feed/img4.jpg" },
+        { author: "Coach Charles", time: "3d ago", content: "Success isn't just about talent; it's about the work you put in when no one is watching.", img: "assets/images/feed/img5.jpg" },
+        { author: "BEF Cabinet", time: "4d ago", content: "Empowering the next generation of African leaders through sports and technology.", img: "assets/images/feed/img6.jpg" },
+        { author: "Mentor John", time: "5d ago", content: "Quick tip: Use high-contrast colors for your social media posts to grab attention.", img: "assets/images/feed/img7.jpg" },
+        { author: "Projet RIS", time: "1w ago", content: "Welcome to all our new mentors! Let's make an impact together.", img: "assets/images/feed/img8.jpg" }
+    ];
 
-  <!-- Video Stage -->
-  <!-- PHP: if ($specialty['is_live']): -->
-  <div class="locker-video">
-    <span class="live-badge">
-      <i class="fa-solid fa-circle-dot"></i> LIVE
-    </span>
-    <button class="play-btn-sm"><i class="fa-solid fa-play"></i></button>
-  </div>
-  <!-- PHP: else: show placeholder -->
-  <!-- PHP: endif; -->
+    function renderFeed() {
+        const container = document.getElementById('feed-container');
+        container.innerHTML = posts.map(p => `
+            <div class="card post">
+                <div class="post-header">
+                    <div class="post-author-info">
+                        <div class="avatar sm">${p.author[0]}</div>
+                        <div>
+                            <div class="post-author">${p.author}</div>
+                            <div class="post-meta">${p.time}</div>
+                        </div>
+                    </div>
+                    <i class="fas fa-ellipsis-h" style="color: var(--grey);"></i>
+                </div>
+                <div class="post-content">${p.content}</div>
+                <img src="${p.img}" class="post-img" alt="Post Image">
+                <div style="display: flex; gap: 15px; color: var(--grey); font-size: 13px;">
+                    <span><i class="far fa-heart"></i> Like</span>
+                    <span><i class="far fa-comment"></i> Comment</span>
+                </div>
+            </div>
+        `).join('');
+    }
 
-  <div class="locker-video-meta">
-    <div class="module-name"><?php /*echo $module['title'];*/ ?>Module 3: Facebook Ads Strategy</div>
-    <div class="peers-count"><?php /*echo $peers_count;*/ ?>42 Students watching</div>
-  </div>
+    function switchTab(tabId, el) {
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.nav-item, .mobile-nav-item').forEach(n => n.classList.remove('active'));
+        
+        document.getElementById(tabId).classList.add('active');
+        el.classList.add('active');
+    }
 
-  <!-- Chat — flex-direction: column-reverse for auto-bottom scroll -->
-  <div class="chat-area">
-    <!-- PHP: foreach ($messages as $msg): -->
-    <div class="chat-message">
-      <div class="avatar student sm" style="flex-shrink:0;">MB</div>
-      <div class="chat-bubble">
-        <div class="chat-author"><?php /*echo $msg['author'];*/ ?>Marie Bongo</div>
-        <div class="chat-message-text"><?php /*echo $msg['message'];*/ ?>Coach when does Module 4 drop?</div>
-      </div>
-    </div>
-    <div class="chat-message">
-      <div class="avatar coach sm" style="flex-shrink:0;">CB</div>
-      <div class="chat-bubble">
-        <div class="chat-author coach-name"><?php /*echo $msg['author'];*/ ?>Coach Biya</div>
-        <div class="chat-message-text"><?php /*echo $msg['message'];*/ ?>Next week! Focus on mastering Module 3 first 💪</div>
-      </div>
-    </div>
-    <div class="chat-message">
-      <div class="avatar sm" style="background:#7c3aed;color:white;flex-shrink:0;">AK</div>
-      <div class="chat-bubble">
-        <div class="chat-author"><?php /*echo $msg['author'];*/ ?>Alex Kamga</div>
-        <div class="chat-message-text"><?php /*echo $msg['message'];*/ ?>This retargeting example is 🔥</div>
-      </div>
-    </div>
-    <div class="chat-message">
-      <div class="avatar sm" style="background:#0891b2;color:white;flex-shrink:0;">MN</div>
-      <div class="chat-bubble">
-        <div class="chat-author"><?php /*echo $msg['author'];*/ ?>Mireille Ngo</div>
-        <div class="chat-message-text"><?php /*echo $msg['message'];*/ ?>Just joined — amazing session so far!</div>
-      </div>
-    </div>
-    <!-- PHP: endforeach; -->
-  </div>
+    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
+    function toggleProfile() { document.getElementById('profileDropdown').classList.toggle('active'); }
+    
+    function updateSpecialty(val) {
+        document.getElementById('sidebar-specialty').innerText = val;
+        alert('Specialty updated to: ' + val);
+    }
 
-  <div class="chat-input-area">
-    <form action="send_chat.php" method="POST" id="chat-form-desktop" style="display:flex;gap:8px;flex:1;">
-      <input type="text" name="chat_msg" placeholder="Reply to your students...">
-      <button type="submit" class="send-btn"><i class="fa-solid fa-paper-plane"></i></button>
-    </form>
-  </div>
+    function logout() {
+        localStorage.clear();
+        window.location.href = 'auth.html';
+    }
 
-</aside>
-<!-- CUT: locker-room.php END -->
-
-<!-- ============================================================
-     BOTTOM NAV (Mobile — 5 tabs for Mentor)
-     ============================================================ -->
-<nav class="bottom-nav">
-  <div class="bottom-nav-inner">
-    <button class="bottom-nav-item active" data-tab="home">
-      <i class="fa-solid fa-house"></i>
-      Home
-    </button>
-    <button class="bottom-nav-item" data-tab="playbook">
-      <i class="fa-solid fa-clipboard-list"></i>
-      Playbook
-    </button>
-    <button class="bottom-nav-item" data-tab="messages">
-      <i class="fa-solid fa-envelope"></i>
-      Messages
-    </button>
-    <button class="bottom-nav-item" data-tab="roster">
-      <i class="fa-solid fa-users"></i>
-      Roster
-    </button>
-    <button class="bottom-nav-item" data-tab="locker">
-      <i class="fa-solid fa-tower-broadcast"></i>
-      Locker Room
-    </button>
-  </div>
-</nav>
-
-<!-- ============================================================
-     VANILLA JS
-     ============================================================ -->
-<script>
-  // ===== POST BUTTON: disabled until text entered =====
-  const textarea = document.getElementById('post-textarea');
-  const postBtn  = document.getElementById('post-btn');
-  if (textarea && postBtn) {
-    textarea.addEventListener('input', () => {
-      postBtn.disabled = textarea.value.trim().length === 0;
-    });
-  }
-
-  // ===== LIKE BUTTON TOGGLE =====
-  document.querySelectorAll('.like-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const isLiked = btn.classList.toggle('liked');
-      const count   = btn.querySelector('span');
-      count.textContent = parseInt(count.textContent) + (isLiked ? 1 : -1);
-      btn.style.transition = 'color 0.2s ease';
-    });
-  });
-
-  // ===== COACH'S BOARD DISMISS (localStorage) =====
-  const board = document.getElementById('coaches-board');
-  if (board && localStorage.getItem('board-dismissed-mentor') === 'true') {
-    board.style.display = 'none';
-  }
-  const dismissBtn = document.getElementById('dismiss-board');
-  if (dismissBtn) {
-    dismissBtn.addEventListener('click', () => {
-      if (board) board.style.display = 'none';
-      localStorage.setItem('board-dismissed-mentor', 'true');
-    });
-  }
-
-  // ===== CREATE MODULE FORM TOGGLE =====
-  const toggleCreateBtn = document.getElementById('toggle-create-form');
-  const createForm      = document.getElementById('create-module-form');
-  const cancelCreate    = document.getElementById('cancel-create');
-
-  if (toggleCreateBtn && createForm) {
-    toggleCreateBtn.addEventListener('click', () => {
-      createForm.classList.toggle('open');
-      toggleCreateBtn.innerHTML = createForm.classList.contains('open')
-        ? '<i class="fa-solid fa-xmark"></i> Cancel'
-        : '<i class="fa-solid fa-plus"></i> New Module';
-    });
-  }
-
-  if (cancelCreate && createForm) {
-    cancelCreate.addEventListener('click', () => {
-      createForm.classList.remove('open');
-      toggleCreateBtn.innerHTML = '<i class="fa-solid fa-plus"></i> New Module';
-    });
-  }
-
-  // ===== DRAFT TOGGLE LABEL UPDATE =====
-  function updateDraft(moduleId, isPublished) {
-    // PHP: POST to toggle_draft.php with module_id and is_draft value
-    const label = event.target.closest('.draft-toggle').querySelector('span');
-    if (label) label.textContent = isPublished ? 'Published' : 'Draft';
-  }
-
-  // ===== GO LIVE BUTTON TOGGLE =====
-  document.querySelectorAll('.go-live-btn').forEach(btn => {
-    btn.addEventListener('click', function(e) {
-      // Visual toggle (actual state managed by PHP)
-      if (this.classList.contains('live-active')) {
-        this.classList.remove('live-active');
-        this.innerHTML = '<i class="fa-solid fa-tower-broadcast"></i> Go Live';
-      } else {
-        this.classList.add('live-active');
-        this.innerHTML = '<i class="fa-solid fa-circle-dot" style="animation:livePulse 1s ease-in-out infinite;"></i> End Session';
-      }
-    });
-  });
-
-  // ===== ROSTER SEARCH FILTER =====
-  const rosterSearch = document.getElementById('roster-search-input');
-  if (rosterSearch) {
-    rosterSearch.addEventListener('input', () => {
-      const query = rosterSearch.value.toLowerCase();
-      document.querySelectorAll('#roster-table tbody tr').forEach(row => {
-        const name = row.querySelector('.student-name')?.textContent.toLowerCase() || '';
-        row.style.display = name.includes(query) ? '' : 'none';
-      });
-    });
-  }
-
-  // ===== MOBILE TAB SWITCHING =====
-  const tabBtns   = document.querySelectorAll('.bottom-nav-item');
-  const tabPanels = document.querySelectorAll('.tab-panel');
-
-  const tabMap = {
-    'home':     'tab-home',
-    'playbook': 'tab-playbook',
-    'messages': 'tab-messages',
-    'roster':   'tab-roster',
-    'locker':   'tab-locker'
-  };
-
-  tabBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      tabBtns.forEach(b  => b.classList.remove('active'));
-      tabPanels.forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      const target = document.getElementById(tabMap[btn.dataset.tab]);
-      if (target) target.classList.add('active');
-    });
-  });
-
-  // ===== SIDEBAR NAV ACTIVE STATE (Desktop) =====
-  document.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('click', e => {
-      e.preventDefault();
-      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-      item.classList.add('active');
-    });
-  });
-</script>
-
+    window.onload = () => {
+        const name = localStorage.getItem('userName') || 'Mentor';
+        document.getElementById('sidebar-name').innerText = name;
+        document.getElementById('sidebar-avatar').innerText = name[0];
+        document.getElementById('header-avatar').innerText = name[0];
+        renderFeed();
+    };
+  </script>
 </body>
 </html>

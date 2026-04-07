@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet RIS | Free Access</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #008751;
+            --secondary: #FCD116;
+            --accent: #EF3340;
+            --dark: #1a1a1a;
+            --gray: #6c757d;
+            --light: #f4f7f4;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--light); color: var(--dark); }
+        h1, h2, h3 { font-family: 'Montserrat', sans-serif; }
+
+        /* Navigation */
+        nav {
+            background: var(--white);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+        .logo { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.5rem; color: var(--primary); }
+        .logo span { color: var(--secondary); }
+        
+        .nav-tabs { display: flex; gap: 2rem; }
+        .nav-tab { 
+            cursor: pointer; 
+            font-weight: 600; 
+            color: var(--gray); 
+            padding: 0.5rem 0;
+            border-bottom: 3px solid transparent;
+            transition: 0.3s;
+        }
+        .nav-tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+        /* Content */
+        .container { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Home Feed Mockup */
+        .post { background: var(--white); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; box-shadow: var(--shadow); }
+        .post-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+        .avatar { width: 40px; height: 40px; background: var(--primary); border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .post-img { width: 100%; border-radius: 8px; margin: 1rem 0; }
+        
+        /* Subscribe Section */
+        .subscribe-card { 
+            background: var(--white); 
+            padding: 3rem 2rem; 
+            border-radius: 20px; 
+            text-align: center; 
+            box-shadow: var(--shadow);
+            border: 2px solid var(--secondary);
+        }
+        .price { font-size: 3rem; font-weight: 900; color: var(--primary); margin: 1rem 0; }
+        .btn-pay { 
+            background: var(--primary); 
+            color: white; 
+            padding: 1rem 2.5rem; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: 700; 
+            display: inline-block;
+            margin-top: 2rem;
+            transition: 0.3s;
+        }
+        .btn-pay:hover { transform: scale(1.05); background: var(--dark); }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .nav-tabs { gap: 1rem; }
+            .container { margin: 1rem auto; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">Projet <span>RIS</span></div>
+        <div class="nav-tabs">
+            <div class="nav-tab active" onclick="switchTab('home')">Home</div>
+            <div class="nav-tab" onclick="switchTab('subscribe')">Subscribe</div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Home Tab -->
+        <div id="home" class="tab-content active">
+            <div class="post">
+                <div class="post-header">
+                    <div class="avatar">C</div>
+                    <div><strong>Coach Charles</strong><br><small>2 hours ago</small></div>
+                </div>
+                <p>Welcome to the Projet RIS community! Here, we bridge the gap between sports and digital excellence. Start your journey today.</p>
+                <img src="assets/images/feed/img1.png" alt="Community" class="post-img">
+            </div>
+            <div class="post">
+                <div class="post-header">
+                    <div class="avatar">B</div>
+                    <div><strong>BEF Expertise</strong><br><small>5 hours ago</small></div>
+                </div>
+                <p>Our latest workshop in Yaoundé was a huge success. Over 50 young athletes joined to learn about digital entrepreneurship.</p>
+                <img src="assets/images/feed/img2.jpg" alt="Workshop" class="post-img">
+            </div>
+            <div class="post" style="text-align: center; padding: 2rem; background: var(--secondary); color: var(--dark);">
+                <h3>Want to see more?</h3>
+                <p>Subscribe to access the full Playbook, Locker Room, and Mentorship sessions.</p>
+                <button class="btn-pay" onclick="switchTab('subscribe')" style="margin-top: 1rem;">View Plans</button>
+            </div>
+        </div>
+
+        <!-- Subscribe Tab -->
+        <div id="subscribe" class="tab-content">
+            <div class="subscribe-card">
+                <h2>Premium Access</h2>
+                <p>Get full access to all courses, live sessions, and certificates.</p>
+                <div class="price">5,000 FCFA<span>/mo</span></div>
+                <ul style="list-style: none; margin: 2rem 0; text-align: left; display: inline-block;">
+                    <li><i class="fas fa-check-circle" style="color: var(--primary);"></i> Full Course Catalog</li>
+                    <li><i class="fas fa-check-circle" style="color: var(--primary);"></i> Live Mentorship Sessions</li>
+                    <li><i class="fas fa-check-circle" style="color: var(--primary);"></i> Professional Certificates</li>
+                    <li><i class="fas fa-check-circle" style="color: var(--primary);"></i> Direct Messaging with Coaches</li>
+                </ul>
+                <br>
+                <a href="#" class="btn-pay" onclick="alert('Redirecting to Payment Gateway...')">Pay with Mobile Money</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
