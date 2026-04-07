@@ -17,6 +17,9 @@
     --dark: #1a1a1a;
     --shadow: 0 2px 12px rgba(0,0,0,0.06);
     --radius: 12px;
+    --sidebar-width: 280px;
+    --sidebar-collapsed-width: 80px;
+    --transition: all 0.3s ease;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -26,90 +29,203 @@
     font-family: 'Inter', sans-serif;
     color: var(--dark);
     min-height: 100vh;
+    overflow-x: hidden;
   }
 
   h1,h2,h3,h4,h5 { font-family: 'Montserrat', sans-serif; }
 
-  /* ===== SIDEBAR (Facebook Style) ===== */
+  /* ===== SIDEBAR (Dynamic & Collapsible) ===== */
   .sidebar {
     position: fixed;
     left: 0; top: 0;
-    width: 280px;
+    width: var(--sidebar-width);
     height: 100vh;
-    background: var(--bg); /* Blends with background like FB */
-    padding: 20px 10px;
+    background: var(--card);
+    box-shadow: var(--shadow);
     display: flex;
     flex-direction: column;
-    z-index: 40;
-    overflow-y: auto;
+    z-index: 100;
+    transition: var(--transition);
+    overflow: hidden;
+  }
+
+  .sidebar.collapsed {
+    width: var(--sidebar-collapsed-width);
+  }
+
+  .sidebar-header {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
   }
 
   .sidebar-logo {
-    padding: 0 15px 20px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
+    overflow: hidden;
+    white-space: nowrap;
   }
 
-  .sidebar-logo img { height: 40px; }
+  .sidebar-logo img { height: 35px; flex-shrink: 0; }
+  .sidebar-logo span { font-weight: 800; color: var(--green); font-size: 1.2rem; }
+
+  .toggle-sidebar {
+    background: none;
+    border: none;
+    color: var(--grey);
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 5px;
+    border-radius: 5px;
+    transition: background 0.2s;
+  }
+
+  .toggle-sidebar:hover { background: #f0f0f0; }
 
   .sidebar-nav {
+    padding: 15px 10px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 5px;
+    flex: 1;
   }
 
   .nav-item {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 10px 15px;
-    border-radius: 8px;
+    gap: 15px;
+    padding: 12px 15px;
+    border-radius: 10px;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: var(--transition);
     color: var(--dark);
     font-weight: 500;
     text-decoration: none;
+    white-space: nowrap;
   }
 
-  .nav-item:hover { background: rgba(0,0,0,0.05); }
-  .nav-item.active { background: rgba(0,0,0,0.05); font-weight: 600; }
-  .nav-item i { font-size: 20px; width: 24px; text-align: center; }
-  .nav-item.active i { color: var(--green); }
+  .nav-item:hover { background: rgba(0,135,81,0.05); color: var(--green); }
+  .nav-item.active { background: rgba(0,135,81,0.08); color: var(--green); font-weight: 600; }
+  .nav-item i { font-size: 1.2rem; width: 24px; text-align: center; flex-shrink: 0; }
+  .nav-item span { transition: opacity 0.2s; }
+
+  .sidebar.collapsed .nav-item span,
+  .sidebar.collapsed .sidebar-logo span {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* ===== TOP HEADER ===== */
+  .top-header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: var(--sidebar-width);
+    height: 70px;
+    background: var(--card);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    z-index: 90;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+    transition: var(--transition);
+  }
+
+  .sidebar.collapsed ~ .top-header {
+    left: var(--sidebar-collapsed-width);
+  }
+
+  .header-search {
+    flex: 1;
+    max-width: 400px;
+    position: relative;
+  }
+
+  .header-search input {
+    width: 100%;
+    background: #f0f2f5;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 15px 10px 40px;
+    font-size: 0.9rem;
+    outline: none;
+  }
+
+  .header-search i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--grey);
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .action-icon {
+    position: relative;
+    font-size: 1.2rem;
+    color: var(--grey);
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .action-icon:hover { color: var(--dark); }
+  .action-icon .badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: var(--red);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 2px solid var(--card);
+  }
 
   /* ===== MAIN CONTENT ===== */
   .main-content {
-    margin-left: 280px;
-    padding: 20px;
+    margin-left: var(--sidebar-width);
+    margin-top: 70px;
+    padding: 30px;
+    transition: var(--transition);
     display: flex;
     justify-content: center;
   }
 
-  .feed-container {
-    width: 100%;
-    max-width: 600px;
+  .sidebar.collapsed ~ .main-content {
+    margin-left: var(--sidebar-collapsed-width);
   }
 
-  /* ===== POST CREATOR ===== */
+  .feed-container {
+    width: 100%;
+    max-width: 650px;
+  }
+
+  /* ===== POSTS & CARDS ===== */
   .card {
     background: var(--card);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     margin-bottom: 20px;
-    padding: 15px;
+    padding: 20px;
   }
 
   .post-creator-top {
     display: flex;
-    gap: 10px;
+    gap: 15px;
     margin-bottom: 15px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 15px;
   }
 
   .avatar {
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     background: var(--green);
     color: white;
@@ -123,151 +239,106 @@
   .post-input-trigger {
     flex: 1;
     background: #f0f2f5;
-    border-radius: 20px;
-    padding: 10px 15px;
+    border-radius: 25px;
+    padding: 12px 20px;
     color: var(--grey);
     cursor: pointer;
     font-size: 0.95rem;
+    display: flex;
+    align-items: center;
   }
 
   .post-creator-actions {
     display: flex;
     justify-content: space-around;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
   }
 
-  .action-btn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.2s;
-    color: var(--grey);
-    font-weight: 600;
-    font-size: 0.9rem;
-  }
-
-  .action-btn:hover { background: #f2f2f2; }
-  .action-btn i.fa-image { color: #45bd62; }
-  .action-btn i.fa-video { color: #f02849; }
-  .action-btn i.fa-smile { color: #f7b928; }
-
-  /* ===== POSTS ===== */
-  .post {
-    background: var(--card);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    margin-bottom: 20px;
-    overflow: hidden;
-  }
-
-  .post-header {
-    padding: 15px;
+  .post-action {
     display: flex;
     align-items: center;
     gap: 10px;
+    color: var(--grey);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 8px 15px;
+    border-radius: 8px;
+    transition: background 0.2s;
   }
 
-  .post-info h4 { font-size: 0.95rem; font-weight: 700; }
-  .post-info span { font-size: 0.8rem; color: var(--grey); }
+  .post-action:hover { background: #f2f2f2; }
+  .post-action i.fa-image { color: #45bd62; }
+  .post-action i.fa-video { color: #f02849; }
+  .post-action i.fa-smile { color: #f7b928; }
 
-  .post-content {
-    padding: 0 15px 15px;
-    font-size: 0.95rem;
-    line-height: 1.5;
-  }
-
-  .post-image {
-    width: 100%;
-    max-height: 500px;
-    object-fit: cover;
-  }
-
-  .post-footer {
-    padding: 10px 15px;
-    border-top: 1px solid #eee;
-    display: flex;
-    justify-content: space-around;
-  }
-
-  /* ===== LOCKER ROOM (Live Video) ===== */
-  #locker-room { display: none; }
-  
-  .video-container {
-    width: 100%;
-    aspect-ratio: 16/9;
-    background: #000;
-    border-radius: var(--radius);
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-  }
-
-  .live-badge {
-    position: absolute;
-    top: 15px; left: 15px;
-    background: var(--red);
-    color: white;
-    padding: 4px 10px;
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: 0.8rem;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .live-badge i { animation: pulse 1.5s infinite; }
-
-  @keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.5; }
-    100% { opacity: 1; }
-  }
-
-  /* ===== MOBILE RESPONSIVE ===== */
+  /* ===== MOBILE VIEW (Bottom Nav) ===== */
   @media (max-width: 768px) {
     .sidebar {
       width: 100%;
-      height: auto;
-      position: relative;
+      height: 60px;
+      top: auto;
+      bottom: 0;
       flex-direction: row;
       justify-content: space-around;
-      padding: 10px;
-      border-bottom: 1px solid #ddd;
+      padding: 0;
+      border-top: 1px solid #ddd;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
     }
-    .sidebar-logo, .sidebar-profile { display: none; }
-    .main-content { margin-left: 0; padding: 10px; }
-    .nav-item span { display: none; }
-    .nav-item { padding: 10px; }
+    .sidebar-header, .sidebar-logo, .toggle-sidebar, .sidebar-nav .nav-item span { display: none; }
+    .sidebar-nav {
+      flex-direction: row;
+      width: 100%;
+      padding: 0;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .nav-item {
+      padding: 10px;
+      border-radius: 0;
+      flex: 1;
+      justify-content: center;
+    }
+    .top-header { left: 0; padding: 0 15px; }
+    .main-content { margin-left: 0; padding: 15px; margin-bottom: 60px; }
+    .feed-container { max-width: 100%; }
   }
+
+  /* Tab Visibility */
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
 </style>
 </head>
 <body>
 
-<div class="sidebar">
-  <div class="sidebar-logo">
-    <img src="assets/images/Screenshot_20260325-094957.jpg" alt="RIS Logo">
-    <span class="logo-text" style="font-weight: 800; color: var(--green);">RIS</span>
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">
+      <img src="assets/images/Screenshot_20260325-094957.jpg" alt="RIS Logo">
+      <span>Projet RIS</span>
+    </div>
+    <button class="toggle-sidebar" onclick="toggleSidebar()">
+      <i class="fas fa-bars"></i>
+    </button>
   </div>
   <div class="sidebar-nav">
-    <a href="#" class="nav-item active" onclick="showTab('home')">
-      <i class="fas fa-home"></i> <span>Home</span>
+    <a href="#" class="nav-item active" onclick="showTab('home', this)">
+      <i class="fa-solid fa-house"></i> <span>Home</span>
     </a>
-    <a href="#" class="nav-item" onclick="showTab('courses')">
-      <i class="fas fa-book"></i> <span>My Courses</span>
+    <a href="#" class="nav-item" onclick="showTab('playbook', this)">
+      <i class="fa-solid fa-clipboard-list"></i> <span>Playbook</span>
     </a>
-    <a href="#" class="nav-item" onclick="showTab('locker-room')">
-      <i class="fas fa-video"></i> <span>Locker Room</span>
+    <a href="#" class="nav-item" onclick="showTab('messages', this)">
+      <i class="fa-solid fa-envelope"></i> <span>Messages</span>
     </a>
-    <a href="#" class="nav-item" onclick="showTab('chat')">
-      <i class="fas fa-comment"></i> <span>Messages</span>
+    <a href="#" class="nav-item" onclick="showTab('performance', this)">
+      <i class="fa-solid fa-chart-simple"></i> <span>Performance</span>
     </a>
-    <a href="#" class="nav-item" onclick="showTab('profile')">
-      <i class="fas fa-user"></i> <span>Profile</span>
+    <a href="#" class="nav-item" onclick="showTab('locker-room', this)">
+      <i class="fa-solid fa-video"></i> <span>Locker Room</span>
     </a>
     <a href="auth.html" class="nav-item" style="margin-top: auto; color: var(--red);">
       <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
@@ -275,140 +346,151 @@
   </div>
 </div>
 
+<!-- TOP HEADER -->
+<div class="top-header">
+  <div class="header-search">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="text" placeholder="The Scout: Search posts, lessons, or users...">
+  </div>
+  <div class="header-actions">
+    <div class="action-icon">
+      <i class="fa-solid fa-bell"></i>
+      <div class="badge"></div>
+    </div>
+    <div class="avatar sm" style="width: 35px; height: 35px; font-size: 0.8rem;">JD</div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
 <div class="main-content">
   <div class="feed-container">
     
-    <!-- HOME TAB (Facebook Style) -->
-    <div id="home-tab">
+    <!-- HOME TAB -->
+    <div id="home" class="tab-content active">
+      <!-- Post Creator -->
       <div class="card">
         <div class="post-creator-top">
           <div class="avatar">JD</div>
           <div class="post-input-trigger">What's on your mind, <span class="user-name-display">Student</span>?</div>
         </div>
         <div class="post-creator-actions">
-          <div class="action-btn"><i class="fas fa-image"></i> Photo</div>
-          <div class="action-btn"><i class="fas fa-video"></i> Video</div>
-          <div class="action-btn"><i class="fas fa-smile"></i> Feeling</div>
+          <div class="post-action"><i class="fas fa-image"></i> Photo</div>
+          <div class="post-action"><i class="fas fa-video"></i> Video</div>
+          <div class="post-action"><i class="fas fa-smile"></i> Feeling</div>
         </div>
       </div>
 
-      <!-- PROTOTYPE POSTS -->
-      <div class="post">
-        <div class="post-header">
+      <!-- Coach's Board (Pinned) -->
+      <div class="card" style="border-left: 4px solid var(--gold);">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+          <i class="fas fa-thumbtack" style="color: var(--gold);"></i>
+          <span style="font-weight: 700; font-size: 0.8rem; color: var(--grey); text-transform: uppercase;">Coach's Board</span>
+        </div>
+        <h4 style="margin-bottom: 10px;">Welcome to the Global Feed!</h4>
+        <p style="font-size: 0.95rem; color: var(--dark); line-height: 1.5;">
+          This is where the entire RIS community connects. Share your progress, ask questions, and stay updated with the latest from all specialties.
+        </p>
+      </div>
+
+      <!-- Prototype Posts -->
+      <div class="card" style="padding: 0; overflow: hidden;">
+        <div style="padding: 15px; display: flex; align-items: center; gap: 12px;">
           <div class="avatar" style="background: #1a1a2e;">MB</div>
-          <div class="post-info">
-            <h4>Moussa Bakari</h4>
-            <span>2 hours ago • <i class="fas fa-globe-africa"></i></span>
+          <div>
+            <h4 style="font-size: 0.95rem;">Moussa Bakari</h4>
+            <span style="font-size: 0.8rem; color: var(--grey);">2 hours ago • <i class="fas fa-globe-africa"></i></span>
           </div>
         </div>
-        <div class="post-content">
-          Just finished my first module on Digital Entrepreneurship! Feeling motivated to build my own sports brand. 🚀 #ProjetRIS #FutureLeader
+        <div style="padding: 0 15px 15px; font-size: 0.95rem;">
+          Just finished my first module on Digital Entrepreneurship! Feeling motivated to build my own sports brand. 🚀 #ProjetRIS
         </div>
-        <img src="assets/images/post1.jpg" class="post-image" alt="Student studying">
-        <div class="post-footer">
-          <div class="action-btn"><i class="far fa-thumbs-up"></i> Like</div>
-          <div class="action-btn"><i class="far fa-comment"></i> Comment</div>
-          <div class="action-btn"><i class="far fa-share-square"></i> Share</div>
-        </div>
-      </div>
-
-      <div class="post">
-        <div class="post-header">
-          <div class="avatar" style="background: var(--gold); color: #000;">SN</div>
-          <div class="post-info">
-            <h4>Sarah Njoh</h4>
-            <span>5 hours ago • <i class="fas fa-globe-africa"></i></span>
-          </div>
-        </div>
-        <div class="post-content">
-          Great training session today at the stadium, followed by an amazing coding workshop. Balancing sports and tech is the way forward! ⚽💻
-        </div>
-        <img src="assets/images/post2.jpg" class="post-image" alt="Athletes training">
-        <div class="post-footer">
-          <div class="action-btn"><i class="far fa-thumbs-up"></i> Like</div>
-          <div class="action-btn"><i class="far fa-comment"></i> Comment</div>
-          <div class="action-btn"><i class="far fa-share-square"></i> Share</div>
-        </div>
-      </div>
-
-      <div class="post">
-        <div class="post-header">
-          <div class="avatar">EK</div>
-          <div class="post-info">
-            <h4>Emmanuel Kotto</h4>
-            <span>Yesterday • <i class="fas fa-globe-africa"></i></span>
-          </div>
-        </div>
-        <div class="post-content">
-          Check out our new classroom setup! Ready to learn some web development skills.
-        </div>
-        <img src="assets/images/post3.jpg" class="post-image" alt="Classroom">
-        <div class="post-footer">
-          <div class="action-btn"><i class="far fa-thumbs-up"></i> Like</div>
-          <div class="action-btn"><i class="far fa-comment"></i> Comment</div>
-          <div class="action-btn"><i class="far fa-share-square"></i> Share</div>
+        <img src="assets/images/post1.jpg" style="width: 100%; max-height: 400px; object-fit: cover;" alt="Post">
+        <div style="padding: 10px 15px; border-top: 1px solid #eee; display: flex; justify-content: space-around;">
+          <div class="post-action"><i class="far fa-thumbs-up"></i> Like</div>
+          <div class="post-action"><i class="far fa-comment"></i> Comment</div>
+          <div class="post-action"><i class="far fa-share-square"></i> Share</div>
         </div>
       </div>
     </div>
 
-    <!-- LOCKER ROOM TAB (Live Video) -->
-    <div id="locker-room">
-      <h2 style="margin-bottom: 10px;">Locker Room</h2>
-      <p style="color: var(--grey); margin-bottom: 20px;">Join live sessions with your mentors and teammates.</p>
-      
+    <!-- PLAYBOOK TAB -->
+    <div id="playbook" class="tab-content">
       <div class="card">
-        <div class="post-header">
-          <div class="avatar" style="background: #1a1a2e;">MC</div>
-          <div class="post-info">
-            <h4>Mentor Collins</h4>
-            <span>Live Now • 124 watching</span>
+        <h3>My Playbook</h3>
+        <p style="color: var(--grey); margin-top: 5px;">Course modules strictly assigned to your specialty.</p>
+        <div style="margin-top: 20px; border: 1px dashed #ccc; padding: 30px; text-align: center; border-radius: 10px;">
+          <i class="fa-solid fa-clipboard-list" style="font-size: 2rem; color: #ddd; margin-bottom: 10px;"></i>
+          <p>Your lessons and PDFs will appear here.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MESSAGES TAB -->
+    <div id="messages" class="tab-content">
+      <div class="card">
+        <h3>Private Inbox</h3>
+        <p style="color: var(--grey); margin-top: 5px;">Direct messaging with Mentors and teammates.</p>
+        <div style="margin-top: 20px; border: 1px dashed #ccc; padding: 30px; text-align: center; border-radius: 10px;">
+          <i class="fa-solid fa-envelope" style="font-size: 2rem; color: #ddd; margin-bottom: 10px;"></i>
+          <p>No new messages yet.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PERFORMANCE TAB -->
+    <div id="performance" class="tab-content">
+      <div class="card">
+        <h3>Stat Sheet</h3>
+        <p style="color: var(--grey); margin-top: 5px;">Your personal metrics and Rank Badge.</p>
+        <div style="margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+          <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; text-align: center;">
+            <span style="font-size: 0.8rem; color: var(--grey);">Modules Completed</span>
+            <h2 style="color: var(--green);">0</h2>
+          </div>
+          <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; text-align: center;">
+            <span style="font-size: 0.8rem; color: var(--grey);">Current Rank</span>
+            <h2 style="color: var(--gold);">Amateur</h2>
           </div>
         </div>
-        <div class="video-container">
-          <div class="live-badge"><i class="fas fa-circle"></i> LIVE</div>
-          <button style="background: var(--green); color: white; border: none; padding: 15px 30px; border-radius: 50px; font-weight: bold; cursor: pointer;">
-            <i class="fas fa-play"></i> Join Session
+      </div>
+    </div>
+
+    <!-- LOCKER ROOM TAB -->
+    <div id="locker-room" class="tab-content">
+      <div class="card">
+        <h3>Locker Room</h3>
+        <p style="color: var(--grey); margin-top: 5px;">Live Hub: Video stream and specialty chat.</p>
+        <div style="margin-top: 20px; background: #000; aspect-ratio: 16/9; border-radius: 10px; display: flex; align-items: center; justify-content: center; position: relative;">
+          <div style="position: absolute; top: 15px; left: 15px; background: var(--red); color: white; padding: 5px 10px; border-radius: 5px; font-weight: bold; font-size: 0.8rem;">
+            <i class="fas fa-circle" style="font-size: 0.6rem; margin-right: 5px;"></i> LIVE
+          </div>
+          <button style="background: var(--green); color: white; border: none; padding: 12px 25px; border-radius: 50px; font-weight: bold; cursor: pointer;">
+            Join Live Session
           </button>
         </div>
-        <div style="padding: 15px;">
-          <h4>Topic: Building your Personal Brand as an Athlete</h4>
-          <p style="font-size: 0.9rem; color: var(--grey); margin-top: 5px;">Learn how to use social media to attract sponsors and grow your influence.</p>
-        </div>
       </div>
-    </div>
-
-    <!-- OTHER TABS (Placeholders) -->
-    <div id="other-tabs" style="display: none; text-align: center; padding: 50px;">
-      <i class="fas fa-tools" style="font-size: 3rem; color: var(--grey); margin-bottom: 20px;"></i>
-      <h3>Section Under Development</h3>
-      <p>We are working hard to bring you this feature soon!</p>
     </div>
 
   </div>
 </div>
 
 <script>
-  function showTab(tabId) {
-    // Update nav active state
-    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-    event.currentTarget.classList.add('active');
-
-    // Hide all tabs
-    document.getElementById('home-tab').style.display = 'none';
-    document.getElementById('locker-room').style.display = 'none';
-    document.getElementById('other-tabs').style.display = 'none';
-
-    // Show selected tab
-    if (tabId === 'home') {
-      document.getElementById('home-tab').style.display = 'block';
-    } else if (tabId === 'locker-room') {
-      document.getElementById('locker-room').style.display = 'block';
-    } else {
-      document.getElementById('other-tabs').style.display = 'block';
-    }
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('collapsed');
   }
 
-  // Get user name from URL or localStorage for prototype
+  function showTab(tabId, element) {
+    // Update nav active state
+    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+    element.classList.add('active');
+
+    // Hide all tabs
+    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+
+    // Show selected tab
+    document.getElementById(tabId).classList.add('active');
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     const userName = localStorage.getItem('ris_user_name') || 'Student';
     document.querySelectorAll('.user-name-display').forEach(el => el.textContent = userName);
