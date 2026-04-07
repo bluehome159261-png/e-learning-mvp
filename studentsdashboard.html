@@ -180,7 +180,7 @@
 
   .action-icon {
     position: relative;
-    font-size: 1.8rem; /* Larger icon like in screenshot */
+    font-size: 1.5rem; /* Adjusted size to match screenshot */
     color: #606770; /* Grey color from screenshot */
     cursor: pointer;
     transition: color 0.2s;
@@ -192,8 +192,8 @@
   
   .action-icon .badge {
     position: absolute;
-    top: 2px;
-    right: 0;
+    top: -2px; /* Adjusted position */
+    right: -2px; /* Adjusted position */
     background: var(--red);
     width: 8px;
     height: 8px;
@@ -209,8 +209,8 @@
   }
 
   .avatar {
-    width: 45px;
-    height: 45px;
+    width: 40px; /* Adjusted size to match screenshot */
+    height: 40px; /* Adjusted size to match screenshot */
     border-radius: 50%;
     background: var(--green); /* Solid green from screenshot */
     color: white;
@@ -218,7 +218,7 @@
     align-items: center;
     justify-content: center;
     font-weight: 600;
-    font-size: 1.1rem;
+    font-size: 1rem; /* Adjusted font size */
     flex-shrink: 0;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
@@ -792,7 +792,7 @@
           <div class="progress-label">
             <span>Content Strategy</span>
             <span>40%</span>
-          </div>
+          }
           <div class="progress-bar-bg">
             <div class="progress-bar-fill" style="width: 40%;"></div>
           </div>
@@ -902,7 +902,7 @@
     
     // Close dropdown when clicking outside
     window.addEventListener('click', (e) => {
-      if (!e.target.closest('.profile-pill')) {
+      if (!e.target.closest('.profile-pill') && !e.target.closest('#profileDropdown')) {
         document.getElementById('profileDropdown').classList.remove('active');
       }
     });
