@@ -118,20 +118,20 @@
     pointer-events: none;
   }
 
-  /* ===== TOP HEADER (Corrected Layout) ===== */
+  /* ===== TOP HEADER (EXACT MATCH TO SCREENSHOT) ===== */
   .top-header {
     position: fixed;
     top: 0;
     right: 0;
     left: var(--sidebar-width);
     height: 70px;
-    background: var(--card);
+    background: #ffffff; /* Clean white as in screenshot */
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 30px;
     z-index: 90;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     transition: var(--transition);
   }
 
@@ -171,56 +171,46 @@
     color: var(--grey);
   }
 
-  /* Header RIGHT: Notifications & Profile (MATCHING SCREENSHOT) */
+  /* Header RIGHT: EXACT MATCH TO SCREENSHOT */
   .header-right {
     display: flex;
     align-items: center;
-    gap: 25px;
+    gap: 20px; /* Spacing between bell and avatar */
   }
 
-  .action-icon {
+  .notification-bell {
     position: relative;
-    font-size: 1.5rem; /* Adjusted size to match screenshot */
-    color: #606770; /* Grey color from screenshot */
+    font-size: 1.8rem; /* Large grey bell as in screenshot */
+    color: #606770; /* Exact grey from screenshot */
     cursor: pointer;
-    transition: color 0.2s;
     display: flex;
     align-items: center;
   }
 
-  .action-icon:hover { color: var(--dark); }
-  
-  .action-icon .badge {
+  .notification-bell .red-dot {
     position: absolute;
-    top: -2px; /* Adjusted position */
-    right: -2px; /* Adjusted position */
-    background: var(--red);
+    top: 2px;
+    right: 0;
+    background: #f02849; /* Bright red dot as in screenshot */
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    border: 1.5px solid var(--card);
+    border: 2px solid #ffffff; /* White border around dot */
   }
 
-  .profile-pill {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    position: relative;
-  }
-
-  .avatar {
-    width: 40px; /* Adjusted size to match screenshot */
-    height: 40px; /* Adjusted size to match screenshot */
+  .profile-avatar-circle {
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
-    background: var(--green); /* Solid green from screenshot */
-    color: white;
+    background: #008751; /* Solid green circle as in screenshot */
+    color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 600;
-    font-size: 1rem; /* Adjusted font size */
-    flex-shrink: 0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    font-size: 1.1rem;
+    cursor: pointer;
+    position: relative;
   }
 
   .profile-dropdown {
@@ -528,7 +518,7 @@
   </div>
 </div>
 
-<!-- TOP HEADER (Corrected Layout) -->
+<!-- TOP HEADER (EXACT MATCH TO SCREENSHOT) -->
 <div class="top-header">
   <div class="header-left">
     <div class="sidebar-logo" style="margin-right: 20px;">
@@ -540,15 +530,17 @@
     </div>
   </div>
   <div class="header-right">
-    <div class="action-icon">
+    <!-- Notification Bell (Exact Match) -->
+    <div class="notification-bell">
       <i class="fa-solid fa-bell"></i>
-      <div class="badge"></div>
+      <div class="red-dot"></div>
     </div>
+    <!-- Profile Avatar (Exact Match) -->
     <div class="profile-pill" onclick="toggleProfileDropdown()">
-      <div class="avatar">JD</div>
+      <div class="profile-avatar-circle">JD</div>
       <div class="profile-dropdown" id="profileDropdown">
         <div class="dropdown-header">
-          <div class="avatar" style="width: 40px; height: 40px; font-size: 0.9rem;">JD</div>
+          <div class="profile-avatar-circle" style="width: 40px; height: 40px; font-size: 0.9rem;">JD</div>
           <div>
             <h4 class="user-name-display">Student</h4>
             <p style="font-size: 0.75rem; color: var(--grey);">Specialty: Digital Marketing</p>
@@ -572,7 +564,7 @@
       <!-- Post Creator -->
       <div class="card">
         <div class="post-creator-top">
-          <div class="avatar">JD</div>
+          <div class="profile-avatar-circle">JD</div>
           <div class="post-input-trigger">What's on your mind, <span class="user-name-display">Student</span>?</div>
         </div>
         <div class="post-creator-actions">
@@ -599,7 +591,7 @@
       <!-- Post 1: Text Only -->
       <div class="card">
         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 15px;">
-          <div class="avatar" style="background: #1a1a2e;">BEF</div>
+          <div class="profile-avatar-circle" style="background: #1a1a2e;">BEF</div>
           <div>
             <h4 style="font-size: 0.95rem;">Cabinet d'Expertise BEF</h4>
             <span style="font-size: 0.8rem; color: var(--grey);">Just now • <i class="fas fa-globe-africa"></i></span>
@@ -617,7 +609,7 @@
       <!-- Post 2: Image -->
       <div class="card" style="padding: 0; overflow: hidden;">
         <div style="padding: 15px; display: flex; align-items: center; gap: 12px;">
-          <div class="avatar" style="background: var(--green);">AN</div>
+          <div class="profile-avatar-circle" style="background: var(--green);">AN</div>
           <div>
             <h4 style="font-size: 0.95rem;">Alain N'Goma</h4>
             <span style="font-size: 0.8rem; color: var(--grey);">45 mins ago • <i class="fas fa-globe-africa"></i></span>
@@ -636,7 +628,7 @@
       <!-- Post 3: Text Only -->
       <div class="card">
         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 15px;">
-          <div class="avatar" style="background: var(--gold); color: #000;">SM</div>
+          <div class="profile-avatar-circle" style="background: var(--gold); color: #000;">SM</div>
           <div>
             <h4 style="font-size: 0.95rem;">Samuel Mvondo</h4>
             <span style="font-size: 0.8rem; color: var(--grey);">2 hours ago • <i class="fas fa-globe-africa"></i></span>
@@ -654,7 +646,7 @@
       <!-- Post 4: Image -->
       <div class="card" style="padding: 0; overflow: hidden;">
         <div style="padding: 15px; display: flex; align-items: center; gap: 12px;">
-          <div class="avatar" style="background: var(--red);">EK</div>
+          <div class="profile-avatar-circle" style="background: var(--red);">EK</div>
           <div>
             <h4 style="font-size: 0.95rem;">Emmanuel Kotto</h4>
             <span style="font-size: 0.8rem; color: var(--grey);">3 hours ago • <i class="fas fa-globe-africa"></i></span>
@@ -673,7 +665,7 @@
       <!-- Post 5: Image -->
       <div class="card" style="padding: 0; overflow: hidden;">
         <div style="padding: 15px; display: flex; align-items: center; gap: 12px;">
-          <div class="avatar" style="background: #1a1a2e;">RIS</div>
+          <div class="profile-avatar-circle" style="background: #1a1a2e;">RIS</div>
           <div>
             <h4 style="font-size: 0.95rem;">Projet RIS Official</h4>
             <span style="font-size: 0.8rem; color: var(--grey);">5 hours ago • <i class="fas fa-globe-africa"></i></span>
@@ -692,7 +684,7 @@
       <!-- Post 6: Text Only -->
       <div class="card">
         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 15px;">
-          <div class="avatar" style="background: var(--green);">SN</div>
+          <div class="profile-avatar-circle" style="background: var(--green);">SN</div>
           <div>
             <h4 style="font-size: 0.95rem;">Sarah Njoh</h4>
             <span style="font-size: 0.8rem; color: var(--grey);">Yesterday • <i class="fas fa-globe-africa"></i></span>
@@ -710,7 +702,7 @@
       <!-- Post 7: Image -->
       <div class="card" style="padding: 0; overflow: hidden;">
         <div style="padding: 15px; display: flex; align-items: center; gap: 12px;">
-          <div class="avatar" style="background: var(--gold); color: #000;">KM</div>
+          <div class="profile-avatar-circle" style="background: var(--gold); color: #000;">KM</div>
           <div>
             <h4 style="font-size: 0.95rem;">Kadiatou Mansare</h4>
             <span style="font-size: 0.8rem; color: var(--grey);">Yesterday • <i class="fas fa-globe-africa"></i></span>
@@ -729,7 +721,7 @@
       <!-- Post 8: Image -->
       <div class="card" style="padding: 0; overflow: hidden;">
         <div style="padding: 15px; display: flex; align-items: center; gap: 12px;">
-          <div class="avatar" style="background: var(--red);">ST</div>
+          <div class="profile-avatar-circle" style="background: var(--red);">ST</div>
           <div>
             <h4 style="font-size: 0.95rem;">Samuel Teto</h4>
             <span style="font-size: 0.8rem; color: var(--grey);">2 days ago • <i class="fas fa-globe-africa"></i></span>
@@ -792,7 +784,7 @@
           <div class="progress-label">
             <span>Content Strategy</span>
             <span>40%</span>
-          }
+          </div>
           <div class="progress-bar-bg">
             <div class="progress-bar-fill" style="width: 40%;"></div>
           </div>
