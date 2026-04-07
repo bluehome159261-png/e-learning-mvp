@@ -128,7 +128,7 @@
     background: #ffffff; /* Clean white as in screenshot */
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end; /* Align items to the right */
     padding: 0 30px;
     z-index: 90;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
@@ -137,36 +137,6 @@
 
   .sidebar.collapsed ~ .top-header {
     left: var(--sidebar-collapsed-width);
-  }
-
-  /* Header LEFT: Logo & Search */
-  .header-left {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-
-  .header-search {
-    position: relative;
-    width: 250px; /* Adjust width as needed */
-  }
-
-  .header-search input {
-    width: 100%;
-    background: #f0f2f5;
-    border: none;
-    border-radius: 50px;
-    padding: 10px 15px 10px 40px;
-    font-size: 0.9rem;
-    outline: none;
-  }
-
-  .header-search i {
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--grey);
   }
 
   /* Header RIGHT: EXACT MATCH TO SCREENSHOT */
@@ -472,7 +442,7 @@
     }
     .nav-item i { font-size: 1.2rem; }
     .nav-item span { display: block; opacity: 1 !important; }
-    .top-header { left: 0; padding: 0 15px; }
+    .top-header { left: 0; padding: 0 15px; justify-content: flex-end; } /* Only right elements */
     .main-content { margin-left: 0; padding: 15px; margin-bottom: 70px; }
     .feed-container { max-width: 100%; }
     .header-search { display: none; }
@@ -498,19 +468,19 @@
     </button>
   </div>
   <div class="sidebar-nav">
-    <a href="#" class="nav-item active" onclick="showTab('home', this)">
+    <a href="#" class="nav-item active" onclick="showTab(\'home\', this)">
       <i class="fa-solid fa-house"></i> <span>Home</span>
     </a>
-    <a href="#" class="nav-item" onclick="showTab('playbook', this)">
+    <a href="#" class="nav-item" onclick="showTab(\'playbook\', this)">
       <i class="fa-solid fa-clipboard-list"></i> <span>Playbook</span>
     </a>
-    <a href="#" class="nav-item" onclick="showTab('messages', this)">
+    <a href="#" class="nav-item" onclick="showTab(\'messages\', this)">
       <i class="fa-solid fa-envelope"></i> <span>Messages</span>
     </a>
-    <a href="#" class="nav-item" onclick="showTab('locker-room', this)">
+    <a href="#" class="nav-item" onclick="showTab(\'locker-room\', this)">
       <i class="fa-solid fa-door-open"></i> <span>Locker Room</span>
     </a>
-    <a href="#" class="nav-item" onclick="showTab('performance', this)">
+    <a href="#" class="nav-item" onclick="showTab(\'performance\', this)">
       <i class="fa-solid fa-chart-simple"></i> <span>Performance</span>
     </a>
   </div>
@@ -518,15 +488,6 @@
 
 <!-- TOP HEADER (EXACT MATCH TO SCREENSHOT) -->
 <div class="top-header">
-  <div class="header-left">
-    <div class="sidebar-logo" style="margin-right: 20px;">
-      <img src="assets/images/Screenshot_20260325-094957.jpg" alt="RIS Logo" style="height: 30px;">
-    </div>
-    <div class="header-search">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" placeholder="The Scout: Search posts, lessons, or users...">
-    </div>
-  </div>
   <div class="header-right">
     <!-- Notification Bell (Exact Match) -->
     <div class="notification-bell">
@@ -563,7 +524,7 @@
       <div class="card">
         <div class="post-creator-top">
           <div class="profile-avatar-circle">JD</div>
-          <div class="post-input-trigger">What's on your mind, <span class="user-name-display">Student</span>?</div>
+          <div class="post-input-trigger">What\'s on your mind, <span class="user-name-display">Student</span>?</div>
         </div>
         <div class="post-creator-actions">
           <div class="post-action"><i class="fas fa-image"></i> Photo</div>
@@ -572,11 +533,11 @@
         </div>
       </div>
 
-      <!-- Coach's Board (Pinned) -->
+      <!-- Coach\'s Board (Pinned) -->
       <div class="card" style="border-left: 4px solid var(--gold);">
         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
           <i class="fas fa-thumbtack" style="color: var(--gold);"></i>
-          <span style="font-weight: 700; font-size: 0.8rem; color: var(--grey); text-transform: uppercase;">Coach's Board</span>
+          <span style="font-weight: 700; font-size: 0.8rem; color: var(--grey); text-transform: uppercase;">Coach\'s Board</span>
         </div>
         <h4 style="margin-bottom: 10px;">Welcome to the Global Feed!</h4>
         <p style="font-size: 0.95rem; color: var(--dark); line-height: 1.5;">
@@ -591,12 +552,12 @@
         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 15px;">
           <div class="profile-avatar-circle" style="background: #1a1a2e;">BEF</div>
           <div>
-            <h4 style="font-size: 0.95rem;">Cabinet d'Expertise BEF</h4>
+            <h4 style="font-size: 0.95rem;">Cabinet d\'Expertise BEF</h4>
             <span style="font-size: 0.8rem; color: var(--grey);">Just now • <i class="fas fa-globe-africa"></i></span>
           </div>
         </div>
         <div style="font-size: 0.95rem; line-height: 1.5;">
-          Reminder: The "Digital Branding for Athletes" workshop starts in 30 minutes in the Locker Room. Don't miss out! 🚀
+          Reminder: The \"Digital Branding for Athletes\" workshop starts in 30 minutes in the Locker Room. Don\'t miss out! 🚀
         </div>
         <div style="padding: 10px 0; border-top: 1px solid #eee; margin-top: 15px; display: flex; justify-content: space-around;">
           <div class="post-action"><i class="far fa-thumbs-up"></i> Like</div>
@@ -609,7 +570,7 @@
         <div style="padding: 15px; display: flex; align-items: center; gap: 12px;">
           <div class="profile-avatar-circle" style="background: var(--green);">AN</div>
           <div>
-            <h4 style="font-size: 0.95rem;">Alain N'Goma</h4>
+            <h4 style="font-size: 0.95rem;">Alain N\'Goma</h4>
             <span style="font-size: 0.8rem; color: var(--grey);">45 mins ago • <i class="fas fa-globe-africa"></i></span>
           </div>
         </div>
@@ -633,7 +594,7 @@
           </div>
         </div>
         <div style="font-size: 0.95rem; line-height: 1.5;">
-          Has anyone started the "Introduction to Web Design" module yet? I'm looking for a study partner! 💻🤝
+          Has anyone started the \"Introduction to Web Design\" module yet? I\'m looking for a study partner! 💻🤝
         </div>
         <div style="padding: 10px 0; border-top: 1px solid #eee; margin-top: 15px; display: flex; justify-content: space-around;">
           <div class="post-action"><i class="far fa-thumbs-up"></i> Like</div>
@@ -689,7 +650,7 @@
           </div>
         </div>
         <div style="font-size: 0.95rem; line-height: 1.5;">
-          Just earned my "Novice" badge! Hard work pays off. Keep pushing everyone! 🏅🔥
+          Just earned my \"Novice\" badge! Hard work pays off. Keep pushing everyone! 🏅🔥
         </div>
         <div style="padding: 10px 0; border-top: 1px solid #eee; margin-top: 15px; display: flex; justify-content: space-around;">
           <div class="post-action"><i class="far fa-thumbs-up"></i> Like</div>
@@ -726,7 +687,7 @@
           </div>
         </div>
         <div style="padding: 0 15px 15px; font-size: 0.95rem;">
-          Focus on the goal. Whether it's on the track or in the code. 🏃‍♂️💻
+          Focus on the goal. Whether it\'s on the track or in the code. 🏃‍♂️💻
         </div>
         <img src="assets/images/feed/img6.jpg" style="width: 100%; max-height: 400px; object-fit: cover;" alt="Sports">
         <div style="padding: 10px 15px; border-top: 1px solid #eee; display: flex; justify-content: space-around;">
@@ -824,7 +785,7 @@
           </div>
           <div class="chat-messages" id="chatMessages">
             <div class="message received">
-              <strong>Mentor Collins:</strong> Welcome everyone! Today we're discussing personal branding.
+              <strong>Mentor Collins:</strong> Welcome everyone! Today we\'re discussing personal branding.
             </div>
             <div class="message received">
               <strong>Alain:</strong> Excited for this session!
@@ -856,44 +817,44 @@
 
 <script>
   function toggleSidebar() {
-    document.getElementById('sidebar').classList.toggle('collapsed');
+    document.getElementById(\'sidebar\').classList.toggle(\'collapsed\');
   }
 
   function toggleProfileDropdown() {
-    document.getElementById('profileDropdown').classList.toggle('active');
+    document.getElementById(\'profileDropdown\').classList.toggle(\'active\');
   }
 
   function showTab(tabId, element) {
-    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-    element.classList.add('active');
-    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-    document.getElementById(tabId).classList.add('active');
+    document.querySelectorAll(\'.nav-item\').forEach(item => item.classList.remove(\'active\'));
+    element.classList.add(\'active\');
+    document.querySelectorAll(\'.tab-content\').forEach(tab => tab.classList.remove(\'active\'));
+    document.getElementById(tabId).classList.add(\'active\');
     
     // Close profile dropdown if open
-    document.getElementById('profileDropdown').classList.remove('active');
+    document.getElementById(\'profileDropdown\').classList.remove(\'active\');
   }
 
   function sendMessage() {
-    const input = document.getElementById('chatInput');
-    const messages = document.getElementById('chatMessages');
-    if (input.value.trim() !== "") {
-      const msgDiv = document.createElement('div');
-      msgDiv.className = 'message sent';
+    const input = document.getElementById(\'chatInput\');
+    const messages = document.getElementById(\'chatMessages\');
+    if (input.value.trim() !== \"\") {
+      const msgDiv = document.createElement(\'div\');
+      msgDiv.className = \'message sent\';
       msgDiv.innerHTML = `<strong>You:</strong> ${input.value}`;
       messages.appendChild(msgDiv);
-      input.value = "";
+      input.value = \"\";
       messages.scrollTop = messages.scrollHeight;
     }
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const userName = localStorage.getItem('ris_user_name') || 'Student';
-    document.querySelectorAll('.user-name-display').forEach(el => el.textContent = userName);
+  document.addEventListener(\'DOMContentLoaded\', () => {
+    const userName = localStorage.getItem(\'ris_user_name\') || \'Student\';
+    document.querySelectorAll(\'.user-name-display\').forEach(el => el.textContent = userName);
     
     // Close dropdown when clicking outside
-    window.addEventListener('click', (e) => {
-      if (!e.target.closest('.profile-pill') && !e.target.closest('#profileDropdown')) {
-        document.getElementById('profileDropdown').classList.remove('active');
+    window.addEventListener(\'click\', (e) => {
+      if (!e.target.closest(\'.profile-pill\') && !e.target.closest(\'#profileDropdown\')) {
+        document.getElementById(\'profileDropdown\').classList.remove(\'active\');
       }
     });
   });
