@@ -848,6 +848,18 @@ input:focus, select:focus {
             formData.append('password', password);
             formData.append('remember', remember);
 
+            // Prototype Login Logic
+            const emailInput = document.getElementById('loginEmail').value;
+            if (emailInput) {
+                localStorage.setItem('ris_user_name', emailInput.split('@')[0]);
+                loginMsg.innerHTML = 'Login successful! Redirecting...';
+                loginMsg.className = 'message success';
+                setTimeout(() => {
+                    window.location.href = 'studentsdashboard.html';
+                }, 1000);
+                return;
+            }
+
             const response = await fetch('php/login.php', { method: 'POST', body: formData });
             const result = await response.json();
 
@@ -855,7 +867,7 @@ input:focus, select:focus {
                 loginMsg.innerHTML = 'Login successful! Redirecting...';
                 loginMsg.className = 'message success';
                 setTimeout(() => {
-                    window.location.href = result.role === 'mentor' ? 'mentor_dashboard.php' : 'student_dashboard.php';
+                    window.location.href = result.role === 'mentor' ? 'mentor_dashboard.php' : 'studentsdashboard.html';
                 }, 1500);
             } else {
                 loginMsg.innerHTML = result.error || 'Login failed';
@@ -904,6 +916,16 @@ input:focus, select:focus {
 
         try {
             const formData = new FormData(regForm);
+            // Prototype Registration Logic
+            const firstName = document.getElementById('firstname').value;
+            localStorage.setItem('ris_user_name', firstName);
+            regMsg.innerHTML = 'Registration successful! Redirecting...';
+            regMsg.className = 'message success';
+            setTimeout(() => {
+                window.location.href = 'welcome.html';
+            }, 1000);
+            return;
+
             const response = await fetch('php/register.php', { method: 'POST', body: formData });
             const result = await response.json();
 
@@ -911,7 +933,7 @@ input:focus, select:focus {
                 regMsg.innerHTML = 'Registration successful! Redirecting...';
                 regMsg.className = 'message success';
                 setTimeout(() => {
-                    window.location.href = result.role === 'mentor' ? 'mentor_dashboard.php' : 'student_dashboard.php';
+                    window.location.href = result.role === 'mentor' ? 'mentor_dashboard.php' : 'studentsdashboard.html';
                 }, 1500);
             } else {
                 regMsg.innerHTML = result.error || 'Registration failed';

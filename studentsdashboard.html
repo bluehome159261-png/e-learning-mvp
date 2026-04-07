@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RIS | Student Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --bg: #f0f2f5;
+    --card: #ffffff;
+    --green: #008751;
+    --gold: #FCD116;
+    --red: #EF3340;
+    --grey: #6c757d;
+    --dark: #1a1a1a;
+    --shadow: 0 2px 12px rgba(0,0,0,0.06);
+    --radius: 12px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Inter', sans-serif;
+    color: var(--dark);
+    min-height: 100vh;
+  }
+
+  h1,h2,h3,h4,h5 { font-family: 'Montserrat', sans-serif; }
+
+  /* ===== SIDEBAR (Facebook Style) ===== */
+  .sidebar {
+    position: fixed;
+    left: 0; top: 0;
+    width: 280px;
+    height: 100vh;
+    background: var(--bg); /* Blends with background like FB */
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    z-index: 40;
+    overflow-y: auto;
+  }
+
+  .sidebar-logo {
+    padding: 0 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .sidebar-logo img { height: 40px; }
+
+  .sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+    color: var(--dark);
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .nav-item:hover { background: rgba(0,0,0,0.05); }
+  .nav-item.active { background: rgba(0,0,0,0.05); font-weight: 600; }
+  .nav-item i { font-size: 20px; width: 24px; text-align: center; }
+  .nav-item.active i { color: var(--green); }
+
+  /* ===== MAIN CONTENT ===== */
+  .main-content {
+    margin-left: 280px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .feed-container {
+    width: 100%;
+    max-width: 600px;
+  }
+
+  /* ===== POST CREATOR ===== */
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+    padding: 15px;
+  }
+
+  .post-creator-top {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--green);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+
+  .post-input-trigger {
+    flex: 1;
+    background: #f0f2f5;
+    border-radius: 20px;
+    padding: 10px 15px;
+    color: var(--grey);
+    cursor: pointer;
+    font-size: 0.95rem;
+  }
+
+  .post-creator-actions {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .action-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+    color: var(--grey);
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .action-btn:hover { background: #f2f2f2; }
+  .action-btn i.fa-image { color: #45bd62; }
+  .action-btn i.fa-video { color: #f02849; }
+  .action-btn i.fa-smile { color: #f7b928; }
+
+  /* ===== POSTS ===== */
+  .post {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+
+  .post-header {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .post-info h4 { font-size: 0.95rem; font-weight: 700; }
+  .post-info span { font-size: 0.8rem; color: var(--grey); }
+
+  .post-content {
+    padding: 0 15px 15px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .post-image {
+    width: 100%;
+    max-height: 500px;
+    object-fit: cover;
+  }
+
+  .post-footer {
+    padding: 10px 15px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  /* ===== LOCKER ROOM (Live Video) ===== */
+  #locker-room { display: none; }
+  
+  .video-container {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #000;
+    border-radius: var(--radius);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .live-badge {
+    position: absolute;
+    top: 15px; left: 15px;
+    background: var(--red);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .live-badge i { animation: pulse 1.5s infinite; }
+
+  @keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+  }
+
+  /* ===== MOBILE RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .sidebar {
+      width: 100%;
+      height: auto;
+      position: relative;
+      flex-direction: row;
+      justify-content: space-around;
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+    .sidebar-logo, .sidebar-profile { display: none; }
+    .main-content { margin-left: 0; padding: 10px; }
+    .nav-item span { display: none; }
+    .nav-item { padding: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-logo">
+    <img src="assets/images/Screenshot_20260325-094957.jpg" alt="RIS Logo">
+    <span class="logo-text" style="font-weight: 800; color: var(--green);">RIS</span>
+  </div>
+  <div class="sidebar-nav">
+    <a href="#" class="nav-item active" onclick="showTab('home')">
+      <i class="fas fa-home"></i> <span>Home</span>
+    </a>
+    <a href="#" class="nav-item" onclick="showTab('courses')">
+      <i class="fas fa-book"></i> <span>My Courses</span>
+    </a>
+    <a href="#" class="nav-item" onclick="showTab('locker-room')">
+      <i class="fas fa-video"></i> <span>Locker Room</span>
+    </a>
+    <a href="#" class="nav-item" onclick="showTab('chat')">
+      <i class="fas fa-comment"></i> <span>Messages</span>
+    </a>
+    <a href="#" class="nav-item" onclick="showTab('profile')">
+      <i class="fas fa-user"></i> <span>Profile</span>
+    </a>
+    <a href="auth.html" class="nav-item" style="margin-top: auto; color: var(--red);">
+      <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+    </a>
+  </div>
+</div>
+
+<div class="main-content">
+  <div class="feed-container">
+    
+    <!-- HOME TAB (Facebook Style) -->
+    <div id="home-tab">
+      <div class="card">
+        <div class="post-creator-top">
+          <div class="avatar">JD</div>
+          <div class="post-input-trigger">What's on your mind, <span class="user-name-display">Student</span>?</div>
+        </div>
+        <div class="post-creator-actions">
+          <div class="action-btn"><i class="fas fa-image"></i> Photo</div>
+          <div class="action-btn"><i class="fas fa-video"></i> Video</div>
+          <div class="action-btn"><i class="fas fa-smile"></i> Feeling</div>
+        </div>
+      </div>
+
+      <!-- PROTOTYPE POSTS -->
+      <div class="post">
+        <div class="post-header">
+          <div class="avatar" style="background: #1a1a2e;">MB</div>
+          <div class="post-info">
+            <h4>Moussa Bakari</h4>
+            <span>2 hours ago • <i class="fas fa-globe-africa"></i></span>
+          </div>
+        </div>
+        <div class="post-content">
+          Just finished my first module on Digital Entrepreneurship! Feeling motivated to build my own sports brand. 🚀 #ProjetRIS #FutureLeader
+        </div>
+        <img src="assets/images/post1.jpg" class="post-image" alt="Student studying">
+        <div class="post-footer">
+          <div class="action-btn"><i class="far fa-thumbs-up"></i> Like</div>
+          <div class="action-btn"><i class="far fa-comment"></i> Comment</div>
+          <div class="action-btn"><i class="far fa-share-square"></i> Share</div>
+        </div>
+      </div>
+
+      <div class="post">
+        <div class="post-header">
+          <div class="avatar" style="background: var(--gold); color: #000;">SN</div>
+          <div class="post-info">
+            <h4>Sarah Njoh</h4>
+            <span>5 hours ago • <i class="fas fa-globe-africa"></i></span>
+          </div>
+        </div>
+        <div class="post-content">
+          Great training session today at the stadium, followed by an amazing coding workshop. Balancing sports and tech is the way forward! ⚽💻
+        </div>
+        <img src="assets/images/post2.jpg" class="post-image" alt="Athletes training">
+        <div class="post-footer">
+          <div class="action-btn"><i class="far fa-thumbs-up"></i> Like</div>
+          <div class="action-btn"><i class="far fa-comment"></i> Comment</div>
+          <div class="action-btn"><i class="far fa-share-square"></i> Share</div>
+        </div>
+      </div>
+
+      <div class="post">
+        <div class="post-header">
+          <div class="avatar">EK</div>
+          <div class="post-info">
+            <h4>Emmanuel Kotto</h4>
+            <span>Yesterday • <i class="fas fa-globe-africa"></i></span>
+          </div>
+        </div>
+        <div class="post-content">
+          Check out our new classroom setup! Ready to learn some web development skills.
+        </div>
+        <img src="assets/images/post3.jpg" class="post-image" alt="Classroom">
+        <div class="post-footer">
+          <div class="action-btn"><i class="far fa-thumbs-up"></i> Like</div>
+          <div class="action-btn"><i class="far fa-comment"></i> Comment</div>
+          <div class="action-btn"><i class="far fa-share-square"></i> Share</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOCKER ROOM TAB (Live Video) -->
+    <div id="locker-room">
+      <h2 style="margin-bottom: 10px;">Locker Room</h2>
+      <p style="color: var(--grey); margin-bottom: 20px;">Join live sessions with your mentors and teammates.</p>
+      
+      <div class="card">
+        <div class="post-header">
+          <div class="avatar" style="background: #1a1a2e;">MC</div>
+          <div class="post-info">
+            <h4>Mentor Collins</h4>
+            <span>Live Now • 124 watching</span>
+          </div>
+        </div>
+        <div class="video-container">
+          <div class="live-badge"><i class="fas fa-circle"></i> LIVE</div>
+          <button style="background: var(--green); color: white; border: none; padding: 15px 30px; border-radius: 50px; font-weight: bold; cursor: pointer;">
+            <i class="fas fa-play"></i> Join Session
+          </button>
+        </div>
+        <div style="padding: 15px;">
+          <h4>Topic: Building your Personal Brand as an Athlete</h4>
+          <p style="font-size: 0.9rem; color: var(--grey); margin-top: 5px;">Learn how to use social media to attract sponsors and grow your influence.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- OTHER TABS (Placeholders) -->
+    <div id="other-tabs" style="display: none; text-align: center; padding: 50px;">
+      <i class="fas fa-tools" style="font-size: 3rem; color: var(--grey); margin-bottom: 20px;"></i>
+      <h3>Section Under Development</h3>
+      <p>We are working hard to bring you this feature soon!</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function showTab(tabId) {
+    // Update nav active state
+    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+
+    // Hide all tabs
+    document.getElementById('home-tab').style.display = 'none';
+    document.getElementById('locker-room').style.display = 'none';
+    document.getElementById('other-tabs').style.display = 'none';
+
+    // Show selected tab
+    if (tabId === 'home') {
+      document.getElementById('home-tab').style.display = 'block';
+    } else if (tabId === 'locker-room') {
+      document.getElementById('locker-room').style.display = 'block';
+    } else {
+      document.getElementById('other-tabs').style.display = 'block';
+    }
+  }
+
+  // Get user name from URL or localStorage for prototype
+  document.addEventListener('DOMContentLoaded', () => {
+    const userName = localStorage.getItem('ris_user_name') || 'Student';
+    document.querySelectorAll('.user-name-display').forEach(el => el.textContent = userName);
+  });
+</script>
+
+</body>
+</html>
