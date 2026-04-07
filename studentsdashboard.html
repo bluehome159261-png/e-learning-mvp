@@ -109,7 +109,7 @@
 
   .nav-item:hover { background: rgba(0,135,81,0.05); color: var(--green); }
   .nav-item.active { background: rgba(0,135,81,0.08); color: var(--green); font-weight: 600; }
-  .nav-item i { font-size: 1.2rem; width: 24px; text-align: center; flex-shrink: 0; }
+  .nav-item i { font-size: 1.4rem; width: 24px; text-align: center; flex-shrink: 0; }
   .nav-item span { transition: opacity 0.2s; }
 
   .sidebar.collapsed .nav-item span,
@@ -188,6 +188,56 @@
     border-radius: 50%;
     border: 2px solid var(--card);
   }
+
+  /* Profile Pill & Dropdown */
+  .profile-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .profile-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 250px;
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    padding: 15px;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 110;
+    margin-top: 10px;
+  }
+
+  .profile-dropdown.active { display: flex; }
+
+  .dropdown-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    border-radius: 8px;
+    color: var(--dark);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+  }
+
+  .dropdown-item:hover { background: #f8f9fa; }
+  .dropdown-item.logout { color: var(--red); }
 
   /* ===== MAIN CONTENT ===== */
   .main-content {
@@ -273,11 +323,72 @@
   .post-action i.fa-video { color: #f02849; }
   .post-action i.fa-smile { color: #f7b928; }
 
+  /* ===== LOCKER ROOM CHAT ===== */
+  .locker-room-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .chat-box {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .chat-header {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .chat-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .message {
+    max-width: 80%;
+    padding: 10px 15px;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  .message.received { background: #f0f2f5; align-self: flex-start; }
+  .message.sent { background: var(--green); color: white; align-self: flex-end; }
+
+  .chat-input {
+    padding: 15px;
+    border-top: 1px solid #eee;
+    display: flex;
+    gap: 10px;
+  }
+
+  .chat-input input {
+    flex: 1;
+    background: #f0f2f5;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 15px;
+    outline: none;
+  }
+
   /* ===== MOBILE VIEW (Bottom Nav) ===== */
   @media (max-width: 768px) {
     .sidebar {
       width: 100%;
-      height: 60px;
+      height: 65px;
       top: auto;
       bottom: 0;
       flex-direction: row;
@@ -295,14 +406,20 @@
       align-items: center;
     }
     .nav-item {
-      padding: 10px;
+      padding: 5px;
       border-radius: 0;
       flex: 1;
+      flex-direction: column;
       justify-content: center;
+      gap: 2px;
+      font-size: 0.7rem;
     }
+    .nav-item i { font-size: 1.2rem; }
+    .nav-item span { display: block; opacity: 1 !important; }
     .top-header { left: 0; padding: 0 15px; }
-    .main-content { margin-left: 0; padding: 15px; margin-bottom: 60px; }
+    .main-content { margin-left: 0; padding: 15px; margin-bottom: 70px; }
     .feed-container { max-width: 100%; }
+    .header-search { display: none; }
   }
 
   /* Tab Visibility */
@@ -334,14 +451,11 @@
     <a href="#" class="nav-item" onclick="showTab('messages', this)">
       <i class="fa-solid fa-envelope"></i> <span>Messages</span>
     </a>
+    <a href="#" class="nav-item" onclick="showTab('locker-room', this)">
+      <i class="fa-solid fa-door-open"></i> <span>Locker Room</span>
+    </a>
     <a href="#" class="nav-item" onclick="showTab('performance', this)">
       <i class="fa-solid fa-chart-simple"></i> <span>Performance</span>
-    </a>
-    <a href="#" class="nav-item" onclick="showTab('locker-room', this)">
-      <i class="fa-solid fa-video"></i> <span>Locker Room</span>
-    </a>
-    <a href="auth.html" class="nav-item" style="margin-top: auto; color: var(--red);">
-      <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
     </a>
   </div>
 </div>
@@ -357,7 +471,22 @@
       <i class="fa-solid fa-bell"></i>
       <div class="badge"></div>
     </div>
-    <div class="avatar sm" style="width: 35px; height: 35px; font-size: 0.8rem;">JD</div>
+    <div class="profile-pill" onclick="toggleProfileDropdown()">
+      <div class="avatar sm" style="width: 35px; height: 35px; font-size: 0.8rem;">JD</div>
+      <div class="profile-dropdown" id="profileDropdown">
+        <div class="dropdown-header">
+          <div class="avatar">JD</div>
+          <div>
+            <h4 class="user-name-display">Student</h4>
+            <p style="font-size: 0.75rem; color: var(--grey);">Specialty: Digital Marketing</p>
+          </div>
+        </div>
+        <a href="#" class="dropdown-item"><i class="fas fa-user-circle"></i> My Profile</a>
+        <a href="#" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+        <a href="#" class="dropdown-item"><i class="fas fa-medal"></i> My Badges (Rank: Amateur)</a>
+        <a href="auth.html" class="dropdown-item logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -392,19 +521,80 @@
         </p>
       </div>
 
-      <!-- Prototype Posts -->
+      <!-- FLOODED FEED -->
+      <!-- Post 1: BEF Related -->
       <div class="card" style="padding: 0; overflow: hidden;">
         <div style="padding: 15px; display: flex; align-items: center; gap: 12px;">
-          <div class="avatar" style="background: #1a1a2e;">MB</div>
+          <div class="avatar" style="background: #1a1a2e;">BEF</div>
           <div>
-            <h4 style="font-size: 0.95rem;">Moussa Bakari</h4>
-            <span style="font-size: 0.8rem; color: var(--grey);">2 hours ago • <i class="fas fa-globe-africa"></i></span>
+            <h4 style="font-size: 0.95rem;">Cabinet d'Expertise BEF</h4>
+            <span style="font-size: 0.8rem; color: var(--grey);">1 hour ago • <i class="fas fa-globe-africa"></i></span>
           </div>
         </div>
         <div style="padding: 0 15px 15px; font-size: 0.95rem;">
-          Just finished my first module on Digital Entrepreneurship! Feeling motivated to build my own sports brand. 🚀 #ProjetRIS
+          Excited to announce our new partnership with local sports academies! We're bringing digital literacy to the field. 🌍⚽ #BEF #ProjetRIS #DigitalAfrica
         </div>
-        <img src="assets/images/post1.jpg" style="width: 100%; max-height: 400px; object-fit: cover;" alt="Post">
+        <img src="assets/images/feed1.png" style="width: 100%; max-height: 400px; object-fit: cover;" alt="BEF Workshop">
+        <div style="padding: 10px 15px; border-top: 1px solid #eee; display: flex; justify-content: space-around;">
+          <div class="post-action"><i class="far fa-thumbs-up"></i> Like</div>
+          <div class="post-action"><i class="far fa-comment"></i> Comment</div>
+          <div class="post-action"><i class="far fa-share-square"></i> Share</div>
+        </div>
+      </div>
+
+      <!-- Post 2: Student Success -->
+      <div class="card" style="padding: 0; overflow: hidden;">
+        <div style="padding: 15px; display: flex; align-items: center; gap: 12px;">
+          <div class="avatar" style="background: var(--green);">AN</div>
+          <div>
+            <h4 style="font-size: 0.95rem;">Alain N'Goma</h4>
+            <span style="font-size: 0.8rem; color: var(--grey);">3 hours ago • <i class="fas fa-globe-africa"></i></span>
+          </div>
+        </div>
+        <div style="padding: 0 15px 15px; font-size: 0.95rem;">
+          Bridging the gap between sports and technology. Today's session on data analytics in football was eye-opening! 📊⚽
+        </div>
+        <img src="assets/images/feed2.jpg" style="width: 100%; max-height: 400px; object-fit: cover;" alt="Data Analytics">
+        <div style="padding: 10px 15px; border-top: 1px solid #eee; display: flex; justify-content: space-around;">
+          <div class="post-action"><i class="far fa-thumbs-up"></i> Like</div>
+          <div class="post-action"><i class="far fa-comment"></i> Comment</div>
+          <div class="post-action"><i class="far fa-share-square"></i> Share</div>
+        </div>
+      </div>
+
+      <!-- Post 3: Community -->
+      <div class="card" style="padding: 0; overflow: hidden;">
+        <div style="padding: 15px; display: flex; align-items: center; gap: 12px;">
+          <div class="avatar" style="background: var(--gold); color: #000;">KM</div>
+          <div>
+            <h4 style="font-size: 0.95rem;">Kadiatou Mansare</h4>
+            <span style="font-size: 0.8rem; color: var(--grey);">5 hours ago • <i class="fas fa-globe-africa"></i></span>
+          </div>
+        </div>
+        <div style="padding: 0 15px 15px; font-size: 0.95rem;">
+          Collaborative learning at its best. We're not just students; we're a team building the future of Africa. 🤝💻
+        </div>
+        <img src="assets/images/feed3.jpg" style="width: 100%; max-height: 400px; object-fit: cover;" alt="Collaboration">
+        <div style="padding: 10px 15px; border-top: 1px solid #eee; display: flex; justify-content: space-around;">
+          <div class="post-action"><i class="far fa-thumbs-up"></i> Like</div>
+          <div class="post-action"><i class="far fa-comment"></i> Comment</div>
+          <div class="post-action"><i class="far fa-share-square"></i> Share</div>
+        </div>
+      </div>
+
+      <!-- Post 4: Sports Action -->
+      <div class="card" style="padding: 0; overflow: hidden;">
+        <div style="padding: 15px; display: flex; align-items: center; gap: 12px;">
+          <div class="avatar" style="background: var(--red);">ST</div>
+          <div>
+            <h4 style="font-size: 0.95rem;">Samuel Teto</h4>
+            <span style="font-size: 0.8rem; color: var(--grey);">Yesterday • <i class="fas fa-globe-africa"></i></span>
+          </div>
+        </div>
+        <div style="padding: 0 15px 15px; font-size: 0.95rem;">
+          Focus, discipline, and hard work. Applying the same principles from the court to my coding projects. 🏀💻 #AthleteMindset
+        </div>
+        <img src="assets/images/feed4.jpg" style="width: 100%; max-height: 400px; object-fit: cover;" alt="Basketball">
         <div style="padding: 10px 15px; border-top: 1px solid #eee; display: flex; justify-content: space-around;">
           <div class="post-action"><i class="far fa-thumbs-up"></i> Like</div>
           <div class="post-action"><i class="far fa-comment"></i> Comment</div>
@@ -413,62 +603,58 @@
       </div>
     </div>
 
-    <!-- PLAYBOOK TAB -->
-    <div id="playbook" class="tab-content">
-      <div class="card">
-        <h3>My Playbook</h3>
-        <p style="color: var(--grey); margin-top: 5px;">Course modules strictly assigned to your specialty.</p>
-        <div style="margin-top: 20px; border: 1px dashed #ccc; padding: 30px; text-align: center; border-radius: 10px;">
-          <i class="fa-solid fa-clipboard-list" style="font-size: 2rem; color: #ddd; margin-bottom: 10px;"></i>
-          <p>Your lessons and PDFs will appear here.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- MESSAGES TAB -->
-    <div id="messages" class="tab-content">
-      <div class="card">
-        <h3>Private Inbox</h3>
-        <p style="color: var(--grey); margin-top: 5px;">Direct messaging with Mentors and teammates.</p>
-        <div style="margin-top: 20px; border: 1px dashed #ccc; padding: 30px; text-align: center; border-radius: 10px;">
-          <i class="fa-solid fa-envelope" style="font-size: 2rem; color: #ddd; margin-bottom: 10px;"></i>
-          <p>No new messages yet.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- PERFORMANCE TAB -->
-    <div id="performance" class="tab-content">
-      <div class="card">
-        <h3>Stat Sheet</h3>
-        <p style="color: var(--grey); margin-top: 5px;">Your personal metrics and Rank Badge.</p>
-        <div style="margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-          <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; text-align: center;">
-            <span style="font-size: 0.8rem; color: var(--grey);">Modules Completed</span>
-            <h2 style="color: var(--green);">0</h2>
-          </div>
-          <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; text-align: center;">
-            <span style="font-size: 0.8rem; color: var(--grey);">Current Rank</span>
-            <h2 style="color: var(--gold);">Amateur</h2>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- LOCKER ROOM TAB -->
     <div id="locker-room" class="tab-content">
-      <div class="card">
-        <h3>Locker Room</h3>
-        <p style="color: var(--grey); margin-top: 5px;">Live Hub: Video stream and specialty chat.</p>
-        <div style="margin-top: 20px; background: #000; aspect-ratio: 16/9; border-radius: 10px; display: flex; align-items: center; justify-content: center; position: relative;">
-          <div style="position: absolute; top: 15px; left: 15px; background: var(--red); color: white; padding: 5px 10px; border-radius: 5px; font-weight: bold; font-size: 0.8rem;">
-            <i class="fas fa-circle" style="font-size: 0.6rem; margin-right: 5px;"></i> LIVE
+      <div class="locker-room-container">
+        <div class="card">
+          <h3>Locker Room</h3>
+          <p style="color: var(--grey); margin-top: 5px;">Live Hub: Video stream and specialty chat.</p>
+          <div style="margin-top: 20px; background: #000; aspect-ratio: 16/9; border-radius: 10px; display: flex; align-items: center; justify-content: center; position: relative;">
+            <div style="position: absolute; top: 15px; left: 15px; background: var(--red); color: white; padding: 5px 10px; border-radius: 5px; font-weight: bold; font-size: 0.8rem;">
+              <i class="fas fa-circle" style="font-size: 0.6rem; margin-right: 5px;"></i> LIVE
+            </div>
+            <button style="background: var(--green); color: white; border: none; padding: 12px 25px; border-radius: 50px; font-weight: bold; cursor: pointer;">
+              Join Live Session
+            </button>
           </div>
-          <button style="background: var(--green); color: white; border: none; padding: 12px 25px; border-radius: 50px; font-weight: bold; cursor: pointer;">
-            Join Live Session
-          </button>
+        </div>
+
+        <!-- Chat Box -->
+        <div class="chat-box">
+          <div class="chat-header">
+            <i class="fas fa-comments" style="color: var(--green);"></i>
+            <span>Specialty Chat: Digital Marketing</span>
+          </div>
+          <div class="chat-messages" id="chatMessages">
+            <div class="message received">
+              <strong>Mentor Collins:</strong> Welcome everyone! Today we're discussing personal branding.
+            </div>
+            <div class="message received">
+              <strong>Alain:</strong> Excited for this session!
+            </div>
+            <div class="message sent">
+              <strong>You:</strong> Ready to learn!
+            </div>
+          </div>
+          <div class="chat-input">
+            <input type="text" placeholder="Type a message..." id="chatInput">
+            <button onclick="sendMessage()" style="background: var(--green); color: white; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer;">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
         </div>
       </div>
+    </div>
+
+    <!-- OTHER TABS (Placeholders) -->
+    <div id="playbook" class="tab-content">
+      <div class="card"><h3>My Playbook</h3><p>Course modules strictly assigned to your specialty.</p></div>
+    </div>
+    <div id="messages" class="tab-content">
+      <div class="card"><h3>Private Inbox</h3><p>Direct messaging with Mentors and teammates.</p></div>
+    </div>
+    <div id="performance" class="tab-content">
+      <div class="card"><h3>Stat Sheet</h3><p>Your personal metrics and Rank Badge.</p></div>
     </div>
 
   </div>
@@ -479,21 +665,43 @@
     document.getElementById('sidebar').classList.toggle('collapsed');
   }
 
+  function toggleProfileDropdown() {
+    document.getElementById('profileDropdown').classList.toggle('active');
+  }
+
   function showTab(tabId, element) {
-    // Update nav active state
     document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
     element.classList.add('active');
-
-    // Hide all tabs
     document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-
-    // Show selected tab
     document.getElementById(tabId).classList.add('active');
+    
+    // Close profile dropdown if open
+    document.getElementById('profileDropdown').classList.remove('active');
+  }
+
+  function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const messages = document.getElementById('chatMessages');
+    if (input.value.trim() !== "") {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = 'message sent';
+      msgDiv.innerHTML = `<strong>You:</strong> ${input.value}`;
+      messages.appendChild(msgDiv);
+      input.value = "";
+      messages.scrollTop = messages.scrollHeight;
+    }
   }
 
   document.addEventListener('DOMContentLoaded', () => {
     const userName = localStorage.getItem('ris_user_name') || 'Student';
     document.querySelectorAll('.user-name-display').forEach(el => el.textContent = userName);
+    
+    // Close dropdown when clicking outside
+    window.addEventListener('click', (e) => {
+      if (!e.target.closest('.profile-pill')) {
+        document.getElementById('profileDropdown').classList.remove('active');
+      }
+    });
   });
 </script>
 
