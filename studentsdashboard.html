@@ -170,7 +170,7 @@
     background: #ffffff;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between; /* Space between search and right icons */
     padding: 0 30px;
     z-index: 90;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
@@ -179,6 +179,36 @@
 
   .sidebar.collapsed ~ .top-header {
     left: var(--sidebar-collapsed-width);
+  }
+
+  /* Search Bar (The Scout) */
+  .header-search {
+    flex: 1;
+    max-width: 400px;
+    position: relative;
+    margin-right: 20px;
+  }
+
+  .header-search input {
+    width: 100%;
+    background: #f0f2f5;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 20px 10px 40px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: var(--dark);
+    outline: none;
+    transition: box-shadow 0.2s;
+  }
+
+  .header-search input:focus { box-shadow: 0 0 0 2px rgba(0,135,81,0.2); }
+  .header-search i {
+    position: absolute;
+    left: 14px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--grey);
+    font-size: 14px;
   }
 
   .header-right {
@@ -445,8 +475,32 @@
     .nav-item.active { border-left: none; border-top: 3px solid var(--green); }
     .nav-item i { font-size: 1.2rem; }
     .nav-item span { display: block; opacity: 1 !important; }
-    .top-header { left: 0; padding: 0 15px; }
-    .main-content { margin-left: 0; padding: 15px; margin-bottom: 70px; }
+    
+    .top-header { left: 0; padding: 0 15px; height: 60px; }
+    .header-search { display: none; } /* Hide desktop search */
+    
+    .mobile-header-left { display: flex; align-items: center; gap: 10px; }
+    .mobile-logo-img { height: 30px; }
+    .mobile-search-trigger { font-size: 1.2rem; color: var(--grey); cursor: pointer; }
+
+    .main-content { margin-left: 0; padding: 15px; margin-bottom: 70px; margin-top: 60px; }
+  }
+
+  /* Mobile Search Bar (Hidden by default) */
+  .mobile-search-bar {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 60px;
+    background: #fff;
+    z-index: 120;
+    padding: 0 15px;
+    align-items: center;
+    gap: 10px;
+    box-shadow: var(--shadow);
+  }
+  .mobile-search-bar.active { display: flex; }
+  .mobile-search-bar input {
+    flex: 1; background: #f0f2f5; border: none; border-radius: 50px; padding: 10px 15px; outline: none;
   }
 
   .tab-panel { display: none; }
@@ -492,8 +546,22 @@
   </nav>
 </aside>
 
-<!-- TOP HEADER (EXACT MATCH TO SCREENSHOT) -->
+<!-- TOP HEADER -->
 <header class="top-header">
+  <!-- Mobile Logo & Search Trigger -->
+  <div class="mobile-header-left">
+    <img src="assets/images/Screenshot_20260325-094957.jpg" alt="RIS Logo" class="mobile-logo-img" style="display: none;">
+    <div class="mobile-search-trigger" onclick="toggleMobileSearch()" style="display: none;">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </div>
+  </div>
+
+  <!-- Desktop Search (The Scout) -->
+  <div class="header-search">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="text" placeholder="Search for posts, lessons, or users...">
+  </div>
+
   <div class="header-right">
     <div class="notification-bell">
       <i class="fa-solid fa-bell"></i>
@@ -517,6 +585,12 @@
   </div>
 </header>
 
+<!-- Mobile Search Bar Overlay -->
+<div class="mobile-search-bar" id="mobileSearchBar">
+  <i class="fa-solid fa-arrow-left" onclick="toggleMobileSearch()"></i>
+  <input type="text" placeholder="Search...">
+</div>
+
 <!-- MAIN CONTENT -->
 <main class="main-content">
   <div class="feed-container">
@@ -538,44 +612,150 @@
 
       <!-- Flooded Feed (8+ Posts) -->
       <div id="feed-posts">
-        <!-- Posts will be injected here or kept as static for prototype -->
+        <!-- Post 1 -->
         <div class="card">
           <div class="standard-post">
             <div class="post-header">
               <div class="post-author-info">
                 <div class="avatar coach">CB</div>
-                <div><div class="post-author">Coach Charles</div><div class="post-meta">2 hours ago</div></div>
+                <div><div class="post-author">Coach Charles</div><div class="post-meta">Just now</div></div>
               </div>
             </div>
-            <p class="post-content">Great work on today's module everyone. Remember — consistency beats perfection every time. Keep pushing! 💪</p>
+            <p class="post-content">Welcome to the new RIS Dashboard! This is your space to grow, connect, and lead. Let's make it happen! 🚀</p>
             <div class="post-actions">
-              <button class="action-btn liked"><i class="fa-solid fa-thumbs-up"></i> <span>24</span></button>
-              <button class="action-btn"><i class="fa-regular fa-comment"></i> <span>8</span></button>
+              <button class="action-btn liked"><i class="fa-solid fa-thumbs-up"></i> <span>42</span></button>
+              <button class="action-btn"><i class="fa-regular fa-comment"></i> <span>12</span></button>
             </div>
           </div>
         </div>
-        <!-- More posts with images... -->
+
+        <!-- Post 2 -->
         <div class="card">
           <div class="standard-post">
             <div class="post-header">
               <div class="post-author-info">
-                <div class="avatar student">MB</div>
-                <div><div class="post-author">Marie Bongo</div><div class="post-meta">4 hours ago</div></div>
+                <div class="avatar student" style="background: #7c3aed; color: white;">AK</div>
+                <div><div class="post-author">Alex Kamga</div><div class="post-meta">2 hours ago</div></div>
               </div>
             </div>
-            <p class="post-content">Just finished Module 2 — the targeting section blew my mind. Already seeing results! 🚀</p>
+            <p class="post-content">Just finished the first module of Digital Marketing. The insights on audience targeting are incredible! 📈</p>
             <img src="assets/images/feed/img1.png" style="width:100%; border-radius:8px; margin-bottom:10px;">
             <div class="post-actions">
-              <button class="action-btn"><i class="fa-solid fa-thumbs-up"></i> <span>17</span></button>
+              <button class="action-btn"><i class="fa-solid fa-thumbs-up"></i> <span>15</span></button>
+              <button class="action-btn"><i class="fa-regular fa-comment"></i> <span>4</span></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Post 3 -->
+        <div class="card">
+          <div class="standard-post">
+            <div class="post-header">
+              <div class="post-author-info">
+                <div class="avatar student" style="background: #0891b2; color: white;">MN</div>
+                <div><div class="post-author">Mireille Ngo</div><div class="post-meta">5 hours ago</div></div>
+              </div>
+            </div>
+            <p class="post-content">Consistency is key. Training in the morning, coding in the afternoon. The RIS lifestyle! ⚽💻</p>
+            <img src="assets/images/feed/img2.jpg" style="width:100%; border-radius:8px; margin-bottom:10px;">
+            <div class="post-actions">
+              <button class="action-btn"><i class="fa-solid fa-thumbs-up"></i> <span>28</span></button>
+              <button class="action-btn"><i class="fa-regular fa-comment"></i> <span>7</span></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Post 4 -->
+        <div class="card">
+          <div class="standard-post">
+            <div class="post-header">
+              <div class="post-author-info">
+                <div class="avatar coach" style="background: #1a1a2e; color: white;">BEF</div>
+                <div><div class="post-author">Cabinet BEF</div><div class="post-meta">Yesterday</div></div>
+              </div>
+            </div>
+            <p class="post-content">New opportunities are coming for our top performers. Keep pushing your limits! 🌟</p>
+            <img src="assets/images/feed/img4.jpg" style="width:100%; border-radius:8px; margin-bottom:10px;">
+            <div class="post-actions">
+              <button class="action-btn"><i class="fa-solid fa-thumbs-up"></i> <span>56</span></button>
+              <button class="action-btn"><i class="fa-regular fa-comment"></i> <span>21</span></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Post 5 -->
+        <div class="card">
+          <div class="standard-post">
+            <div class="post-header">
+              <div class="post-author-info">
+                <div class="avatar student" style="background: #f59e0b; color: white;">SM</div>
+                <div><div class="post-author">Samuel Mvondo</div><div class="post-meta">Yesterday</div></div>
+              </div>
+            </div>
+            <p class="post-content">Who else is excited for the live session in the Locker Room today? See you there! 👋</p>
+            <div class="post-actions">
+              <button class="action-btn"><i class="fa-solid fa-thumbs-up"></i> <span>12</span></button>
               <button class="action-btn"><i class="fa-regular fa-comment"></i> <span>3</span></button>
             </div>
           </div>
         </div>
-        <!-- Additional 6+ posts to flood the feed -->
+
+        <!-- Post 6 -->
+        <div class="card">
+          <div class="standard-post">
+            <div class="post-header">
+              <div class="post-author-info">
+                <div class="avatar student" style="background: #10b981; color: white;">SN</div>
+                <div><div class="post-author">Sarah Njoh</div><div class="post-meta">2 days ago</div></div>
+              </div>
+            </div>
+            <p class="post-content">Finally understood the basics of SEO. It's like finding the right path on the field! 🗺️</p>
+            <img src="assets/images/feed/img6.jpg" style="width:100%; border-radius:8px; margin-bottom:10px;">
+            <div class="post-actions">
+              <button class="action-btn"><i class="fa-solid fa-thumbs-up"></i> <span>22</span></button>
+              <button class="action-btn"><i class="fa-regular fa-comment"></i> <span>5</span></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Post 7 -->
+        <div class="card">
+          <div class="standard-post">
+            <div class="post-header">
+              <div class="post-author-info">
+                <div class="avatar student" style="background: #ef4444; color: white;">EK</div>
+                <div><div class="post-author">Emmanuel Kotto</div><div class="post-meta">3 days ago</div></div>
+              </div>
+            </div>
+            <p class="post-content">Teamwork makes the dream work. Great collaboration session today! 🤝</p>
+            <img src="assets/images/feed/img7.jpg" style="width:100%; border-radius:8px; margin-bottom:10px;">
+            <div class="post-actions">
+              <button class="action-btn"><i class="fa-solid fa-thumbs-up"></i> <span>31</span></button>
+              <button class="action-btn"><i class="fa-regular fa-comment"></i> <span>9</span></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Post 8 -->
+        <div class="card">
+          <div class="standard-post">
+            <div class="post-header">
+              <div class="post-author-info">
+                <div class="avatar coach">CB</div>
+                <div><div class="post-author">Coach Charles</div><div class="post-meta">4 days ago</div></div>
+              </div>
+            </div>
+            <p class="post-content">Don't forget to check your Playbook for the latest updates on Module 3. Knowledge is power! 📚</p>
+            <div class="post-actions">
+              <button class="action-btn"><i class="fa-solid fa-thumbs-up"></i> <span>45</span></button>
+              <button class="action-btn"><i class="fa-regular fa-comment"></i> <span>14</span></button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- TAB: PLAYBOOK (Original Data) -->
+    <!-- TAB: PLAYBOOK -->
     <div id="playbook" class="tab-panel">
       <div class="playbook-wrap">
         <p class="section-label">My Playbook</p>
@@ -602,7 +782,7 @@
       </div>
     </div>
 
-    <!-- TAB: MESSAGES (Original Data) -->
+    <!-- TAB: MESSAGES -->
     <div id="messages" class="tab-panel">
       <div class="messages-wrap">
         <p class="section-label">Direct Messages</p>
@@ -624,7 +804,7 @@
       </div>
     </div>
 
-    <!-- TAB: PERFORMANCE (Original Data) -->
+    <!-- TAB: PERFORMANCE -->
     <div id="performance" class="tab-panel">
       <div class="performance-wrap">
         <div class="rank-card">
@@ -642,7 +822,7 @@
       </div>
     </div>
 
-    <!-- TAB: LOCKER ROOM (Original Data) -->
+    <!-- TAB: LOCKER ROOM -->
     <div id="locker" class="tab-panel">
       <div class="locker-room-wrap">
         <div class="card">
@@ -674,6 +854,8 @@
 <script>
   function toggleSidebar() { document.getElementById('sidebar').classList.toggle('collapsed'); }
   function toggleProfileDropdown() { document.getElementById('profileDropdown').classList.toggle('active'); }
+  function toggleMobileSearch() { document.getElementById('mobileSearchBar').classList.toggle('active'); }
+
   function showTab(tabId, element) {
     document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
     element.classList.add('active');
@@ -681,9 +863,17 @@
     document.getElementById(tabId).classList.add('active');
     document.getElementById('profileDropdown').classList.remove('active');
   }
+
   document.addEventListener('DOMContentLoaded', () => {
     const userName = localStorage.getItem('ris_user_name') || 'Jean Biya';
     document.querySelectorAll('.user-name-display').forEach(el => el.textContent = userName);
+    
+    // Adjust mobile header elements
+    if (window.innerWidth <= 768) {
+      document.querySelector('.mobile-logo-img').style.display = 'block';
+      document.querySelector('.mobile-search-trigger').style.display = 'block';
+    }
+
     window.addEventListener('click', (e) => {
       if (!e.target.closest('.profile-pill') && !e.target.closest('#profileDropdown')) {
         document.getElementById('profileDropdown').classList.remove('active');
