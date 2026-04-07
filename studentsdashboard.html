@@ -118,7 +118,7 @@
     pointer-events: none;
   }
 
-  /* ===== TOP HEADER ===== */
+  /* ===== TOP HEADER (Restored Original Style) ===== */
   .top-header {
     position: fixed;
     top: 0;
@@ -139,31 +139,8 @@
     left: var(--sidebar-collapsed-width);
   }
 
-  .header-search {
-    flex: 1;
-    max-width: 400px;
-    position: relative;
-  }
-
-  .header-search input {
-    width: 100%;
-    background: #f0f2f5;
-    border: none;
-    border-radius: 50px;
-    padding: 10px 15px 10px 40px;
-    font-size: 0.9rem;
-    outline: none;
-  }
-
-  .header-search i {
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--grey);
-  }
-
-  .header-actions {
+  /* Header Actions on the LEFT as requested */
+  .header-left-actions {
     display: flex;
     align-items: center;
     gap: 20px;
@@ -189,7 +166,6 @@
     border: 2px solid var(--card);
   }
 
-  /* Profile Pill & Dropdown */
   .profile-pill {
     display: flex;
     align-items: center;
@@ -201,7 +177,7 @@
   .profile-dropdown {
     position: absolute;
     top: 100%;
-    right: 0;
+    left: 0; /* Dropdown on the left side now */
     width: 250px;
     background: var(--card);
     border-radius: var(--radius);
@@ -238,6 +214,31 @@
 
   .dropdown-item:hover { background: #f8f9fa; }
   .dropdown-item.logout { color: var(--red); }
+
+  .header-search {
+    flex: 1;
+    max-width: 400px;
+    position: relative;
+    margin-left: 20px;
+  }
+
+  .header-search input {
+    width: 100%;
+    background: #f0f2f5;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 15px 10px 40px;
+    font-size: 0.9rem;
+    outline: none;
+  }
+
+  .header-search i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--grey);
+  }
 
   /* ===== MAIN CONTENT ===== */
   .main-content {
@@ -460,13 +461,9 @@
   </div>
 </div>
 
-<!-- TOP HEADER -->
+<!-- TOP HEADER (Restored Original Style) -->
 <div class="top-header">
-  <div class="header-search">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <input type="text" placeholder="The Scout: Search posts, lessons, or users...">
-  </div>
-  <div class="header-actions">
+  <div class="header-left-actions">
     <div class="action-icon">
       <i class="fa-solid fa-bell"></i>
       <div class="badge"></div>
@@ -487,6 +484,10 @@
         <a href="auth.html" class="dropdown-item logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
       </div>
     </div>
+  </div>
+  <div class="header-search">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="text" placeholder="The Scout: Search posts, lessons, or users...">
   </div>
 </div>
 
@@ -521,86 +522,157 @@
         </p>
       </div>
 
-      <!-- FLOODED FEED -->
-      <!-- Post 1: BEF Related -->
-      <div class="card" style="padding: 0; overflow: hidden;">
-        <div style="padding: 15px; display: flex; align-items: center; gap: 12px;">
+      <!-- FLOODED FEED (8+ Posts) -->
+      
+      <!-- Post 1: Text Only -->
+      <div class="card">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 15px;">
           <div class="avatar" style="background: #1a1a2e;">BEF</div>
           <div>
             <h4 style="font-size: 0.95rem;">Cabinet d'Expertise BEF</h4>
-            <span style="font-size: 0.8rem; color: var(--grey);">1 hour ago • <i class="fas fa-globe-africa"></i></span>
+            <span style="font-size: 0.8rem; color: var(--grey);">Just now • <i class="fas fa-globe-africa"></i></span>
           </div>
         </div>
-        <div style="padding: 0 15px 15px; font-size: 0.95rem;">
-          Excited to announce our new partnership with local sports academies! We're bringing digital literacy to the field. 🌍⚽ #BEF #ProjetRIS #DigitalAfrica
+        <div style="font-size: 0.95rem; line-height: 1.5;">
+          Reminder: The "Digital Branding for Athletes" workshop starts in 30 minutes in the Locker Room. Don't miss out! 🚀
         </div>
-        <img src="assets/images/feed1.png" style="width: 100%; max-height: 400px; object-fit: cover;" alt="BEF Workshop">
-        <div style="padding: 10px 15px; border-top: 1px solid #eee; display: flex; justify-content: space-around;">
+        <div style="padding: 10px 0; border-top: 1px solid #eee; margin-top: 15px; display: flex; justify-content: space-around;">
           <div class="post-action"><i class="far fa-thumbs-up"></i> Like</div>
           <div class="post-action"><i class="far fa-comment"></i> Comment</div>
-          <div class="post-action"><i class="far fa-share-square"></i> Share</div>
         </div>
       </div>
 
-      <!-- Post 2: Student Success -->
+      <!-- Post 2: Image -->
       <div class="card" style="padding: 0; overflow: hidden;">
         <div style="padding: 15px; display: flex; align-items: center; gap: 12px;">
           <div class="avatar" style="background: var(--green);">AN</div>
           <div>
             <h4 style="font-size: 0.95rem;">Alain N'Goma</h4>
+            <span style="font-size: 0.8rem; color: var(--grey);">45 mins ago • <i class="fas fa-globe-africa"></i></span>
+          </div>
+        </div>
+        <div style="padding: 0 15px 15px; font-size: 0.95rem;">
+          Learning how to use data to track my performance on the field. Tech + Sports = Future! ⚽📊
+        </div>
+        <img src="assets/images/feed/img1.png" style="width: 100%; max-height: 400px; object-fit: cover;" alt="Digital Skills">
+        <div style="padding: 10px 15px; border-top: 1px solid #eee; display: flex; justify-content: space-around;">
+          <div class="post-action"><i class="far fa-thumbs-up"></i> Like</div>
+          <div class="post-action"><i class="far fa-comment"></i> Comment</div>
+        </div>
+      </div>
+
+      <!-- Post 3: Text Only -->
+      <div class="card">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 15px;">
+          <div class="avatar" style="background: var(--gold); color: #000;">SM</div>
+          <div>
+            <h4 style="font-size: 0.95rem;">Samuel Mvondo</h4>
+            <span style="font-size: 0.8rem; color: var(--grey);">2 hours ago • <i class="fas fa-globe-africa"></i></span>
+          </div>
+        </div>
+        <div style="font-size: 0.95rem; line-height: 1.5;">
+          Has anyone started the "Introduction to Web Design" module yet? I'm looking for a study partner! 💻🤝
+        </div>
+        <div style="padding: 10px 0; border-top: 1px solid #eee; margin-top: 15px; display: flex; justify-content: space-around;">
+          <div class="post-action"><i class="far fa-thumbs-up"></i> Like</div>
+          <div class="post-action"><i class="far fa-comment"></i> Comment</div>
+        </div>
+      </div>
+
+      <!-- Post 4: Image -->
+      <div class="card" style="padding: 0; overflow: hidden;">
+        <div style="padding: 15px; display: flex; align-items: center; gap: 12px;">
+          <div class="avatar" style="background: var(--red);">EK</div>
+          <div>
+            <h4 style="font-size: 0.95rem;">Emmanuel Kotto</h4>
             <span style="font-size: 0.8rem; color: var(--grey);">3 hours ago • <i class="fas fa-globe-africa"></i></span>
           </div>
         </div>
         <div style="padding: 0 15px 15px; font-size: 0.95rem;">
-          Bridging the gap between sports and technology. Today's session on data analytics in football was eye-opening! 📊⚽
+          Great session today at the stadium. Discipline in sports translates to discipline in learning. 🏀💪
         </div>
-        <img src="assets/images/feed2.jpg" style="width: 100%; max-height: 400px; object-fit: cover;" alt="Data Analytics">
+        <img src="assets/images/feed/img4.jpg" style="width: 100%; max-height: 400px; object-fit: cover;" alt="Basketball">
         <div style="padding: 10px 15px; border-top: 1px solid #eee; display: flex; justify-content: space-around;">
           <div class="post-action"><i class="far fa-thumbs-up"></i> Like</div>
           <div class="post-action"><i class="far fa-comment"></i> Comment</div>
-          <div class="post-action"><i class="far fa-share-square"></i> Share</div>
         </div>
       </div>
 
-      <!-- Post 3: Community -->
+      <!-- Post 5: Image -->
+      <div class="card" style="padding: 0; overflow: hidden;">
+        <div style="padding: 15px; display: flex; align-items: center; gap: 12px;">
+          <div class="avatar" style="background: #1a1a2e;">RIS</div>
+          <div>
+            <h4 style="font-size: 0.95rem;">Projet RIS Official</h4>
+            <span style="font-size: 0.8rem; color: var(--grey);">5 hours ago • <i class="fas fa-globe-africa"></i></span>
+          </div>
+        </div>
+        <div style="padding: 0 15px 15px; font-size: 0.95rem;">
+          Empowering the next generation of African leaders through the fusion of sports and technology. 🌍✨
+        </div>
+        <img src="assets/images/feed/img2.jpg" style="width: 100%; max-height: 400px; object-fit: cover;" alt="Empowerment">
+        <div style="padding: 10px 15px; border-top: 1px solid #eee; display: flex; justify-content: space-around;">
+          <div class="post-action"><i class="far fa-thumbs-up"></i> Like</div>
+          <div class="post-action"><i class="far fa-comment"></i> Comment</div>
+        </div>
+      </div>
+
+      <!-- Post 6: Text Only -->
+      <div class="card">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 15px;">
+          <div class="avatar" style="background: var(--green);">SN</div>
+          <div>
+            <h4 style="font-size: 0.95rem;">Sarah Njoh</h4>
+            <span style="font-size: 0.8rem; color: var(--grey);">Yesterday • <i class="fas fa-globe-africa"></i></span>
+          </div>
+        </div>
+        <div style="font-size: 0.95rem; line-height: 1.5;">
+          Just earned my "Novice" badge! Hard work pays off. Keep pushing everyone! 🏅🔥
+        </div>
+        <div style="padding: 10px 0; border-top: 1px solid #eee; margin-top: 15px; display: flex; justify-content: space-around;">
+          <div class="post-action"><i class="far fa-thumbs-up"></i> Like</div>
+          <div class="post-action"><i class="far fa-comment"></i> Comment</div>
+        </div>
+      </div>
+
+      <!-- Post 7: Image -->
       <div class="card" style="padding: 0; overflow: hidden;">
         <div style="padding: 15px; display: flex; align-items: center; gap: 12px;">
           <div class="avatar" style="background: var(--gold); color: #000;">KM</div>
           <div>
             <h4 style="font-size: 0.95rem;">Kadiatou Mansare</h4>
-            <span style="font-size: 0.8rem; color: var(--grey);">5 hours ago • <i class="fas fa-globe-africa"></i></span>
+            <span style="font-size: 0.8rem; color: var(--grey);">Yesterday • <i class="fas fa-globe-africa"></i></span>
           </div>
         </div>
         <div style="padding: 0 15px 15px; font-size: 0.95rem;">
-          Collaborative learning at its best. We're not just students; we're a team building the future of Africa. 🤝💻
+          Collaboration is key. Working together on our final project. 🤝💻
         </div>
-        <img src="assets/images/feed3.jpg" style="width: 100%; max-height: 400px; object-fit: cover;" alt="Collaboration">
+        <img src="assets/images/feed/img7.jpg" style="width: 100%; max-height: 400px; object-fit: cover;" alt="Collaboration">
         <div style="padding: 10px 15px; border-top: 1px solid #eee; display: flex; justify-content: space-around;">
           <div class="post-action"><i class="far fa-thumbs-up"></i> Like</div>
           <div class="post-action"><i class="far fa-comment"></i> Comment</div>
-          <div class="post-action"><i class="far fa-share-square"></i> Share</div>
         </div>
       </div>
 
-      <!-- Post 4: Sports Action -->
+      <!-- Post 8: Image -->
       <div class="card" style="padding: 0; overflow: hidden;">
         <div style="padding: 15px; display: flex; align-items: center; gap: 12px;">
           <div class="avatar" style="background: var(--red);">ST</div>
           <div>
             <h4 style="font-size: 0.95rem;">Samuel Teto</h4>
-            <span style="font-size: 0.8rem; color: var(--grey);">Yesterday • <i class="fas fa-globe-africa"></i></span>
+            <span style="font-size: 0.8rem; color: var(--grey);">2 days ago • <i class="fas fa-globe-africa"></i></span>
           </div>
         </div>
         <div style="padding: 0 15px 15px; font-size: 0.95rem;">
-          Focus, discipline, and hard work. Applying the same principles from the court to my coding projects. 🏀💻 #AthleteMindset
+          Focus on the goal. Whether it's on the track or in the code. 🏃‍♂️💻
         </div>
-        <img src="assets/images/feed4.jpg" style="width: 100%; max-height: 400px; object-fit: cover;" alt="Basketball">
+        <img src="assets/images/feed/img6.jpg" style="width: 100%; max-height: 400px; object-fit: cover;" alt="Sports">
         <div style="padding: 10px 15px; border-top: 1px solid #eee; display: flex; justify-content: space-around;">
           <div class="post-action"><i class="far fa-thumbs-up"></i> Like</div>
           <div class="post-action"><i class="far fa-comment"></i> Comment</div>
-          <div class="post-action"><i class="far fa-share-square"></i> Share</div>
         </div>
       </div>
+
     </div>
 
     <!-- LOCKER ROOM TAB -->
