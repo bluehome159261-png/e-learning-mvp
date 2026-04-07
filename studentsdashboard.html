@@ -171,39 +171,56 @@
     color: var(--grey);
   }
 
-  /* Header RIGHT: Notifications & Profile */
+  /* Header RIGHT: Notifications & Profile (MATCHING SCREENSHOT) */
   .header-right {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 25px;
   }
 
   .action-icon {
     position: relative;
-    font-size: 1.2rem;
-    color: var(--grey);
+    font-size: 1.8rem; /* Larger icon like in screenshot */
+    color: #606770; /* Grey color from screenshot */
     cursor: pointer;
     transition: color 0.2s;
+    display: flex;
+    align-items: center;
   }
 
   .action-icon:hover { color: var(--dark); }
+  
   .action-icon .badge {
     position: absolute;
-    top: -5px;
-    right: -5px;
+    top: 2px;
+    right: 0;
     background: var(--red);
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    border: 2px solid var(--card);
+    border: 1.5px solid var(--card);
   }
 
   .profile-pill {
     display: flex;
     align-items: center;
-    gap: 10px;
     cursor: pointer;
     position: relative;
+  }
+
+  .avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: var(--green); /* Solid green from screenshot */
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
 
   .profile-dropdown {
@@ -279,19 +296,6 @@
     display: flex;
     gap: 15px;
     margin-bottom: 15px;
-  }
-
-  .avatar {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background: var(--green);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    flex-shrink: 0;
   }
 
   .post-input-trigger {
@@ -541,10 +545,10 @@
       <div class="badge"></div>
     </div>
     <div class="profile-pill" onclick="toggleProfileDropdown()">
-      <div class="avatar sm" style="width: 35px; height: 35px; font-size: 0.8rem;">JD</div>
+      <div class="avatar">JD</div>
       <div class="profile-dropdown" id="profileDropdown">
         <div class="dropdown-header">
-          <div class="avatar">JD</div>
+          <div class="avatar" style="width: 40px; height: 40px; font-size: 0.9rem;">JD</div>
           <div>
             <h4 class="user-name-display">Student</h4>
             <p style="font-size: 0.75rem; color: var(--grey);">Specialty: Digital Marketing</p>
