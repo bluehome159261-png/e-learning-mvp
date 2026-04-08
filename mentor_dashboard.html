@@ -143,6 +143,7 @@
   /* ===== MAIN FEED ===== */
   .main-feed {
     margin-left: 280px;
+    margin-right: 360px;
     min-height: 100vh;
     padding: 24px 24px 100px;
   }
@@ -228,8 +229,8 @@
   .post-img { width: 100%; border-radius: 8px; margin-bottom: 12px; }
 
   /* ===== TABS CONTENT ===== */
-  .tab-content { display: none; }
-  .tab-content.active { display: block; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
 
   /* ===== PROFILE DROPDOWN ===== */
   .profile-dropdown {
@@ -274,18 +275,317 @@
     font-family: 'Inter', sans-serif;
   }
 
+  /* ===== LOCKER ROOM (Desktop) ===== */
+  .locker-room {
+    position: fixed;
+    right: 0; top: 0;
+    width: 360px;
+    height: 100vh;
+    background: var(--card);
+    box-shadow: -2px 0 20px rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+    z-index: 40;
+  }
+
+  .locker-header {
+    padding: 20px 20px 16px;
+    border-bottom: 1px solid #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+
+  .locker-header h3 {
+    font-size: 15px; font-weight: 700;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .locker-header h3 i { color: var(--green); }
+
+  .go-live-wrap {
+    padding: 14px 16px;
+    border-bottom: 1px solid #f1f5f9;
+    flex-shrink: 0;
+  }
+
+  .go-live-btn {
+    width: 100%;
+    background: var(--red);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: opacity 0.2s;
+    letter-spacing: 0.3px;
+  }
+
+  .go-live-btn:hover { opacity: 0.88; }
+  .go-live-btn.live-active { background: var(--dark); }
+
+  .locker-video {
+    aspect-ratio: 16/9;
+    background: #0a0a0a;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .locker-video::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(0,135,81,0.10) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .play-btn-sm {
+    width: 44px; height: 44px;
+    background: var(--green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    position: relative; z-index: 2;
+    transition: transform 0.2s;
+    animation: playGlow 2s ease-out infinite;
+  }
+
+  @keyframes playGlow {
+    0%   { box-shadow: 0 0 0 0 rgba(0,135,81,0.5); }
+    70%  { box-shadow: 0 0 0 14px rgba(0,135,81,0); }
+    100% { box-shadow: 0 0 0 0 rgba(0,135,81,0); }
+  }
+
+  .live-badge {
+    position: absolute;
+    top: 12px; left: 12px;
+    background: var(--red);
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    letter-spacing: 0.8px;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .locker-video-meta {
+    padding: 12px 18px;
+    border-bottom: 1px solid #f1f5f9;
+    flex-shrink: 0;
+  }
+
+  .locker-video-meta .module-name { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 13px; margin-bottom: 2px; }
+  .locker-video-meta .peers-count { font-size: 12px; color: var(--green); font-weight: 600; }
+
+  .chat-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column-reverse;
+    overflow-y: auto;
+    padding: 14px 16px;
+    gap: 10px;
+  }
+
+  .chat-message { display: flex; gap: 9px; align-items: flex-start; }
+
+  .chat-bubble {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 8px 12px;
+    flex: 1;
+  }
+
+  .chat-bubble .chat-author {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    color: var(--green);
+    margin-bottom: 3px;
+  }
+
+  .chat-bubble .chat-author.coach-name { color: #1a1a2e; }
+  .chat-bubble .chat-message-text { font-size: 13px; color: #374151; line-height: 1.45; }
+
+  .chat-input-area {
+    padding: 12px 16px;
+    border-top: 1px solid #f1f5f9;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .chat-input-area input {
+    flex: 1;
+    background: var(--bg);
+    border: 1.5px solid transparent;
+    border-radius: 50px;
+    padding: 10px 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .chat-input-area input:focus { border-color: var(--green); }
+
+  .send-btn {
+    width: 36px; height: 36px;
+    background: var(--green);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    flex-shrink: 0;
+    transition: opacity 0.2s;
+  }
+
+  /* ===== BUTTONS & OTHER UI FROM NEW FILE ===== */
+  .btn-primary {
+    background: var(--green);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 24px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .btn-outline {
+    background: none;
+    color: var(--grey);
+    border: 1.5px solid #e2e8f0;
+    border-radius: 50px;
+    padding: 9px 18px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .btn-outline:hover { border-color: var(--green); color: var(--green); }
+  .btn-sm { padding: 7px 14px; font-size: 12px; }
+
+  .playbook-manager { padding: 20px; }
+  .playbook-manager-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+  .playbook-manager-header h3 { font-size: 16px; font-weight: 700; }
+
+  .create-module-form { background: var(--bg); border-radius: 12px; padding: 16px; margin-bottom: 18px; display: none; }
+  .create-module-form.open { display: block; }
+  .form-row { display: flex; gap: 10px; margin-bottom: 10px; }
+  .form-input { flex: 1; background: var(--card); border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 10px 14px; font-family: 'Inter', sans-serif; font-size: 13px; color: #1a1a2e; outline: none; transition: border-color 0.2s; }
+  .form-input:focus { border-color: var(--green); }
+  .form-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
+
+  .module-item { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid #f1f5f9; }
+  .module-item:last-child { border-bottom: none; }
+  .module-icon { width: 44px; height: 44px; background: rgba(0,135,81,0.08); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--green); font-size: 18px; flex-shrink: 0; }
+  .module-icon.draft { background: rgba(239,51,64,0.08); color: var(--grey); }
+  .module-info { flex: 1; }
+  .module-info h4 { font-size: 13px; font-weight: 700; margin-bottom: 3px; }
+  .module-info p  { font-size: 11px; color: var(--grey); }
+
+  .draft-toggle { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--grey); font-weight: 500; }
+  .toggle { position: relative; width: 36px; height: 20px; }
+  .toggle input { display: none; }
+  .toggle-slider { position: absolute; inset: 0; background: #e2e8f0; border-radius: 20px; cursor: pointer; transition: background 0.2s; }
+  .toggle-slider::before { content: ''; position: absolute; width: 14px; height: 14px; background: white; border-radius: 50%; top: 3px; left: 3px; transition: transform 0.2s; box-shadow: 0 1px 4px rgba(0,0,0,0.15); }
+  .toggle input:checked + .toggle-slider { background: var(--green); }
+  .toggle input:checked + .toggle-slider::before { transform: translateX(16px); }
+
+  .module-crud { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+  .crud-btn { width: 32px; height: 32px; border-radius: 8px; background: var(--bg); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--grey); transition: all 0.2s; }
+  .crud-btn:hover.edit  { background: rgba(0,135,81,0.1); color: var(--green); }
+  .crud-btn:hover.del   { background: rgba(239,51,64,0.1); color: var(--red); }
+  .draft-badge { display: inline-flex; align-items: center; gap: 4px; background: rgba(239,51,64,0.10); color: var(--red); font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; font-family: 'Montserrat', sans-serif; }
+
+  .roster-wrap { padding: 20px; }
+  .roster-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .roster-header h3 { font-size: 16px; font-weight: 700; }
+  .roster-search { position: relative; width: 220px; }
+  .roster-search input { width: 100%; background: var(--bg); border: 1.5px solid #e2e8f0; border-radius: 50px; padding: 8px 16px 8px 36px; font-family: 'Inter', sans-serif; font-size: 13px; outline: none; transition: border-color 0.2s; }
+  .roster-search input:focus { border-color: var(--green); }
+  .roster-search i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--grey); font-size: 12px; }
+  .roster-table { width: 100%; border-collapse: collapse; }
+  .roster-table th { text-align: left; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 11px; color: var(--grey); text-transform: uppercase; letter-spacing: 0.8px; padding: 0 12px 12px; border-bottom: 1px solid #f1f5f9; }
+  .roster-table td { padding: 14px 12px; border-bottom: 1px solid #f1f5f9; font-size: 13px; vertical-align: middle; }
+  .student-cell { display: flex; align-items: center; gap: 10px; }
+  .student-cell .student-name { font-weight: 600; font-size: 13px; }
+  .student-cell .student-email { font-size: 11px; color: var(--grey); }
+  .progress-mini { display: flex; align-items: center; gap: 8px; }
+  .progress-bar-mini { width: 60px; height: 4px; background: #e2e8f0; border-radius: 2px; overflow: hidden; }
+  .progress-fill-mini { height: 100%; background: var(--green); border-radius: 2px; }
+  .progress-pct { font-size: 11px; color: var(--grey); font-weight: 600; width: 28px; }
+  .grade-select { background: var(--bg); border: 1.5px solid #e2e8f0; border-radius: 8px; padding: 6px 10px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; color: #1a1a2e; outline: none; cursor: pointer; transition: border-color 0.2s; }
+  .student-rank { display: inline-flex; align-items: center; gap: 4px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 10px; padding: 3px 8px; border-radius: 20px; background: rgba(0,135,81,0.10); color: var(--green); }
+
+  .section-label { font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1px; color: var(--grey); text-transform: uppercase; margin-bottom: 14px; padding-left: 2px; }
+
   /* Mobile */
   @media (max-width: 768px) {
     .sidebar { width: 0; overflow: hidden; }
-    .main-feed { margin-left: 0; padding: 10px; }
+    .main-feed { margin-left: 0; margin-right: 0; padding: 10px; }
+    .locker-room { display: none; }
     .sidebar.active { width: 280px; }
     .mobile-nav {
         position: fixed; bottom: 0; left: 0; width: 100%;
         background: var(--card); display: flex; justify-content: space-around;
         padding: 12px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 50;
     }
-    .mobile-nav-item { color: var(--grey); font-size: 20px; }
+    .mobile-nav-item { color: var(--grey); font-size: 20px; border: none; background: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 10px; font-weight: 600; font-family: 'Montserrat', sans-serif; }
+    .mobile-nav-item i { font-size: 20px; }
     .mobile-nav-item.active { color: var(--green); }
+    
+    .tab-panel { padding-bottom: 80px; }
+    .roster-mobile { padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+    .student-card-mobile { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px; }
+    .student-card-top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .student-card-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+    .stat-pill { background: var(--bg); padding: 8px; border-radius: 10px; text-align: center; }
+    .sp-val { font-weight: 700; font-size: 13px; }
+    .sp-lbl { font-size: 10px; color: var(--grey); }
+    .student-card-actions { display: flex; gap: 8px; }
+    
+    .module-card-mobile { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px; margin-bottom: 12px; }
+    .module-card-top { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .module-card-top h4 { flex: 1; font-size: 13px; font-weight: 700; }
+    .module-card-bottom { display: flex; justify-content: space-between; align-items: center; }
+    
+    .mobile-locker { display: flex; flex-direction: column; height: calc(100vh - 130px); }
+    .locker-video-mobile { aspect-ratio: 16/9; background: #0a0a0a; position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .mobile-chat-area { flex: 1; overflow-y: auto; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
   }
 </style>
 </head>
@@ -302,11 +602,11 @@
       <div class="user-specialty" id="sidebar-specialty">Digital Marketing Mentor</div>
     </div>
     <nav class="sidebar-nav">
-      <a href="#" class="nav-item active" onclick="switchTab('home', this)"><i class="fa-solid fa-house"></i> Home</a>
-      <a href="#" class="nav-item" onclick="switchTab('courses', this)"><i class="fa-solid fa-clipboard-list"></i> My Courses</a>
-      <a href="#" class="nav-item" onclick="switchTab('messages', this)"><i class="fa-solid fa-envelope"></i> Messages</a>
-      <a href="#" class="nav-item" onclick="switchTab('locker', this)"><i class="fa-solid fa-door-open"></i> Locker Room</a>
-      <a href="#" class="nav-item" onclick="switchTab('performance', this)"><i class="fa-solid fa-chart-simple"></i> Performance</a>
+      <a href="#" class="nav-item active" data-tab="home"><i class="fa-solid fa-house"></i> Home</a>
+      <a href="#" class="nav-item" data-tab="playbook"><i class="fa-solid fa-clipboard-list"></i> My Courses</a>
+      <a href="#" class="nav-item" data-tab="messages"><i class="fa-solid fa-envelope"></i> Messages</a>
+      <a href="#" class="nav-item" data-tab="roster"><i class="fa-solid fa-users"></i> Performance</a>
+      <a href="#" class="nav-item" data-tab="locker"><i class="fa-solid fa-door-open"></i> Locker Room</a>
     </nav>
   </div>
 
@@ -345,15 +645,15 @@
       </div>
     </header>
 
-    <!-- Home Tab (Facebook Style) -->
-    <div id="home" class="tab-content active">
+    <!-- Home Tab (Facebook Style - Preserved) -->
+    <div id="tab-home" class="tab-panel active">
       <div class="card post-creator">
         <div class="post-creator-top">
           <div class="avatar coach">JD</div>
-          <textarea placeholder="Share an update with your students..."></textarea>
+          <textarea id="post-textarea" placeholder="Share an update with your students..."></textarea>
         </div>
         <div style="display: flex; justify-content: flex-end; padding: 0 20px 20px;">
-          <button class="btn-primary">Post Update</button>
+          <button class="btn-primary" id="post-btn" disabled>Post Update</button>
         </div>
       </div>
       <div id="feed-container">
@@ -361,110 +661,377 @@
       </div>
     </div>
 
-    <!-- Other Tabs (Original Content Restored) -->
-    <div id="courses" class="tab-content">
-      <h2 style="margin-bottom: 20px;">My Courses</h2>
-      <div class="card" style="padding: 20px;">
-        <h3>Digital Marketing 101</h3>
-        <p style="color: var(--grey); margin: 10px 0;">45 Students Enrolled</p>
-        <button class="btn-primary">Manage Course</button>
-      </div>
-    </div>
+    <!-- My Courses Tab (Replaced with Playbook Manager) -->
+    <div id="tab-playbook" class="tab-panel">
+      <div class="card" style="display:block;">
+        <div class="playbook-manager">
+          <div class="playbook-manager-header">
+            <h3><i class="fa-solid fa-clipboard-list" style="color:var(--green);margin-right:8px;"></i>Playbook Manager</h3>
+            <button class="btn-primary btn-sm" id="toggle-create-form">
+              <i class="fa-solid fa-plus"></i> New Module
+            </button>
+          </div>
 
-    <div id="messages" class="tab-content">
-      <h2 style="margin-bottom: 20px;">Messages</h2>
-      <div class="card" style="padding: 15px; display: flex; align-items: center; gap: 15px;">
-        <div class="avatar student">MB</div>
-        <div style="flex: 1;">
-          <div style="font-weight: 700;">Marie Bongo</div>
-          <div style="font-size: 13px; color: var(--grey);">Coach, I finished the SEO module!</div>
+          <div class="create-module-form" id="create-module-form">
+            <form action="create_module.php" method="POST">
+              <div class="form-row">
+                <input type="text" name="title" class="form-input" placeholder="Module title...">
+                <input type="text" name="description" class="form-input" placeholder="Short description...">
+              </div>
+              <div class="form-row">
+                <input type="text" name="file_url" class="form-input" placeholder="File URL or upload link...">
+                <input type="number" name="duration" class="form-input" placeholder="Duration (mins)">
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;margin-top:4px;">
+                <label class="draft-toggle">
+                  <label class="toggle">
+                    <input type="checkbox" name="is_draft" value="1">
+                    <span class="toggle-slider"></span>
+                  </label>
+                  Save as Draft
+                </label>
+              </div>
+              <div class="form-actions">
+                <button type="button" class="btn-outline" id="cancel-create">Cancel</button>
+                <button type="submit" class="btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save Module</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="module-item">
+            <div class="module-icon"><i class="fa-solid fa-bullseye"></i></div>
+            <div class="module-info">
+              <h4>Module 1: Marketing Fundamentals</h4>
+              <p>8 lessons &bull; 45 min &bull; <span style="color:var(--green);font-weight:600;">Published</span></p>
+            </div>
+            <div class="draft-toggle">
+              <label class="toggle">
+                <input type="checkbox" checked onchange="updateDraft(1, this.checked)">
+                <span class="toggle-slider"></span>
+              </label>
+              <span>Published</span>
+            </div>
+            <div class="module-crud">
+              <button type="button" class="crud-btn edit"><i class="fa-solid fa-pen"></i></button>
+              <button type="button" class="crud-btn del"><i class="fa-solid fa-trash"></i></button>
+            </div>
+          </div>
+
+          <div class="module-item">
+            <div class="module-icon"><i class="fa-solid fa-chart-line"></i></div>
+            <div class="module-info">
+              <h4>Module 2: Audience Targeting</h4>
+              <p>6 lessons &bull; 38 min &bull; <span style="color:var(--green);font-weight:600;">Published</span></p>
+            </div>
+            <div class="draft-toggle">
+              <label class="toggle">
+                <input type="checkbox" checked onchange="updateDraft(2, this.checked)">
+                <span class="toggle-slider"></span>
+              </label>
+              <span>Published</span>
+            </div>
+            <div class="module-crud">
+              <button type="button" class="crud-btn edit"><i class="fa-solid fa-pen"></i></button>
+              <button type="button" class="crud-btn del"><i class="fa-solid fa-trash"></i></button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <div id="locker" class="tab-content">
-      <h2 style="margin-bottom: 20px;">Locker Room</h2>
-      <div class="card" style="padding: 40px; text-align: center;">
-        <i class="fa-solid fa-video" style="font-size: 48px; color: var(--grey); margin-bottom: 20px;"></i>
-        <h3>Live Session Hub</h3>
-        <p style="color: var(--grey); margin-top: 10px;">Start a live session to interact with your students.</p>
-        <button class="btn-primary" style="margin-top: 20px;">Go Live Now</button>
+    <!-- Messages Tab (Replaced) -->
+    <div id="tab-messages" class="tab-panel">
+      <div class="card" style="display:block;padding:20px;">
+        <p class="section-label">Direct Messages</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg);border-radius:10px;cursor:pointer;">
+            <div class="avatar student">MB</div>
+            <div style="flex:1;min-width:0;">
+              <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;margin-bottom:2px;">Marie Bongo</div>
+              <div style="font-size:12px;color:var(--grey);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Coach I have a question about the pixel...</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;">
+              <span style="font-size:11px;color:var(--grey);">2h ago</span>
+              <span style="width:7px;height:7px;background:var(--green);border-radius:50%;display:block;"></span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div id="performance" class="tab-content">
-      <h2 style="margin-bottom: 20px;">Performance Analytics</h2>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
-        <div class="card" style="padding: 20px; text-align: center;">
-          <div style="font-size: 24px; font-weight: 800; color: var(--green);">128</div>
-          <div style="font-size: 12px; color: var(--grey);">Total Students</div>
+    <!-- Performance Tab (Replaced with Roster) -->
+    <div id="tab-roster" class="tab-panel">
+      <div class="card" style="display:block;">
+        <div class="roster-wrap">
+          <div class="roster-header">
+            <h3><i class="fa-solid fa-users" style="color:var(--green);margin-right:8px;"></i>Roster — Digital Marketing</h3>
+            <div class="roster-search">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" id="roster-search-input" placeholder="Search students...">
+            </div>
+          </div>
+          <table class="roster-table" id="roster-table">
+            <thead>
+              <tr>
+                <th>Student</th>
+                <th>Rank</th>
+                <th>Progress</th>
+                <th>Sessions</th>
+                <th>Grade</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="student-cell">
+                    <div class="avatar student" style="width:34px;height:34px;font-size:12px;">MB</div>
+                    <div>
+                      <div class="student-name">Marie Bongo</div>
+                      <div class="student-email">marie@email.com</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="student-rank"><i class="fa-solid fa-star"></i> Rookie</span></td>
+                <td>
+                  <div class="progress-mini">
+                    <div class="progress-bar-mini"><div class="progress-fill-mini" style="width:75%"></div></div>
+                    <span class="progress-pct">75%</span>
+                  </div>
+                </td>
+                <td style="font-weight:600;font-size:13px;">5</td>
+                <td>
+                  <select class="grade-select">
+                    <option>Rookie</option>
+                    <option selected>Novice</option>
+                    <option>Professional</option>
+                    <option>Expert</option>
+                  </select>
+                </td>
+                <td><button class="btn-outline btn-sm"><i class="fa-solid fa-envelope"></i> Message</button></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <div class="card" style="padding: 20px; text-align: center;">
-          <div style="font-size: 24px; font-weight: 800; color: var(--gold);">85%</div>
-          <div style="font-size: 12px; color: var(--grey);">Completion Rate</div>
+      </div>
+    </div>
+
+    <!-- Locker Room Tab (Replaced) -->
+    <div id="tab-locker" class="tab-panel">
+      <div class="mobile-locker">
+        <div style="padding:14px 16px;background:var(--card);border-bottom:1px solid #f1f5f9;">
+          <button type="button" class="go-live-btn" id="go-live-mobile">
+            <i class="fa-solid fa-tower-broadcast"></i> Go Live
+          </button>
+        </div>
+        <div class="locker-video-mobile">
+          <span class="live-badge" style="top:10px;left:10px;font-size:9px;padding:3px 8px;">
+            <i class="fa-solid fa-circle-dot"></i> LIVE
+          </span>
+          <button class="play-btn-sm"><i class="fa-solid fa-play"></i></button>
+        </div>
+        <div style="padding:12px 16px;border-bottom:1px solid #f1f5f9;background:var(--card);">
+          <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;margin-bottom:2px;">Module 3: Facebook Ads Strategy</div>
+          <div style="font-size:12px;color:var(--green);font-weight:600;">42 Students watching</div>
+        </div>
+        <div class="mobile-chat-area">
+          <div class="chat-message">
+            <div class="avatar student sm">MB</div>
+            <div class="chat-bubble">
+              <div class="chat-author">Marie Bongo</div>
+              <div class="chat-message-text">Coach when does Module 4 drop?</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </main>
 
+  <!-- Locker Room (Desktop) -->
+  <aside class="locker-room">
+    <div class="locker-header">
+      <h3><i class="fa-solid fa-tower-broadcast"></i> Locker Room</h3>
+      <span class="peers-online" style="font-size:12px;">42 watching</span>
+    </div>
+    <div class="go-live-wrap">
+      <button type="button" class="go-live-btn" id="go-live-desktop">
+        <i class="fa-solid fa-tower-broadcast"></i> Go Live
+      </button>
+    </div>
+    <div class="locker-video">
+      <span class="live-badge"><i class="fa-solid fa-circle-dot"></i> LIVE</span>
+      <button class="play-btn-sm"><i class="fa-solid fa-play"></i></button>
+    </div>
+    <div class="locker-video-meta">
+      <div class="module-name">Module 3: Facebook Ads Strategy</div>
+      <div class="peers-count">42 Students watching</div>
+    </div>
+    <div class="chat-area">
+      <div class="chat-message">
+        <div class="avatar student sm">MB</div>
+        <div class="chat-bubble">
+          <div class="chat-author">Marie Bongo</div>
+          <div class="chat-message-text">Coach when does Module 4 drop?</div>
+        </div>
+      </div>
+    </div>
+    <div class="chat-input-area">
+      <input type="text" placeholder="Reply to your students...">
+      <button class="send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+    </div>
+  </aside>
+
   <!-- Mobile Nav -->
   <nav class="mobile-nav">
-    <a href="#" class="mobile-nav-item active" onclick="switchTab('home', this)"><i class="fa-solid fa-house"></i></a>
-    <a href="#" class="mobile-nav-item" onclick="switchTab('courses', this)"><i class="fa-solid fa-clipboard-list"></i></a>
-    <a href="#" class="mobile-nav-item" onclick="switchTab('messages', this)"><i class="fa-solid fa-envelope"></i></a>
-    <a href="#" class="mobile-nav-item" onclick="switchTab('locker', this)"><i class="fa-solid fa-door-open"></i></a>
+    <button class="mobile-nav-item active" data-tab="home"><i class="fa-solid fa-house"></i>Home</button>
+    <button class="mobile-nav-item" data-tab="playbook"><i class="fa-solid fa-clipboard-list"></i>Playbook</button>
+    <button class="mobile-nav-item" data-tab="messages"><i class="fa-solid fa-envelope"></i>Messages</button>
+    <button class="mobile-nav-item" data-tab="roster"><i class="fa-solid fa-users"></i>Roster</button>
+    <button class="mobile-nav-item" data-tab="locker"><i class="fa-solid fa-tower-broadcast"></i>Locker</button>
   </nav>
 
   <script>
+    // Preserved Tab Switching Logic
     function switchTab(tabId, el) {
-      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-      document.getElementById(tabId).classList.add('active');
+      document.querySelectorAll('.tab-panel').forEach(t => t.classList.remove('active'));
+      const target = document.getElementById('tab-' + tabId);
+      if (target) target.classList.add('active');
+      
       document.querySelectorAll('.nav-item, .mobile-nav-item').forEach(n => n.classList.remove('active'));
-      el.classList.add('active');
+      if (el) el.classList.add('active');
+      
+      // Sync sidebar and mobile nav
+      document.querySelectorAll(`[data-tab="${tabId}"]`).forEach(n => n.classList.add('active'));
     }
 
+    document.querySelectorAll('.nav-item, .mobile-nav-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        const tabId = item.getAttribute('data-tab');
+        switchTab(tabId, item);
+      });
+    });
+
+    // Preserved Profile Logic
     function toggleProfile() {
       document.getElementById('profileDropdown').classList.toggle('active');
     }
 
     function updateSpecialty(val) {
-      document.getElementById('sidebar-specialty').innerText = val;
+      document.getElementById('sidebar-specialty').innerText = val + ' Mentor';
+      localStorage.setItem('mentorSpecialty', val);
     }
 
-    // Flood Feed
-    const feed = document.getElementById('feed-container');
-    const posts = [
-      { author: 'Cabinet BEF', text: 'New digital skills workshop starting next week! #ProjetRIS', img: 'assets/images/feed1.jpg' },
-      { author: 'Coach Charles', text: 'Consistency is key. Keep pushing! 🚀', img: 'assets/images/feed2.jpg' },
-      { author: 'Projet RIS', text: 'Success story: From athlete to developer.', img: 'assets/images/feed3.jpg' },
-      { author: 'Marie Bongo', text: 'Finished my SEO module! Thanks Coach.', img: 'assets/images/feed4.jpg' },
-      { author: 'Cabinet BEF', text: 'Building the future of Cameroon. 🇨🇲', img: 'assets/images/feed5.jpg' },
-      { author: 'Emmanuel Kotto', text: 'Locker Room session tonight!', img: 'assets/images/feed6.jpg' },
-      { author: 'Projet RIS', text: 'New course: Social Media for Athletes.', img: 'assets/images/feed7.jpg' }
-    ];
+    function logout() {
+        window.location.href = 'index.html';
+    }
 
-    posts.forEach(p => {
-      feed.innerHTML += `
-        <div class="card post">
-          <div class="post-header">
-            <div class="post-author-info">
-              <div class="avatar sm student">${p.author[0]}</div>
-              <div>
-                <div class="post-author">${p.author}</div>
-                <div class="post-meta">Just now</div>
+    // Preserved Data Handling
+    document.addEventListener('DOMContentLoaded', () => {
+      const name = localStorage.getItem('userName') || 'John Doe';
+      document.getElementById('sidebar-name').innerText = name;
+      const initials = name.split(' ').map(n => n[0]).join('').toUpperCase();
+      document.getElementById('sidebar-avatar').innerText = initials;
+      document.getElementById('header-avatar').innerText = initials;
+      
+      const specialty = localStorage.getItem('mentorSpecialty');
+      if(specialty) {
+          document.getElementById('sidebar-specialty').innerText = specialty + ' Mentor';
+      }
+      
+      // Flood Feed (Preserved)
+      const feed = document.getElementById('feed-container');
+      const posts = [
+        { author: 'Cabinet BEF', text: 'New digital skills workshop starting next week! #ProjetRIS', img: 'assets/images/feed1.jpg' },
+        { author: 'Coach Charles', text: 'Consistency is key. Keep pushing! 🚀', img: 'assets/images/feed2.jpg' },
+        { author: 'Projet RIS', text: 'Success story: From athlete to developer.', img: 'assets/images/feed3.jpg' },
+        { author: 'Marie Bongo', text: 'Finished my SEO module! Thanks Coach.', img: 'assets/images/feed4.jpg' },
+        { author: 'Cabinet BEF', text: 'Building the future of Cameroon. 🇨🇲', img: 'assets/images/feed5.jpg' },
+        { author: 'Emmanuel Kotto', text: 'Locker Room session tonight!', img: 'assets/images/feed6.jpg' },
+        { author: 'Projet RIS', text: 'New course: Social Media for Athletes.', img: 'assets/images/feed7.jpg' }
+      ];
+
+      posts.forEach(p => {
+        feed.innerHTML += `
+          <div class="card post">
+            <div class="post-header">
+              <div class="post-author-info">
+                <div class="avatar sm student">${p.author[0]}</div>
+                <div>
+                  <div class="post-author">${p.author}</div>
+                  <div class="post-meta">Just now</div>
+                </div>
               </div>
             </div>
+            <div class="post-content">${p.text}</div>
+            <img src="${p.img}" class="post-img" onerror="this.style.display='none'">
           </div>
-          <div class="post-content">${p.text}</div>
-          <img src="${p.img}" class="post-img" onerror="this.style.display='none'">
-        </div>
-      `;
+        `;
+      });
     });
 
-    const userName = localStorage.getItem('ris_user_name') || 'Mentor';
-    document.getElementById('sidebar-name').innerText = userName;
-    document.getElementById('header-avatar').innerText = userName[0].toUpperCase();
-    document.getElementById('sidebar-avatar').innerText = userName[0].toUpperCase();
+    // New Logic from Provided File
+    const textarea = document.getElementById('post-textarea');
+    const postBtn  = document.getElementById('post-btn');
+    if (textarea && postBtn) {
+      textarea.addEventListener('input', () => {
+        postBtn.disabled = textarea.value.trim().length === 0;
+      });
+    }
+
+    const toggleCreateBtn = document.getElementById('toggle-create-form');
+    const createForm      = document.getElementById('create-module-form');
+    const cancelCreate    = document.getElementById('cancel-create');
+
+    if (toggleCreateBtn && createForm) {
+      toggleCreateBtn.addEventListener('click', () => {
+        createForm.classList.toggle('open');
+        toggleCreateBtn.innerHTML = createForm.classList.contains('open')
+          ? '<i class="fa-solid fa-xmark"></i> Cancel'
+          : '<i class="fa-solid fa-plus"></i> New Module';
+      });
+    }
+
+    if (cancelCreate && createForm) {
+      cancelCreate.addEventListener('click', () => {
+        createForm.classList.remove('open');
+        toggleCreateBtn.innerHTML = '<i class="fa-solid fa-plus"></i> New Module';
+      });
+    }
+
+    function updateDraft(moduleId, isPublished) {
+      const label = event.target.closest('.draft-toggle').querySelector('span');
+      if (label) label.textContent = isPublished ? 'Published' : 'Draft';
+    }
+
+    document.querySelectorAll('.go-live-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        if (this.classList.contains('live-active')) {
+          this.classList.remove('live-active');
+          this.innerHTML = '<i class="fa-solid fa-tower-broadcast"></i> Go Live';
+        } else {
+          this.classList.add('live-active');
+          this.innerHTML = '<i class="fa-solid fa-circle-dot" style="animation:livePulse 1s ease-in-out infinite;"></i> End Session';
+        }
+      });
+    });
+
+    const rosterSearch = document.getElementById('roster-search-input');
+    if (rosterSearch) {
+      rosterSearch.addEventListener('input', () => {
+        const query = rosterSearch.value.toLowerCase();
+        document.querySelectorAll('#roster-table tbody tr').forEach(row => {
+          const name = row.querySelector('.student-name')?.textContent.toLowerCase() || '';
+          row.style.display = name.includes(query) ? '' : 'none';
+        });
+      });
+    }
+
+    window.onclick = function(event) {
+      if (!event.target.closest('.avatar') && !event.target.closest('.profile-dropdown')) {
+        document.getElementById('profileDropdown').classList.remove('active');
+      }
+    }
   </script>
 </body>
 </html>
