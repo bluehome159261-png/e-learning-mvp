@@ -27,7 +27,9 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         html { scroll-behavior: smooth; }
+
         body {
             font-family: 'Inter', sans-serif;
             color: var(--dark);
@@ -87,6 +89,16 @@
             background: var(--primary);
             color: white;
             transform: translateY(-2px);
+        }
+
+        .btn-white {
+            background: white;
+            color: var(--primary);
+            box-shadow: var(--shadow-md);
+        }
+        .btn-white:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
 
         /* ── HEADER ── */
@@ -161,6 +173,21 @@
             gap: 12px;
         }
 
+        .lang-toggle {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--gray-light);
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+        .lang-toggle:hover { border-color: var(--primary); color: var(--primary); }
+
         .btn-login {
             padding: 10px 20px;
             font-size: 0.9rem;
@@ -185,6 +212,14 @@
         }
         .btn-signup:hover { background: var(--primary-dark); }
 
+        .mobile-toggle {
+            display: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: var(--dark);
+            padding: 8px;
+        }
+
         /* ── HERO ── */
         .hero {
             padding: 140px 0 100px;
@@ -193,11 +228,35 @@
             overflow: hidden;
         }
 
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -100px; right: -100px;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(0,135,81,0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
         .hero-inner {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 60px;
             align-items: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0,135,81,0.1);
+            color: var(--primary);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
         }
 
         .hero h1 {
@@ -221,111 +280,791 @@
             margin-bottom: 48px;
         }
 
-        /* ── SLIDESHOW ── */
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding-top: 24px;
+            border-top: 1px solid var(--gray-light);
+        }
+        .stat-item { text-align: center; }
+        .stat-number {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--primary);
+            display: block;
+        }
+        .stat-label { font-size: 0.8rem; color: var(--gray); font-weight: 600; }
+
+        /* Hero Visual */
         .hero-visual {
             position: relative;
-            height: 450px;
+        }
+
+        .hero-card-main {
+            background: white;
             border-radius: 24px;
-            overflow: hidden;
+            padding: 32px;
             box-shadow: var(--shadow-lg);
-        }
-
-        .slideshow-container {
             position: relative;
-            width: 100%;
-            height: 100%;
+            z-index: 2;
         }
 
-        .slide {
+        .classroom-preview {
+            background: var(--dark);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .classroom-bar {
+            background: #2d2d2d;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot-red { background: #ff5f57; }
+        .dot-yellow { background: #febc2e; }
+        .dot-green { background: #28c840; }
+        .classroom-bar span {
+            color: #888;
+            font-size: 0.75rem;
+            margin-left: 8px;
+        }
+        .classroom-content {
+            padding: 20px;
+            min-height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .code-line {
+            display: flex;
+            gap: 8px;
+            width: 100%;
+        }
+        .line-num { color: #555; font-size: 0.75rem; font-family: monospace; width: 20px; }
+        .line-code { font-size: 0.75rem; font-family: monospace; }
+        .kw { color: #c678dd; }
+        .fn { color: #61afef; }
+        .str { color: #98c379; }
+        .punc { color: #abb2bf; }
+
+        .mentor-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--light);
+            border-radius: 12px;
+        }
+        .mentor-avatar {
+            width: 44px; height: 44px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        .mentor-info { flex: 1; }
+        .mentor-name { font-weight: 700; font-size: 0.9rem; }
+        .mentor-role { font-size: 0.75rem; color: var(--gray); }
+        .live-badge {
+            background: var(--accent);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .floating-pill {
             position: absolute;
-            top: 0; left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 1.5s ease-in-out;
-            background-size: cover;
-            background-position: center;
+            background: white;
+            border-radius: 50px;
+            padding: 10px 18px;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            animation: floatUp 3s ease-in-out infinite;
+            z-index: 3;
+        }
+        .fp1 { top: -20px; right: -20px; animation-delay: 0s; }
+        .fp2 { bottom: 20px; left: -30px; animation-delay: 1.5s; }
+
+        @keyframes floatUp {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
         }
 
-        .slide.active {
-            opacity: 1;
+        /* ── SECTION SHARED ── */
+        .section-tag {
+            display: inline-block;
+            background: rgba(0,135,81,0.1);
+            color: var(--primary);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
         }
 
-        .slide-overlay {
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 100%;
-            padding: 40px 30px 30px;
-            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+        .section-header {
+            text-align: center;
+            max-width: 680px;
+            margin: 0 auto 56px;
+        }
+        .section-header h2 {
+            font-size: clamp(1.8rem, 3vw, 2.6rem);
+            color: var(--dark);
+            margin-bottom: 16px;
+        }
+        .section-header h2 span { color: var(--primary); }
+        .section-header p { color: var(--gray); font-size: 1.05rem; line-height: 1.7; }
+
+        /* ── PROBLEM / SOLUTION ── */
+        .ps-section {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .ps-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        .ps-card {
+            border-radius: var(--radius);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        .ps-card.problem {
+            background: #fff5f5;
+            border: 1px solid rgba(239,51,64,0.15);
+        }
+        .ps-card.solution {
+            background: #f0faf4;
+            border: 1px solid rgba(0,135,81,0.15);
+        }
+
+        .ps-card-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+        .ps-card-title h3 { font-size: 1.4rem; }
+        .ps-card.problem .ps-card-title h3 { color: var(--accent); }
+        .ps-card.solution .ps-card-title h3 { color: var(--primary); }
+        .ps-card-title i { font-size: 1.4rem; }
+        .ps-card.problem .ps-card-title i { color: var(--accent); }
+        .ps-card.solution .ps-card-title i { color: var(--primary); }
+
+        .ps-item {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 20px;
+            padding: 14px;
+            border-radius: 12px;
+            transition: var(--transition);
+        }
+        .ps-item:hover { background: rgba(255,255,255,0.7); transform: translateX(4px); }
+        .ps-item-icon {
+            width: 36px; height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 0.95rem;
+        }
+        .problem .ps-item-icon { background: rgba(239,51,64,0.12); color: var(--accent); }
+        .solution .ps-item-icon { background: rgba(0,135,81,0.12); color: var(--primary); }
+        .ps-item-text h4 { font-size: 0.95rem; margin-bottom: 4px; }
+        .ps-item-text p { font-size: 0.85rem; color: var(--gray); }
+
+        /* ── SPECIALTIES ── */
+        .specialties-section {
+            padding: 100px 0;
+            background: var(--light);
+        }
+
+        .spec-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .spec-card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+        .spec-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(0,135,81,0.15);
+        }
+
+        .spec-card-top {
+            padding: 28px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(0,135,81,0.05), rgba(252,209,22,0.05));
+            position: relative;
+        }
+        .spec-icon {
+            width: 64px; height: 64px;
+            background: rgba(0,135,81,0.1);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 14px;
+            font-size: 1.6rem;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+        .spec-card:hover .spec-icon {
+            background: var(--primary);
+            color: white;
+        }
+        .spec-card-top h3 { font-size: 1.1rem; color: var(--dark); }
+
+        .spec-card-body { padding: 20px 24px; }
+        .spec-card-body ul { list-style: none; }
+        .spec-card-body ul li {
+            padding: 7px 0;
+            font-size: 0.88rem;
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        .spec-card-body ul li:last-child { border-bottom: none; }
+        .spec-card-body ul li i { color: var(--primary); font-size: 0.7rem; }
+
+        .spec-card-foot {
+            padding: 16px 24px 24px;
+        }
+        .spec-card-foot a {
+            display: block;
+            text-align: center;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1.5px solid var(--primary);
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .spec-card-foot a:hover {
+            background: var(--primary);
             color: white;
         }
 
-        .slide-overlay h3 {
+        /* ── HOW IT WORKS ── */
+        .how-section {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .steps-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            position: relative;
+            margin-top: 48px;
+        }
+        .steps-row::before {
+            content: '';
+            position: absolute;
+            top: 32px;
+            left: calc(12.5% + 24px);
+            right: calc(12.5% + 24px);
+            height: 2px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+        }
+
+        .step-item {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .step-num {
+            width: 64px; height: 64px;
+            background: white;
+            border: 3px solid var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-family: 'Montserrat', sans-serif;
             font-size: 1.4rem;
-            margin-bottom: 8px;
+            font-weight: 900;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+        .step-item:hover .step-num {
+            background: var(--primary);
+            color: white;
+        }
+        .step-item h4 { font-size: 1rem; margin-bottom: 8px; }
+        .step-item p { font-size: 0.85rem; color: var(--gray); line-height: 1.6; }
+
+        /* ── DIFFERENTIATORS ── */
+        .diff-section {
+            padding: 100px 0;
+            background: var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+        .diff-section::before {
+            content: '';
+            position: absolute;
+            top: -150px; right: -150px;
+            width: 500px; height: 500px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 50%;
         }
 
-        .slide-overlay p {
-            font-size: 0.9rem;
-            opacity: 0.9;
-            margin-bottom: 0;
+        .diff-section .section-header h2 { color: white; }
+        .diff-section .section-header p { color: rgba(255,255,255,0.75); }
+        .diff-section .section-tag {
+            background: rgba(255,255,255,0.15);
+            color: var(--secondary);
+        }
+
+        .diff-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .diff-card {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: var(--radius);
+            padding: 36px 28px;
+            text-align: center;
+            transition: var(--transition);
+            backdrop-filter: blur(4px);
+        }
+        .diff-card:hover {
+            background: rgba(255,255,255,0.14);
+            transform: translateY(-4px);
+        }
+        .diff-card-icon {
+            width: 72px; height: 72px;
+            background: rgba(252,209,22,0.15);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.8rem;
+            color: var(--secondary);
+        }
+        .diff-card h4 { font-size: 1.1rem; color: white; margin-bottom: 12px; }
+        .diff-card p { font-size: 0.88rem; color: rgba(255,255,255,0.72); line-height: 1.7; }
+
+        /* ── TESTIMONIALS ── */
+        .testi-section {
+            padding: 100px 0;
+            background: var(--light);
+        }
+
+        .testi-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .testi-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 32px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            position: relative;
+        }
+        .testi-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+        .testi-card::before {
+            content: '"';
+            position: absolute;
+            top: 16px; left: 24px;
+            font-size: 4rem;
+            font-family: Georgia, serif;
+            color: rgba(0,135,81,0.12);
+            line-height: 1;
+        }
+
+        .testi-stars {
+            display: flex;
+            gap: 3px;
+            margin-bottom: 16px;
+        }
+        .testi-stars i { color: var(--secondary); font-size: 0.85rem; }
+
+        .testi-quote {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: #444;
+            margin-bottom: 24px;
+            font-style: italic;
+        }
+
+        .testi-author { display: flex; align-items: center; gap: 12px; }
+        .testi-avatar {
+            width: 46px; height: 46px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        .testi-name { font-weight: 700; font-size: 0.92rem; }
+        .testi-role { font-size: 0.78rem; color: var(--gray); }
+
+        /* ── PRICING ── */
+        .pricing-section {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            align-items: start;
+        }
+
+        .pricing-card {
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1.5px solid var(--gray-light);
+            transition: var(--transition);
+        }
+        .pricing-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+        .pricing-card.popular {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(0,135,81,0.08);
+            transform: scale(1.03);
+        }
+
+        .pricing-top {
+            padding: 32px 28px;
+            background: var(--light);
+            text-align: center;
+            position: relative;
+        }
+        .popular .pricing-top {
+            background: var(--primary);
+            color: white;
+        }
+        .popular-badge {
+            position: absolute;
+            top: 16px; right: 16px;
+            background: var(--secondary);
+            color: var(--dark);
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .plan-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .popular .plan-name { color: rgba(255,255,255,0.85); }
+        .plan-price {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: var(--primary);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+        .popular .plan-price { color: white; }
+        .plan-period { font-size: 0.82rem; color: var(--gray); }
+        .popular .plan-period { color: rgba(255,255,255,0.7); }
+
+        .pricing-body { padding: 28px; }
+        .pricing-body ul { list-style: none; margin-bottom: 28px; }
+        .pricing-body ul li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 0;
+            font-size: 0.88rem;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        .pricing-body ul li:last-child { border-bottom: none; }
+        .pricing-body ul li i.fa-check { color: var(--primary); }
+        .pricing-body ul li i.fa-times { color: #ccc; }
+        .pricing-body ul li.disabled { color: #bbb; }
+        .pricing-body .btn { width: 100%; justify-content: center; }
+
+        /* ── CTA ── */
+        .cta-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--dark) 0%, #2d3a2e 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23008751' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .cta-inner { position: relative; }
+        .cta-section h2 { font-size: clamp(1.8rem, 3vw, 2.8rem); color: white; margin-bottom: 16px; }
+        .cta-section p { font-size: 1.05rem; color: rgba(255,255,255,0.7); max-width: 600px; margin: 0 auto 40px; }
+        .cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+        /* ── PARTNERS ── */
+        .partners-section {
+            padding: 80px 0;
+            background: white;
+            border-top: 1px solid var(--gray-light);
+        }
+
+        .partners-label {
+            text-align: center;
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 40px;
+        }
+
+        .partners-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+
+        .partner-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            opacity: 0.65;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        .partner-item:hover { opacity: 1; transform: translateY(-3px); }
+
+        .partner-logo {
+            width: 80px; height: 80px;
+            border-radius: 16px;
+            background: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--primary);
+            border: 1.5px solid var(--gray-light);
+        }
+        .partner-name {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--dark);
+            text-align: center;
         }
 
         /* ── FOOTER ── */
         footer {
             background: var(--dark);
-            color: white;
-            padding: 80px 0 40px;
+            color: rgba(255,255,255,0.7);
+            padding: 72px 0 32px;
         }
 
         .footer-grid {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            grid-template-columns: 1.8fr 1fr 1fr 1.2fr;
             gap: 48px;
-            margin-bottom: 60px;
+            margin-bottom: 56px;
         }
 
-        .footer-logo .logo-text { color: white; }
-        .footer-logo .logo-sub { color: rgba(255,255,255,0.5); }
+        .footer-brand .logo-text { color: white; }
+        .footer-brand .logo-sub { color: rgba(255,255,255,0.4); }
 
-        .footer-col h4 {
-            font-size: 1.1rem;
-            margin-bottom: 24px;
-            color: var(--secondary);
+        .footer-desc {
+            font-size: 0.88rem;
+            line-height: 1.7;
+            margin: 16px 0 24px;
+            color: rgba(255,255,255,0.55);
+        }
+
+        .footer-socials { display: flex; gap: 10px; }
+        .footer-socials a {
+            width: 38px; height: 38px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .footer-socials a:hover { background: var(--primary); color: white; }
+
+        .footer-col h5 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 800;
+            color: white;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
         }
 
         .footer-col ul { list-style: none; }
-        .footer-col ul li { margin-bottom: 12px; }
-        .footer-col ul a {
-            color: rgba(255,255,255,0.7);
+        .footer-col ul li { margin-bottom: 10px; }
+        .footer-col ul li a {
+            color: rgba(255,255,255,0.55);
             text-decoration: none;
+            font-size: 0.88rem;
             transition: var(--transition);
-            font-size: 0.9rem;
         }
-        .footer-col ul a:hover { color: white; padding-left: 4px; }
+        .footer-col ul li a:hover { color: white; padding-left: 4px; }
+
+        .footer-contact li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-size: 0.88rem;
+        }
+        .footer-contact li i {
+            color: var(--primary);
+            width: 16px;
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
 
         .footer-bottom {
-            padding-top: 40px;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 28px;
+            border-top: 1px solid rgba(255,255,255,0.08);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.5);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .footer-bottom p { font-size: 0.82rem; color: rgba(255,255,255,0.35); }
+        .footer-bottom a { color: rgba(255,255,255,0.45); text-decoration: none; font-size: 0.82rem; }
+        .footer-bottom a:hover { color: white; }
+
+        /* ── MOBILE ── */
+        @media (max-width: 1024px) {
+            .spec-grid { grid-template-columns: repeat(2, 1fr); }
+            .diff-grid { grid-template-columns: repeat(2, 1fr); }
+            .testi-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
         }
 
         @media (max-width: 768px) {
             .hero-inner { grid-template-columns: 1fr; }
-            .hero-visual { height: 300px; }
-            .footer-grid { grid-template-columns: 1fr 1fr; }
-            nav, .btn-login { display: none; }
+            .hero-visual { display: none; }
+            .ps-grid { grid-template-columns: 1fr; }
+            .spec-grid { grid-template-columns: 1fr; }
+            .steps-row { grid-template-columns: 1fr 1fr; }
+            .steps-row::before { display: none; }
+            .diff-grid { grid-template-columns: 1fr; }
+            .testi-grid { grid-template-columns: 1fr; }
+            .pricing-grid { grid-template-columns: 1fr; }
+            .pricing-card.popular { transform: none; }
+            .footer-grid { grid-template-columns: 1fr; }
+            nav, .lang-toggle, .btn-login { display: none; }
+            .mobile-toggle { display: block; }
+            .hero-stats { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 72px; left: 0;
+            width: 100%;
+            background: white;
+            box-shadow: var(--shadow-lg);
+            z-index: 999;
+            padding: 16px;
+        }
+        .mobile-menu.open { display: block; }
+        .mobile-menu ul { list-style: none; }
+        .mobile-menu ul li { border-bottom: 1px solid var(--gray-light); }
+        .mobile-menu ul a {
+            display: block;
+            padding: 14px 8px;
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+        }
+        .mobile-menu-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 16px;
+        }
+        .mobile-menu-actions a {
+            display: block;
+            padding: 12px;
+            text-align: center;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
         }
     </style>
 </head>
 <body>
 
-<header>
+<!-- HEADER -->
+<header id="header">
     <div class="container header-inner">
         <a href="index.html" class="logo">
             <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
@@ -334,68 +1073,200 @@
                 <span class="logo-sub">Fondation BEF</span>
             </div>
         </a>
+
         <nav>
             <ul>
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#about">About</a></li>
                 <li><a href="#specialties">Specialties</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
                 <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#partners">Partners</a></li>
             </ul>
         </nav>
+
         <div class="header-actions">
-            <a href="auth.html" class="btn-login">Log In</a>
-            <a href="auth.html" class="btn-signup">Get Started</a>
+            <div class="lang-toggle" id="langToggle">
+                <span>🇫🇷</span> FR / <span>🇬🇧</span> EN
+            </div>
+            <a href="login.html" class="btn-login">Log In</a>
+            <a href="register.html" class="btn-signup">Get Started</a>
+            <div class="mobile-toggle" id="mobileToggle">
+                <i class="fas fa-bars"></i>
+            </div>
         </div>
     </div>
 </header>
 
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+    <ul>
+        <li><a href="#specialties">Specialties</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#partners">Partners</a></li>
+    </ul>
+    <div class="mobile-menu-actions">
+        <a href="login.html" style="border:2px solid var(--primary);color:var(--primary);">Log In</a>
+        <a href="register.html" style="background:var(--primary);color:white;">Get Started Free</a>
+    </div>
+</div>
+
+<!-- HERO -->
 <section class="hero" id="hero">
     <div class="container hero-inner">
         <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-star"></i> Proudly Built for African Athletes
+            </div>
             <h1>Turn Your <span>Athletic Discipline</span> Into a Digital Career</h1>
             <p>Projet RIS connects young athletes across Cameroon and Africa with expert mentors in tech, business, and agriculture — flexible, practical, and designed for your schedule.</p>
             <div class="hero-cta">
-                <a href="auth.html" class="btn btn-primary">Start Free Trial</a>
-                <a href="free-home.html" class="btn btn-outline">Explore Free Plan</a>
+                <a href="register.html" class="btn btn-primary">
+                    <i class="fas fa-play"></i> Start Free Trial
+                </a>
+                <a href="register.html?role=mentor" class="btn btn-outline">
+                    <i class="fas fa-chalkboard-teacher"></i> Become a Mentor
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">15+</span>
+                    <span class="stat-label">Specialties</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">3</span>
+                    <span class="stat-label">User Roles</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Flexible</span>
+                </div>
             </div>
         </div>
 
         <div class="hero-visual">
-            <div class="slideshow-container">
-                <div class="slide active" style="background-image: url('assets/images/slideshow/slide1.jpg');">
-                    <div class="slide-overlay">
-                        <h3>Digital Empowerment</h3>
-                        <p>Equipping athletes with 21st-century skills.</p>
+            <div class="floating-pill fp1">
+                <i class="fas fa-check-circle" style="color:var(--primary)"></i>
+                Session Live Now
+            </div>
+            <div class="floating-pill fp2">
+                <i class="fas fa-certificate" style="color:var(--secondary)"></i>
+                Certificate Earned!
+            </div>
+
+            <div class="hero-card-main">
+                <div class="classroom-preview">
+                    <div class="classroom-bar">
+                        <div class="dot dot-red"></div>
+                        <div class="dot dot-yellow"></div>
+                        <div class="dot dot-green"></div>
+                        <span>Virtual Classroom — Web Dev Module 3</span>
+                    </div>
+                    <div class="classroom-content">
+                        <div class="code-line">
+                            <span class="line-num">1</span>
+                            <span class="line-code"><span class="kw">function</span> <span class="fn">buildFuture</span><span class="punc">(</span><span class="str">athlete</span><span class="punc">) {</span></span>
+                        </div>
+                        <div class="code-line">
+                            <span class="line-num">2</span>
+                            <span class="line-code">&nbsp;&nbsp;<span class="kw">return</span> <span class="fn">RIS</span><span class="punc">.</span><span class="fn">learn</span><span class="punc">(</span><span class="str">athlete</span><span class="punc">);</span></span>
+                        </div>
+                        <div class="code-line">
+                            <span class="line-num">3</span>
+                            <span class="line-code"><span class="punc">}</span></span>
+                        </div>
                     </div>
                 </div>
-                <div class="slide" style="background-image: url('assets/images/slideshow/slide2.jpg');">
-                    <div class="slide-overlay">
-                        <h3>Online Learning</h3>
-                        <p>Flexible education tailored for sports schedules.</p>
+                <div class="mentor-row">
+                    <div class="mentor-avatar">MB</div>
+                    <div class="mentor-info">
+                        <div class="mentor-name">Mr. BIGAMBIA Charles</div>
+                        <div class="mentor-role">Project Supervisor · Fondation BEF</div>
+                    </div>
+                    <div class="live-badge">● LIVE</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PROBLEM / SOLUTION -->
+<section class="ps-section" id="problem-solution">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">The Reality</span>
+            <h2>From Challenges <span>to Solutions</span></h2>
+            <p>Young athletes in Cameroon face real, structural barriers. RIS was built specifically to break each one of them.</p>
+        </div>
+
+        <div class="ps-grid">
+            <div class="ps-card problem">
+                <div class="ps-card-title">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>The Challenges</h3>
+                </div>
+                <div class="ps-item">
+                    <div class="ps-item-icon"><i class="fas fa-futbol"></i></div>
+                    <div class="ps-item-text">
+                        <h4>The Kudo Trap</h4>
+                        <p>Earning ~1,000 CFA per informal match with no financial security or career growth</p>
                     </div>
                 </div>
-                <div class="slide" style="background-image: url('assets/images/slideshow/slide3.jpg');">
-                    <div class="slide-overlay">
-                        <h3>Future Leaders</h3>
-                        <p>Building careers beyond the field.</p>
+                <div class="ps-item">
+                    <div class="ps-item-icon"><i class="fas fa-dice"></i></div>
+                    <div class="ps-item-text">
+                        <h4>Sports Betting Dependency</h4>
+                        <p>Platforms like 1xBet exploit financial desperation, deepening instability</p>
                     </div>
                 </div>
-                <div class="slide" style="background-image: url('assets/images/slideshow/slide4.jpg');">
-                    <div class="slide-overlay">
-                        <h3>Community Support</h3>
-                        <p>Connecting mentors with talented youth.</p>
+                <div class="ps-item">
+                    <div class="ps-item-icon"><i class="fas fa-laptop"></i></div>
+                    <div class="ps-item-text">
+                        <h4>Digital Skills Gap</h4>
+                        <p>Less than 25% of African youth acquire market-relevant digital skills (UNESCO, 2022)</p>
                     </div>
                 </div>
-                <div class="slide" style="background-image: url('assets/images/slideshow/slide5.jpg');">
-                    <div class="slide-overlay">
-                        <h3>Skill Development</h3>
-                        <p>Practical training in tech and business.</p>
+                <div class="ps-item">
+                    <div class="ps-item-icon"><i class="fas fa-clock"></i></div>
+                    <div class="ps-item-text">
+                        <h4>No Flexible Training</h4>
+                        <p>Rigid school schedules conflict with competition calendars and training routines</p>
                     </div>
                 </div>
-                <div class="slide" style="background-image: url('assets/images/slideshow/slide6.jpg');">
-                    <div class="slide-overlay">
-                        <h3>Career Transition</h3>
-                        <p>Helping athletes succeed in the professional world.</p>
+            </div>
+
+            <div class="ps-card solution">
+                <div class="ps-card-title">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>RIS Solutions</h3>
+                </div>
+                <div class="ps-item">
+                    <div class="ps-item-icon"><i class="fas fa-user-tie"></i></div>
+                    <div class="ps-item-text">
+                        <h4>Mentor-Led Learning</h4>
+                        <p>Real industry professionals guide you live, not pre-recorded videos you watch alone</p>
+                    </div>
+                </div>
+                <div class="ps-item">
+                    <div class="ps-item-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <div class="ps-item-text">
+                        <h4>Mobile-First Platform</h4>
+                        <p>Designed for Cameroonian smartphones — lightweight and works on slow connections</p>
+                    </div>
+                </div>
+                <div class="ps-item">
+                    <div class="ps-item-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="ps-item-text">
+                        <h4>Athlete-Friendly Schedule</h4>
+                        <p>Classes available 6AM–10PM GMT+1 to fit around training and competitions</p>
+                    </div>
+                </div>
+                <div class="ps-item">
+                    <div class="ps-item-icon"><i class="fas fa-certificate"></i></div>
+                    <div class="ps-item-text">
+                        <h4>Certified Career Skills</h4>
+                        <p>Earn verifiable certificates in web development, design, agriculture, business, and more</p>
                     </div>
                 </div>
             </div>
@@ -403,70 +1274,468 @@
     </div>
 </section>
 
+<!-- SPECIALTIES -->
+<section class="specialties-section" id="specialties">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Curriculum</span>
+            <h2>Explore Our <span>Specialties</span></h2>
+            <p>Six categories of practical, career-ready skills — all taught by industry professionals who know the African market</p>
+        </div>
+        <div class="spec-grid">
+            <div class="spec-card">
+                <div class="spec-card-top">
+                    <div class="spec-icon"><i class="fas fa-laptop-code"></i></div>
+                    <h3>Digital Skills</h3>
+                </div>
+                <div class="spec-card-body">
+                    <ul>
+                        <li><i class="fas fa-circle"></i> Web Development</li>
+                        <li><i class="fas fa-circle"></i> Graphic Design</li>
+                        <li><i class="fas fa-circle"></i> Blogging</li>
+                        <li><i class="fas fa-circle"></i> Social Media Management</li>
+                    </ul>
+                </div>
+                <div class="spec-card-foot"><a href="register.html">Explore Courses</a></div>
+            </div>
+
+            <div class="spec-card">
+                <div class="spec-card-top">
+                    <div class="spec-icon"><i class="fas fa-briefcase"></i></div>
+                    <h3>Business & Entrepreneurship</h3>
+                </div>
+                <div class="spec-card-body">
+                    <ul>
+                        <li><i class="fas fa-circle"></i> Marketing</li>
+                        <li><i class="fas fa-circle"></i> E-commerce</li>
+                        <li><i class="fas fa-circle"></i> Accounting</li>
+                        <li><i class="fas fa-circle"></i> Entrepreneurship</li>
+                    </ul>
+                </div>
+                <div class="spec-card-foot"><a href="register.html">Explore Courses</a></div>
+            </div>
+
+            <div class="spec-card">
+                <div class="spec-card-top">
+                    <div class="spec-icon"><i class="fas fa-seedling"></i></div>
+                    <h3>Agriculture & AgriTech</h3>
+                </div>
+                <div class="spec-card-body">
+                    <ul>
+                        <li><i class="fas fa-circle"></i> Agricultural Projects</li>
+                        <li><i class="fas fa-circle"></i> Livestock Farming</li>
+                        <li><i class="fas fa-circle"></i> Fish Farming</li>
+                        <li><i class="fas fa-circle"></i> Modern Agri Techniques</li>
+                    </ul>
+                </div>
+                <div class="spec-card-foot"><a href="register.html">Explore Courses</a></div>
+            </div>
+
+            <div class="spec-card">
+                <div class="spec-card-top">
+                    <div class="spec-icon"><i class="fas fa-solar-panel"></i></div>
+                    <h3>Environment & Green Skills</h3>
+                </div>
+                <div class="spec-card-body">
+                    <ul>
+                        <li><i class="fas fa-circle"></i> Solar Energy Installation</li>
+                        <li><i class="fas fa-circle"></i> Waste Management</li>
+                        <li><i class="fas fa-circle"></i> Water Conservation</li>
+                        <li><i class="fas fa-circle"></i> Reforestation</li>
+                    </ul>
+                </div>
+                <div class="spec-card-foot"><a href="register.html">Explore Courses</a></div>
+            </div>
+
+            <div class="spec-card">
+                <div class="spec-card-top">
+                    <div class="spec-icon"><i class="fas fa-search"></i></div>
+                    <h3>Job Search Skills</h3>
+                </div>
+                <div class="spec-card-body">
+                    <ul>
+                        <li><i class="fas fa-circle"></i> CV & Cover Letter Writing</li>
+                        <li><i class="fas fa-circle"></i> Interview Techniques</li>
+                        <li><i class="fas fa-circle"></i> Job Search Strategy</li>
+                        <li><i class="fas fa-circle"></i> Professional Networking</li>
+                    </ul>
+                </div>
+                <div class="spec-card-foot"><a href="register.html">Explore Courses</a></div>
+            </div>
+
+            <div class="spec-card">
+                <div class="spec-card-top">
+                    <div class="spec-icon"><i class="fas fa-hands-helping"></i></div>
+                    <h3>Inclusion & Leadership</h3>
+                </div>
+                <div class="spec-card-body">
+                    <ul>
+                        <li><i class="fas fa-circle"></i> Sign Language</li>
+                        <li><i class="fas fa-circle"></i> Civic Engagement</li>
+                        <li><i class="fas fa-circle"></i> Project Management</li>
+                        <li><i class="fas fa-circle"></i> Conflict Management</li>
+                    </ul>
+                </div>
+                <div class="spec-card-foot"><a href="register.html">Explore Courses</a></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how-it-works">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Process</span>
+            <h2>How <span>RIS Works</span></h2>
+            <p>From registration to your first live session in four simple steps</p>
+        </div>
+        <div class="steps-row">
+            <div class="step-item">
+                <div class="step-num">1</div>
+                <h4>Create Your Account</h4>
+                <p>Register as a Student, Mentor, or Admin. Takes less than 2 minutes.</p>
+            </div>
+            <div class="step-item">
+                <div class="step-num">2</div>
+                <h4>Choose Your Specialty</h4>
+                <p>Browse 15+ fields and pick the career path that fits your goals.</p>
+            </div>
+            <div class="step-item">
+                <div class="step-num">3</div>
+                <h4>Enroll & Get Matched</h4>
+                <p>Enroll in a course and connect with a verified industry mentor.</p>
+            </div>
+            <div class="step-item">
+                <div class="step-num">4</div>
+                <h4>Learn & Earn a Certificate</h4>
+                <p>Join live sessions, submit projects, and earn your career certificate.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- DIFFERENTIATORS -->
+<section class="diff-section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag" style="background:rgba(255,255,255,0.15);color:var(--secondary)">Why RIS</span>
+            <h2>What Makes RIS <span style="color:var(--secondary)">Different</span></h2>
+            <p>Not another generic eLearning platform. Built specifically for young people in Cameroon.</p>
+        </div>
+        <div class="diff-grid">
+            <div class="diff-card">
+                <div class="diff-card-icon"><i class="fas fa-desktop"></i></div>
+                <h4>Live Screen Sharing</h4>
+                <p>Mentors demonstrate tasks live. With your consent, they can see your screen and fix problems in real time — not a pre-recorded video.</p>
+            </div>
+            <div class="diff-card">
+                <div class="diff-card-icon"><i class="fas fa-coins"></i></div>
+                <h4>Africa-First Pricing</h4>
+                <p>Pay in XOF with plans starting at 5,000 CFA/month. Scholarships available for athletes who cannot afford any subscription.</p>
+            </div>
+            <div class="diff-card">
+                <div class="diff-card-icon"><i class="fas fa-wifi"></i></div>
+                <h4>Works on Slow Data</h4>
+                <p>Designed to load fast on affordable smartphones. No heavy downloads, no wasted data — built for Cameroon's real network reality.</p>
+            </div>
+            <div class="diff-card">
+                <div class="diff-card-icon"><i class="fas fa-language"></i></div>
+                <h4>Bilingual Platform</h4>
+                <p>All content available in both French and English — because Cameroon speaks both, and so does RIS.</p>
+            </div>
+            <div class="diff-card">
+                <div class="diff-card-icon"><i class="fas fa-running"></i></div>
+                <h4>Built Around Your Schedule</h4>
+                <p>Classes from 6AM to 10PM GMT+1. Train in the morning, learn in the evening. No rigid timetables, no missed sessions.</p>
+            </div>
+            <div class="diff-card">
+                <div class="diff-card-icon"><i class="fas fa-users"></i></div>
+                <h4>Real Community</h4>
+                <p>Connect with peers, share progress, ask questions. Not a lonely library — a genuine support network of athletes learning together.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi-section" id="testimonials">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Success Stories</span>
+            <h2>Athletes <span>Transforming</span> Their Futures</h2>
+            <p>Real stories from young people who chose skills over betting slips</p>
+        </div>
+        <div class="testi-grid">
+            <div class="testi-card">
+                <div class="testi-stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="testi-quote">"After my injury, I didn't know what to do with my life. RIS helped me learn web development and now I build websites for sports clubs in Douala. Best decision I ever made."</p>
+                <div class="testi-author">
+                    <div class="testi-avatar">AD</div>
+                    <div>
+                        <div class="testi-name">Amadou D.</div>
+                        <div class="testi-role">Former Basketball Player · Yaoundé</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testi-card">
+                <div class="testi-stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="testi-quote">"I used to spend money on betting trying to survive. RIS gave me a real skill — graphic design. Now I earn more from my laptop than I ever did from Kudo matches."</p>
+                <div class="testi-author">
+                    <div class="testi-avatar">FK</div>
+                    <div>
+                        <div class="testi-name">Fatima K.</div>
+                        <div class="testi-role">Former Handball Player · Bafoussam</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testi-card">
+                <div class="testi-stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="testi-quote">"The mentors on RIS are different. They actually look at your work, tell you exactly what's wrong, and show you how to fix it. That's how I learned to code properly."</p>
+                <div class="testi-author">
+                    <div class="testi-avatar">JN</div>
+                    <div>
+                        <div class="testi-name">Jean-Paul N.</div>
+                        <div class="testi-role">Active Footballer · Garoua</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Pricing</span>
+            <h2>Simple, <span>Transparent</span> Pricing</h2>
+            <p>Africa-first pricing in XOF — no surprises, no hidden fees, and scholarships for those who need them</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <div class="pricing-top">
+                    <div class="plan-name">Starter</div>
+                    <div class="plan-price">Free</div>
+                    <div class="plan-period">Forever — no card required</div>
+                </div>
+                <div class="pricing-body">
+                    <ul>
+                        <li><i class="fas fa-check"></i> 2 workshops per month</li>
+                        <li><i class="fas fa-check"></i> Access to community</li>
+                        <li><i class="fas fa-check"></i> Basic course catalog</li>
+                        <li class="disabled"><i class="fas fa-times"></i> Live mentor sessions</li>
+                        <li class="disabled"><i class="fas fa-times"></i> Assignment feedback</li>
+                        <li class="disabled"><i class="fas fa-times"></i> Career certificate</li>
+                    </ul>
+                    <a href="register.html" class="btn btn-outline">Get Started Free</a>
+                </div>
+            </div>
+
+            <div class="pricing-card popular">
+                <div class="pricing-top">
+                    <span class="popular-badge">Most Popular</span>
+                    <div class="plan-name">Learner</div>
+                    <div class="plan-price">5,000 XOF</div>
+                    <div class="plan-period">per month · ~8 USD</div>
+                </div>
+                <div class="pricing-body">
+                    <ul>
+                        <li><i class="fas fa-check"></i> 1 specialty focus</li>
+                        <li><i class="fas fa-check"></i> 4 live sessions/month</li>
+                        <li><i class="fas fa-check"></i> Mentor feedback on projects</li>
+                        <li><i class="fas fa-check"></i> Assignment submission</li>
+                        <li><i class="fas fa-check"></i> Community access</li>
+                        <li><i class="fas fa-check"></i> Completion certificate</li>
+                    </ul>
+                    <a href="register.html" class="btn btn-primary">Choose Learner</a>
+                </div>
+            </div>
+
+            <div class="pricing-card">
+                <div class="pricing-top">
+                    <div class="plan-name">Pro</div>
+                    <div class="plan-price">12,000 XOF</div>
+                    <div class="plan-period">per month · ~20 USD</div>
+                </div>
+                <div class="pricing-body">
+                    <ul>
+                        <li><i class="fas fa-check"></i> Unlimited specialties</li>
+                        <li><i class="fas fa-check"></i> Unlimited live sessions</li>
+                        <li><i class="fas fa-check"></i> 1-on-1 mentorship</li>
+                        <li><i class="fas fa-check"></i> Screen-sharing support</li>
+                        <li><i class="fas fa-check"></i> Job placement assistance</li>
+                        <li><i class="fas fa-check"></i> Premium certificates</li>
+                    </ul>
+                    <a href="register.html" class="btn btn-outline">Choose Pro</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+    <div class="container cta-inner">
+        <h2>Ready to Build Your Second Career?</h2>
+        <p>Join young athletes across Cameroon who are choosing skills over betting slips and Kudo matches. Your future starts here.</p>
+        <div class="cta-buttons">
+            <a href="register.html" class="btn btn-white">
+                <i class="fas fa-play"></i> Start Free Today
+            </a>
+            <a href="register.html?role=mentor" class="btn" style="background:rgba(255,255,255,0.15);color:white;border:1.5px solid rgba(255,255,255,0.3);">
+                <i class="fas fa-chalkboard-teacher"></i> Join as Mentor
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- PARTNERS -->
+<section class="partners-section" id="partners">
+    <div class="container">
+        <p class="partners-label">Trusted Partners & Supporters</p>
+        <div class="partners-row">
+            <a href="#" class="partner-item">
+                <div class="partner-logo"><i class="fas fa-handshake"></i></div>
+                <span class="partner-name">Fondation BEF</span>
+            </a>
+            <a href="#" class="partner-item">
+                <div class="partner-logo"><i class="fas fa-shield-alt"></i></div>
+                <span class="partner-name">Cameroon Sports Ministry</span>
+            </a>
+            <a href="#" class="partner-item">
+                <div class="partner-logo"><i class="fas fa-globe-africa"></i></div>
+                <span class="partner-name">African Union Youth</span>
+            </a>
+            <a href="#" class="partner-item">
+                <div class="partner-logo"><i class="fas fa-university"></i></div>
+                <span class="partner-name">Ministry of Youth</span>
+            </a>
+            <a href="#" class="partner-item">
+                <div class="partner-logo"><i class="fas fa-graduation-cap"></i></div>
+                <span class="partner-name">UNESCO Cameroon</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
     <div class="container">
         <div class="footer-grid">
-            <div class="footer-col">
-                <a href="index.html" class="logo footer-logo">
+            <div class="footer-col footer-brand">
+                <a href="index.html" class="logo">
                     <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
                     <div>
                         <span class="logo-text">RIS</span>
                         <span class="logo-sub">Fondation BEF</span>
                     </div>
                 </a>
-                <p style="margin-top: 20px; color: rgba(255,255,255,0.6); font-size: 0.9rem;">
-                    Empowering African athletes through digital education and professional reintegration.
-                </p>
+                <p class="footer-desc">Renforcement des Capacités et Réinsertion Socio-Professionnelle des Sportifs. Empowering young African athletes with digital skills to build sustainable careers.</p>
+                <div class="footer-socials">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
             </div>
+
             <div class="footer-col">
-                <h4>Platform</h4>
+                <h5>Platform</h5>
                 <ul>
                     <li><a href="#specialties">Specialties</a></li>
-                    <li><a href="#how-it-works">How it Works</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
                     <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#testimonials">Success Stories</a></li>
+                    <li><a href="#partners">Partners</a></li>
                 </ul>
             </div>
+
             <div class="footer-col">
-                <h4>Company</h4>
+                <h5>Specialties</h5>
                 <ul>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Fondation BEF</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="register.html">Web Development</a></li>
+                    <li><a href="register.html">Graphic Design</a></li>
+                    <li><a href="register.html">Agriculture Tech</a></li>
+                    <li><a href="register.html">E-commerce</a></li>
+                    <li><a href="register.html">Solar Energy</a></li>
+                    <li><a href="register.html">Blogging</a></li>
                 </ul>
             </div>
+
             <div class="footer-col">
-                <h4>Contact</h4>
-                <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">
-                    Yaoundé, Cameroon<br>
-                    contact@projet-ris.cm<br>
-                    +237 6XX XXX XXX
-                </p>
+                <h5>Contact</h5>
+                <ul class="footer-contact">
+                    <li><i class="fas fa-map-marker-alt"></i><span>Yaoundé, Cameroon</span></li>
+                    <li><i class="fas fa-envelope"></i><span>learn@ris-cameroon.org</span></li>
+                    <li><i class="fab fa-whatsapp"></i><span>+237 6XX XXX XXX</span></li>
+                    <li><i class="fas fa-clock"></i><span>Mon–Sat, 6AM–10PM GMT+1</span></li>
+                </ul>
             </div>
         </div>
+
         <div class="footer-bottom">
-            <p>&copy; 2026 Projet RIS. All rights reserved.</p>
-            <div class="social-links">
-                <a href="#" style="color: white; margin-left: 15px;"><i class="fab fa-facebook"></i></a>
-                <a href="#" style="color: white; margin-left: 15px;"><i class="fab fa-twitter"></i></a>
-                <a href="#" style="color: white; margin-left: 15px;"><i class="fab fa-linkedin"></i></a>
+            <p>&copy; 2025 Projet RIS — Renforcement des Capacités et Réinsertion Socio-Professionnelle des Sportifs. All rights reserved.</p>
+            <div style="display:flex;gap:20px;">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Use</a>
             </div>
         </div>
     </div>
 </footer>
 
 <script>
-    // Slideshow Logic
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.slide');
-    
-    function nextSlide() {
-        slides[currentSlide].classList.remove('active');
-        currentSlide = (currentSlide + 1) % slides.length;
-        slides[currentSlide].classList.add('active');
-    }
-    
-    setInterval(nextSlide, 5000); // Change slide every 5 seconds
-</script>
+    // Mobile menu
+    const toggle = document.getElementById('mobileToggle');
+    const menu = document.getElementById('mobileMenu');
+    toggle.addEventListener('click', () => {
+        menu.classList.toggle('open');
+    });
 
+    // Close mobile menu on link click
+    menu.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => menu.classList.remove('open'));
+    });
+
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+        const h = document.getElementById('header');
+        h.style.boxShadow = window.scrollY > 20
+            ? '0 2px 20px rgba(0,0,0,0.12)'
+            : '0 1px 0 rgba(0,0,0,0.08)';
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            const t = document.querySelector(a.getAttribute('href'));
+            if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+        });
+    });
+
+    // Intersection Observer for animations
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.style.opacity = '1';
+                e.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.spec-card, .diff-card, .testi-card, .pricing-card, .step-item, .ps-item').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        observer.observe(el);
+    });
+</script>
 </body>
 </html>
